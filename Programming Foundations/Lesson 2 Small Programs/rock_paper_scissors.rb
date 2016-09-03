@@ -54,7 +54,7 @@ end
 loop do # Overall Loop
   human_wins = 0
   computer_wins = 0
-
+  prompt("Welcome to Rock, Paper, Scissors, Lizard, Spock!")
   loop do # Main Game Loop
     choice = ''
 
