@@ -1,0 +1,62 @@
+1.a method that returns the sum of two integers
+
+Given two integers
+ - add the two integers and store them in a variable
+ - print the variable
+
+START
+ GET integer 1
+ GET integer 2
+
+ SET total to integer 1 + integer 2
+
+ PRINT total
+END
+
+ 2.a method that takes an array of strings, and returns a string that is all those strings concatenated together
+
+ Given an array of strings
+
+ Interate through the array
+ -set a new string to the first string in the array
+ -add the new string through each iteration
+
+ Return the new string variable
+
+START
+ GET array of strings
+
+SET Iterator = 1
+
+WHILE iterator < number of strings
+SET new_string  =  new_string + current string
+SET Iterator + 1
+
+RETURN the new_string
+END
+
+
+
+3. a method that takes an array of integers, and returns a new array with every other element
+
+Given an array of integers
+
+Set an interator at 0
+Iterate through array, adding the value of array[iterator] to a new array
+Add 2 to iterator
+
+Return the new array
+
+START
+
+GIVEN array
+
+SET iterator = 0
+
+WHILE iterator < array.length
+
+SET new_array.new value = array[iterator]
+SET iterator += 2
+
+RETURN new_array
+
