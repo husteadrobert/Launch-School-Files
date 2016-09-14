@@ -36,6 +36,7 @@ end
 def display_hand(hand)
   to_display = []
   hand.each do |card|
+    #to_display << card.last
     case card.first
     when 'C'
       to_display << "#{card.last} of Clubs"
@@ -121,7 +122,7 @@ loop do # Overall Loop
         prompt "Hit (h) or Stand (s)?"
         action = gets.chomp
 
-        if action.casecmp('h').zero? # need more rigorous checking
+        if action.casecmp('h').zero?
           hit!(player_hand, deck)
         end
         break if action.casecmp('s').zero?
