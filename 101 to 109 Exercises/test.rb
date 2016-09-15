@@ -1,26 +1,34 @@
-def palindrome?(message)
-  index = 0
-  reverse_index = -1
-  (message.length / 2).times do
-    return false if message[index] != message[reverse_index]
-    index += 1
-    reverse_index -= 1
+
+DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+def integer_to_string(number)
+  result = ''
+  loop do
+    number, remainder = number.divmod(10)
+    result.prepend(DIGITS[remainder])
+    break if number == 0
   end
-  true
-end
-
-def real_palindrome?(message)
-  palindrome?(message.downcase.gsub(/\W/, ''))
-end
-
-def palindromic_number?(nums)
-  nums.to_s.chars == nums.to_s.chars.reverse
+  result
 end
 
 
+def signed_integer_to_string(number)
+  if number > 0
+    result = integer_to_string(number)
+    result.prepend('+')
+  elsif number < 0
+    result = integer_to_string(number*-1)
+    result.prepend('-')
+  else
+    result = '0'
+  end
+end
 
 
-puts palindromic_number?(34543) == true
-puts palindromic_number?(123210) == false
-puts palindromic_number?(22) == true
-puts palindromic_number?(5) == true
+
+
+
+
+puts    signed_integer_to_string(4321) == '+4321'
+puts    signed_integer_to_string(-123) == '-123'
+ puts   signed_integer_to_string(0) == '0'
