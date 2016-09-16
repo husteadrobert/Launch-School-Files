@@ -101,3 +101,115 @@ def swap(words)
   result.join(' ')
 end
 
+# Clean up the words
+
+def cleanup(message)
+  alphabet = ('a'..'z').to_a
+  new_message = message.chars.map do |char|
+    alphabet.include?(char.downcase) ? char : " "
+  end
+  new_message.join.squeeze(" ")
+end
+# LS Solution
+def cleanup(text)
+  text.gsub(/[^a-z]/i, ' ').squeeze(' ')
+end
+
+# Letter Counter (Part 1)
+
+def word_sizes(message)
+  sizes = {}
+  message.split.each do |word|
+    sizes.has_key?(word.length) ? sizes[word.length] += 1 : sizes[word.length] = 1
+  end
+  sizes
+end
+# LS Solution
+def word_sizes(words_string)
+  counts = Hash.new(0)
+  words_string.split.each do |word|
+    counts[word.size] += 1
+  end
+  counts
+end
+
+# Letter Counter (Part 2)
+
+def word_sizes(message)
+  sizes = {}
+  new_message = message.split.map do |word|
+    word.gsub(/[^a-z]/i, '').squeeze(' ')
+  end
+  new_message.each do |word|
+    sizes.has_key?(word.length) ? sizes[word.length] += 1 : sizes[word.length] = 1
+  end
+  sizes
+end
+#LS Solution
+def word_sizes(words_string)
+  counts = Hash.new(0)
+  words_string.split.each do |word|
+    clean_word = word.delete('^A-Za-z')
+    counts[clean_word.size] += 1
+  end
+  counts
+end
+
+# Alphabetical Numbers
+# LS Solution
+NUMBER_WORDS = %w(zero one two three four
+                  five six seven eight nine
+                  ten eleven twelve thirteen fourteen
+                  fifteen sixteen seventeen eighteen nineteen)
+
+def alphabetic_number_sort(numbers)
+  numbers.sort_by { |number| NUMBER_WORDS[number] }
+end
+
+# ddaaiillyy ddoouubbllee
+
+def crunch(message)
+  new_word = ''
+  current_letter = ''
+  previous_letter = ''
+  message.chars.each do |letter|
+    current_letter = letter
+    if current_letter == previous_letter
+      next
+    else
+      new_word << current_letter
+      previous_letter = current_letter
+    end
+  end
+  new_word
+end
+#LS Solution
+def crunch(text)
+  index = 0
+  crunch_text = ''
+  while index <= text.length - 1
+    crunch_text << text[index] unless text[index] == text[index + 1]
+    index += 1
+  end
+  crunch_text
+end
+
+# Bannerizer
+def print_in_box(message)
+  puts "+-#{'-'*message.length}-+"
+  puts "| #{' '*message.length} |"
+  puts "| #{message} |"
+  puts "| #{' '*message.length} |"
+  puts "+-#{'-'*message.length}-+"
+end
+# LS Solution
+def print_in_box(message)
+   horizontal_rule = "+#{'-' * (message.size + 2)}+"
+   empty_line = "|#{' ' * (message.size + 2)}|"
+
+   puts horizontal_rule
+   puts empty_line
+   puts "| #{message} |"
+   puts empty_line
+   puts horizontal_rule
+end
