@@ -1,11 +1,18 @@
-def triangle(num)
-  whitespace = num - 1
-  stars = 1
-  num.times do |iterator|
-    puts "#{' ' * whitespace}#{'*' * stars}"
-    stars += 1
-    whitespace -=1
-  end
+def penultimate(string)
+  string.split[-2]
 end
 
-triangle(20)
+
+
+
+
+
+
+
+
+
+
+
+
+puts penultimate('last word') == 'last'
+puts penultimate('Launch School is great!') == 'is'
