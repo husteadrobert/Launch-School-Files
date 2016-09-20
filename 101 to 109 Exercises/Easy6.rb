@@ -152,3 +152,33 @@ end
 def find_dup(array)
   array.find { |element| array.count(element) == 2 }
 end
+
+# Does My List Include This?
+
+def include?(array, num)
+  included = false
+  array.each do |element|
+    if element == num
+      included = true
+    end
+  end
+  included
+end
+
+# LS Solution
+def include?(array, value)
+  !!array.find_index(value)
+end
+
+# Right Triangles
+
+def triangle(num)
+  whitespace = num - 1
+  stars = 1
+  num.times do |iterator|
+    puts "#{' ' * whitespace}#{'*' * stars}"
+    stars += 1
+    whitespace -=1
+  end
+end
+
