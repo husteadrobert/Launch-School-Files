@@ -120,3 +120,22 @@ def reversed_number(number)
 end
 
 # Get The Middle Character
+def center_of(string)
+  if string.length.odd?
+    return string[(string.length / 2)]
+  else
+    value1 = string[(string.length / 2) - 1]
+    value2 = string[(string.length / 2)]
+    return "#{value1}#{value2}"
+  end
+end
+
+# LS Solution
+def center_of(string)
+  center_index = string.size / 2
+  if string.size.odd?
+    string[center_index]
+  else
+    string[center_index - 1, 2]
+  end
+end
