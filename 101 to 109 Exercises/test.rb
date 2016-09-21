@@ -1,28 +1,18 @@
-def block_word?(string)
-  hash = { 'B' => 'O', 'G' => 'T', 'V' => 'I', 
-           'X' => 'K', 'R' => 'E', 'L' => 'Y',
-           'D' => 'Q', 'F' => 'S', 'Z' => 'M',
-           'C' => 'P', 'J' => 'W', 'N' => 'A', 'H' => 'U'}
 
-  banned_letters = []
-  bool = true
-  letters = string.upcase.chars
-  letters.each do |letter|
-    if hash.has_key?(letter)
-      banned_letters << hash[letter]
-    elsif hash.has_value?(letter)
-      banned_letters << hash.key(letter)
-    end
-  end
-  banned_letters.each do |letter|
-    if letters.include?(letter)
-      bool = false
-      break
+def letter_percentages(string)
+  length = string.length
+  percentage = (length / 1.0)
+  hash = {lowercase:0, uppercase:0, neither:0}
+  string.chars.each do |character|
+    if character =~ /[A-Z]/
+      hash[:uppercase] += percentage
+    elsif character =~ /[a-z]/
+      hash[:lowercase] += percentage
     else
-      next
+      hash[:neither] += percentage
     end
   end
-  bool
+  hash
 end
 
 
@@ -30,13 +20,8 @@ end
 
 
 
-#B:O   X:K   D:Q   C:P   N:A
-#G:T   R:E   F:S   J:W   H:U
-#:I   L:Y   Z:M
 
 
-
-
- puts   block_word?('BATCH') == true
- puts   block_word?('BUTCH') == false
- puts   block_word?('jest') == true
+ #puts   letter_percentages('abCdef 123') == { lowercase: 50, uppercase: 10, neither: 40 }
+ puts   letter_percentages('AbCd +Ef') #== { lowercase: 37.5, uppercase: 37.5, neither: 25 }
+ puts   letter_percentages('123')# == { lowercase: 0, uppercase: 0, neither: 100 }
