@@ -1,34 +1,42 @@
+def block_word?(string)
+  hash = { 'B' => 'O', 'G' => 'T', 'V' => 'I', 
+           'X' => 'K', 'R' => 'E', 'L' => 'Y',
+           'D' => 'Q', 'F' => 'S', 'Z' => 'M',
+           'C' => 'P', 'J' => 'W', 'N' => 'A', 'H' => 'U'}
 
-
-
-def fibonacci(number)
-  total = 0
-  now_sum = 1
-  previous_sum = 1
-  3.upto(number) do
-    total = now_sum + previous_sum
-    previous_sum = now_sum
-    now_sum = total
+  banned_letters = []
+  bool = true
+  letters = string.upcase.chars
+  letters.each do |letter|
+    if hash.has_key?(letter)
+      banned_letters << hash[letter]
+    elsif hash.has_value?(letter)
+      banned_letters << hash.key(letter)
+    end
   end
-  total
+  banned_letters.each do |letter|
+    if letters.include?(letter)
+      bool = false
+      break
+    else
+      next
+    end
+  end
+  bool
 end
 
 
-def fibonacci_last(nth)
-  answer = fibonacci(nth)
-  answer.to_s.chars[-1]
-end
 
 
-#puts fibonacci_last(15)        # -> 0  (the 15th Fibonacci number is 610)
-#puts fibonacci_last(20)        # -> 5 (the 20th Fibonacci number is 6765)
-#puts fibonacci_last(100)       # -> 5 (the 100th Fibonacci number is 354224848179261915075)
-#puts fibonacci_last(100_001)   # -> 1 (this is a 20899 digit number)
-#puts fibonacci_last(1_000_007) # -> 3 (this is a 208989 digit number)
-#fibonacci_last(123456789) # -> 4
 
-puts fibonacci_last(279)
-puts fibonacci_last(3)
-puts fibonacci_last(12)
 
-puts fibonacci_last(837/100)
+#B:O   X:K   D:Q   C:P   N:A
+#G:T   R:E   F:S   J:W   H:U
+#:I   L:Y   Z:M
+
+
+
+
+ puts   block_word?('BATCH') == true
+ puts   block_word?('BUTCH') == false
+ puts   block_word?('jest') == true
