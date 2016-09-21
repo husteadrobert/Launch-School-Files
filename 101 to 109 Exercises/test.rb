@@ -1,21 +1,34 @@
-def truthy_or_falsey value
-  # We don't know what `value` is
-  # It could be true, false, or a non-boolean value like 1, "", etc.
-  # Ruby only cares about whether something is truthy or falsey, though.
-  # Let's go look!
 
-  if value
-    # What does inspect do here?
-    # Remove it and see how the output changes.
-    puts "#{value.inspect} is truthy"
 
-    # Instead of calling value.inspect, call value.to_s
-    # How does the output of that look?
-  else
-    puts "#{value.inspect} is falsey" 
+
+def fibonacci(number)
+  total = 0
+  now_sum = 1
+  previous_sum = 1
+  3.upto(number) do
+    total = now_sum + previous_sum
+    previous_sum = now_sum
+    now_sum = total
   end
+  total
 end
 
-[true, false, Object, 0, 1, nil, true, false, "", [1, 2, 3], {}].each do |value|
-  truthy_or_falsey(value)
+
+def fibonacci_last(nth)
+  answer = fibonacci(nth)
+  answer.to_s.chars[-1]
 end
+
+
+#puts fibonacci_last(15)        # -> 0  (the 15th Fibonacci number is 610)
+#puts fibonacci_last(20)        # -> 5 (the 20th Fibonacci number is 6765)
+#puts fibonacci_last(100)       # -> 5 (the 100th Fibonacci number is 354224848179261915075)
+#puts fibonacci_last(100_001)   # -> 1 (this is a 20899 digit number)
+#puts fibonacci_last(1_000_007) # -> 3 (this is a 208989 digit number)
+#fibonacci_last(123456789) # -> 4
+
+puts fibonacci_last(279)
+puts fibonacci_last(3)
+puts fibonacci_last(12)
+
+puts fibonacci_last(837/100)
