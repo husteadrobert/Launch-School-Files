@@ -1,18 +1,8 @@
-
-def letter_percentages(string)
-  length = string.length
-  percentage = (length / 1.0)
-  hash = {lowercase:0, uppercase:0, neither:0}
-  string.chars.each do |character|
-    if character =~ /[A-Z]/
-      hash[:uppercase] += percentage
-    elsif character =~ /[a-z]/
-      hash[:lowercase] += percentage
-    else
-      hash[:neither] += percentage
-    end
-  end
-  hash
+def sum_square_difference(number)
+  squared_sum = 1.upto(number).inject(:+)**2
+  sum_squares = 0
+  1.upto(number).each {|num| sum_squares += num**2}
+  squared_sum - sum_squares
 end
 
 
@@ -22,6 +12,9 @@ end
 
 
 
- #puts   letter_percentages('abCdef 123') == { lowercase: 50, uppercase: 10, neither: 40 }
- puts   letter_percentages('AbCd +Ef') #== { lowercase: 37.5, uppercase: 37.5, neither: 25 }
- puts   letter_percentages('123')# == { lowercase: 0, uppercase: 0, neither: 100 }
+
+ puts   sum_square_difference(3) == 22
+       # -> (1 + 2 + 3)**2 - (1**2 + 2**2 + 3**2)
+puts    sum_square_difference(10) == 2640
+ puts   sum_square_difference(1) == 0
+ puts   sum_square_difference(100) == 25164150
