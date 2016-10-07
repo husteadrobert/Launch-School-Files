@@ -1,18 +1,37 @@
-class Person
-  attr_accessor :name
-  def name=(full_name)
-    parts = full_name.split
-    @first_name = parts.first
-    @last_name = parts.last
-    #@first_name, @last_name = full_name.split(' ')
+class Vehicle
+  attr_reader :make, :model
+  def initialize(make, model)
+    @make = make
+    @model = model
   end
-  def name
-    "#{@first_name} #{@last_name}"
+
+  def to_s
+    "#{make} #{model}"
   end
 end
 
 
-person1 = Person.new
-person1.name = 'John Doe'
-puts person1.name
+class Car < Vehicle
+  def wheels
+    4
+  end
+end
 
+class Motorcycle
+  def wheels
+    2
+  end
+end
+
+class Truck
+  attr_reader :payload
+
+  def initialize(make, model, payload)
+    super(make, model)
+    @payload = payload
+  end
+
+  def wheels
+    6
+  end
+end
