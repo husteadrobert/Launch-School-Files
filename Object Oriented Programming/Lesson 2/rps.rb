@@ -69,7 +69,7 @@ class Human < Player
     loop do
       puts "Please input a name:"
       n = gets.chomp
-      break unless n.strip.empty? 
+      break unless n.strip.empty?
       puts "Invalid input, try again."
     end
     self.name = n.strip
@@ -263,7 +263,10 @@ class RPSGame
   end
 
   def display_welcome_message
-    puts "Welcome to Rock, Paper, Scissors, Spock, Lizard!  First to 10 wins!"
+    to_say = ''
+    to_say << "Welcome to Rock, Paper, Scissors, Spock, Lizard! "
+    to_say << "First to #{MAX_SCORE} wins!"
+    puts to_say
   end
 
   def display_goodbye_message
