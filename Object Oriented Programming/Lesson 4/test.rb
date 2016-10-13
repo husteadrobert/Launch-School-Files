@@ -1,40 +1,41 @@
-class KrispyKreme
-  def initialize(filling_type, glazing)
-    @filling_type = filling_type
-    @glazing = glazing
+module Moveable
+  attr_accessor :speed, :heading
+  attr_writer :fuel_capacity, :fuel_efficiency
+
+  def range
+    @fuel_capacity * @fuel_efficiency
+  end
+end
+
+class WheeledVehicle
+  include Moveable
+
+  def initialize(tire_array, km_traveled_per_liter, liters_of_fuel_capacity)
+    @tires = tire_array
+    self.fuel_efficiency = km_traveled_per_liter
+    self.fuel_capacity = liters_of_fuel_capacity
   end
 
-  def to_s
-      @filling_type = "Plain" if @filling_type == nil
-      message = ""
-      if @glazing == nil
-        message << "#{@filling_type}"
-      else
-        message << "#{@filling_type} with #{@glazing}"
-      end
-      message
+  def tire_pressure(tire_index)
+    @tires[tire_index]
+  end
+
+  def inflate_tire(tire_index, pressure)
+    @tires[tire_index] = pressure
+  end
+end
+
+class Catamaran
+  include Moveable
+
+  attr_accessor :propeller_count, :hull_count
+
+  def initialize(num_propellers, num_hulls, km_traveled_per_liter, liters_of_fuel_capacity)
+    self.fuel_efficiency = km_traveled_per_liter
+    self.fuel_capacity = liters_of_fuel_capacity
+
+    # ... other code to track catamaran-specific data omitted ...
   end
 end
 
 
-
-donut1 = KrispyKreme.new(nil, nil)
-donut2 = KrispyKreme.new("Vanilla", nil)
-donut3 = KrispyKreme.new(nil, "sugar")
-donut4 = KrispyKreme.new(nil, "chocolate sprinkles")
-donut5 = KrispyKreme.new("Custard", "icing")
-
-puts donut1
- # => "Plain"
-
-puts donut2
-#  => "Vanilla"
-
-puts donut3
- # => "Plain with sugar"
-
-puts donut4
-#  => "Plain with chocolate sprinkles"
-
-puts donut5
- # => "Custard with icing"
