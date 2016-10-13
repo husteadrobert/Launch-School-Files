@@ -64,21 +64,22 @@ end
 
 class Human < Player
   def set_name
+    system('clear')
     n = ""
     loop do
       puts "Please input a name:"
       n = gets.chomp
-      break unless n.empty?
+      break unless n.strip.empty? 
       puts "Invalid input, try again."
     end
-    self.name = n
+    self.name = n.strip
   end
 
   def choose
     choice = nil
     loop do
       puts "Please choose rock, paper, scissors, spock or lizard:"
-      choice = gets.chomp
+      choice = gets.chomp.downcase
       break if Move::VALUES.include? choice
       puts "Sorry, invalid choice."
     end
@@ -87,6 +88,16 @@ class Human < Player
 end
 
 class Computer < Player
+  def winning_percentages(history)
+    winning_symbols = find_winning_symbols(history)
+    percentage_hash = find_win_percent(winning_symbols, history)
+    percentage_hash
+  end
+
+  def random(max_num)
+    (1..max_num).to_a.sample
+  end
+
   def sample_of_best(hash)
     maximum = hash.max_by { |_, v| v }
     array = []
@@ -97,6 +108,8 @@ class Computer < Player
     end
     array.sample
   end
+
+  private
 
   def find_winning_symbols(history)
     total_games = history.computer_history.length
@@ -128,12 +141,6 @@ class Computer < Player
     end
     hash
   end
-
-  def winning_percentages(history)
-    winning_symbols = find_winning_symbols(history)
-    percentage_hash = find_win_percent(winning_symbols, history)
-    percentage_hash
-  end
 end
 
 class Deepblue < Computer
@@ -142,21 +149,23 @@ class Deepblue < Computer
   end
 
   # DeepBlue selects by random if there is no history.  Otherwise,
-  # he calculates the winning percentage of each symbol.  He chooses
-  # the highest rated, or at random from a list of symbols that have
-  # same highest percentage.
+  # he calculates the winning percentage of each symbol.  He prefers
+  # what he calculates as the highest rated symbol and will chose it
+  # with 70% frequency.  Otherwise, he chooses at random.
   def choose(history)
     if history.computer_history.length.zero?
       self.move = Move.new(Move::VALUES.sample)
     else
       hash = winning_percentages(history)
-      self.move = Move.new(sample_of_best(hash))
+      rand = random(10)
+      self.move = Move.new(sample_of_best(hash)) if rand < 8
+      self.move = Move.new(Move::VALUES.sample) if rand >= 8
     end
     move
   end
 
   def taunt
-    rand = (1..2).to_a.sample
+    rand = random(2)
     if rand == 1
       to_say = ""
       to_say << "Deep Blue says, "
@@ -177,7 +186,7 @@ class R2D2 < Computer
   end
 
   def taunt
-    rand = (1..2).to_a.sample
+    rand = random(2)
     puts "R2D2 says, \"Beep Boop Whizzzzz!\" " if rand == 1
   end
 end
@@ -200,7 +209,7 @@ class Number5 < Computer
   end
 
   def taunt
-    rand = (1..2).to_a.sample
+    rand = random(2)
     puts "Johnny says, \"Do not dissasemble Johnny Number 5!\" " if rand == 1
   end
 end
@@ -228,16 +237,16 @@ class Hal < Computer
   end
 
   def taunt
-    rand = (1..2).to_a.sample
+    rand = random(2)
     puts "Hal says, \"I can't let you do that, #{@human_name}.\" " if rand == 1
   end
 end
 
-# Game Orchestration Engine
 class RPSGame
-  MAX_SCORE = 3
+  MAX_SCORE = 10
 
-  attr_accessor :human, :computer, :human_score, :computer_score, :history
+  attr_accessor :human_score, :computer_score
+  attr_reader :human, :computer, :history
 
   def initialize
     @human = Human.new
@@ -254,7 +263,7 @@ class RPSGame
   end
 
   def display_welcome_message
-    puts "Welcome to Rock, Paper, Scissors, Spock, Lizard!"
+    puts "Welcome to Rock, Paper, Scissors, Spock, Lizard!  First to 10 wins!"
   end
 
   def display_goodbye_message
@@ -324,7 +333,7 @@ class RPSGame
   end
 
   def display_opponent
-    puts "You're facing off against #{computer.name}.  Good luck!"
+    puts "You're facing off against #{computer.name}. Good luck!"
   end
 
   def single_game
@@ -342,6 +351,7 @@ class RPSGame
 
   def play
     loop do
+      system('clear')
       initialize_score
       display_welcome_message
       display_opponent
@@ -354,5 +364,3 @@ class RPSGame
 end
 
 RPSGame.new.play
-
-#Issues: Deep Blue will just keep picking same move

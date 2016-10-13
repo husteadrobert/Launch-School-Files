@@ -78,7 +78,7 @@ class Human < Player
     choice = nil
     loop do
       puts "Please choose rock, paper, scissors, spock or lizard:"
-      choice = gets.chomp
+      choice = gets.chomp.downcase
       break if Move::VALUES.include? choice
       puts "Sorry, invalid choice."
     end
@@ -87,6 +87,17 @@ class Human < Player
 end
 
 class Computer < Player
+
+  def winning_percentages(history)
+    winning_symbols = find_winning_symbols(history)
+    percentage_hash = find_win_percent(winning_symbols, history)
+    percentage_hash
+  end
+
+  def random(max_num)
+    (1..max_num).to_a.sample
+  end
+
   def sample_of_best(hash)
     maximum = hash.max_by { |_, v| v }
     array = []
@@ -97,6 +108,8 @@ class Computer < Player
     end
     array.sample
   end
+
+  private
 
   def find_winning_symbols(history)
     total_games = history.computer_history.length
@@ -129,36 +142,6 @@ class Computer < Player
     hash
   end
 
-  def winning_percentages(history)
-    winning_symbols = find_winning_symbols(history)
-    percentage_hash = find_win_percent(winning_symbols, history)
-    percentage_hash
-  end
-  # def winning_percentages(history)
-  #   total_games = history.computer_history.length
-  #   winning_symbol = []
-  #   index = 0
-  #   while index < total_games
-  #     computer_past_move = Move.new(history.computer_history[index])
-  #     human_past_move = Move.new(history.human_history[index])
-  #     if computer_past_move > human_past_move
-  #       winning_symbol << history.computer_history[index]
-  #     end
-  #     index += 1
-  #   end
-  #   hash = Hash.new(0)
-  #   Move::VALUES.each do |symbol|
-  #     hash[symbol] = winning_symbol.count(symbol)
-  #   end
-  #   hash.each do |key, value|
-  #     hash[key] = if value.positive?
-  #                   value.to_f / total_games
-  #                 else
-  #                   0
-  #                 end
-  #   end
-  #   hash
-  # end
 end
 
 class Deepblue < Computer
@@ -167,21 +150,23 @@ class Deepblue < Computer
   end
 
   # DeepBlue selects by random if there is no history.  Otherwise,
-  # he calculates the winning percentage of each symbol.  He chooses
-  # the highest rated, or at random from a list of symbols that have
-  # same highest percentage.
+  # he calculates the winning percentage of each symbol.  He prefers
+  # what he calculates as the highest rated symbol and will chose it
+  # with 70% frequency.  Otherwise, he chooses at random.
   def choose(history)
     if history.computer_history.length.zero?
       self.move = Move.new(Move::VALUES.sample)
     else
       hash = winning_percentages(history)
-      self.move = Move.new(sample_of_best(hash))
+      rand = random(10)
+      self.move = Move.new(sample_of_best(hash)) if rand < 8
+      self.move = Move.new(Move::VALUES.sample) if rand >= 8
     end
     move
   end
 
   def taunt
-    rand = (1..2).to_a.sample
+    rand = random(2)
     if rand == 1
       to_say = ""
       to_say << "Deep Blue says, "
@@ -202,7 +187,7 @@ class R2D2 < Computer
   end
 
   def taunt
-    rand = (1..2).to_a.sample
+    rand = random(2)
     puts "R2D2 says, \"Beep Boop Whizzzzz!\" " if rand == 1
   end
 end
@@ -225,7 +210,7 @@ class Number5 < Computer
   end
 
   def taunt
-    rand = (1..2).to_a.sample
+    rand = random(2)
     puts "Johnny says, \"Do not dissasemble Johnny Number 5!\" " if rand == 1
   end
 end
@@ -253,7 +238,7 @@ class Hal < Computer
   end
 
   def taunt
-    rand = (1..2).to_a.sample
+    rand = random(2)
     puts "Hal says, \"I can't let you do that, #{@human_name}.\" " if rand == 1
   end
 end
@@ -262,7 +247,8 @@ end
 class RPSGame
   MAX_SCORE = 3
 
-  attr_accessor :human, :computer, :human_score, :computer_score, :history
+  attr_accessor :human_score, :computer_score
+  attr_reader :human, :computer, :history
 
   def initialize
     @human = Human.new
