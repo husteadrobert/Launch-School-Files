@@ -118,6 +118,7 @@ class TTTGame
   HUMAN_MARKER = "X".freeze
   COMPUTER_MARKER = "O".freeze
   FIRST_TO_MOVE = HUMAN_MARKER.freeze
+  MAX_SCORE = 2
 
   attr_reader :board, :human, :computer
 
@@ -126,6 +127,8 @@ class TTTGame
     @human = Player.new(HUMAN_MARKER)
     @computer = Player.new(COMPUTER_MARKER)
     @current_marker = FIRST_TO_MOVE
+    @human_score = 0
+    @computer_score = 0
   end
 
   def play
@@ -134,14 +137,18 @@ class TTTGame
 
     loop do
       display_board
-
       loop do
-        current_player_moves
-        break if board.someone_won? || board.full?
-        clear_screen_and_display_board
+        loop do
+          current_player_moves
+          break if board.someone_won? || board.full?
+          clear_screen_and_display_board
+        end
+        display_result
+        update_scores
+        break if at_max_score?
       end
-
-      display_result
+      display_final_scores
+      display_winner
       break unless play_again?
       reset
       display_play_again_message
@@ -151,6 +158,31 @@ class TTTGame
   end
 
   private
+
+  def display_final_scores
+    puts "Human Score: #{@human_score}  Computer Score: #{@computer_score}"
+    puts ""
+  end
+
+  def display_winner
+    if @human_score == MAX_SCORE
+      puts "The Human wins!"
+    else
+      puts "The Computer wins!"
+    end
+    puts ""
+  end
+
+  def at_max_score?
+    @human_score == MAX_SCORE || @computer_score == MAX_SCORE
+  end
+
+  def update_scores
+    case board.winning_marker
+    when human.marker then @human_score += 1
+    when computer.marker then @computer_score += 1
+    end
+  end
 
   def display_welcome_message
     puts "Welcome to Tic Tac Toe!"
@@ -247,6 +279,8 @@ class TTTGame
   end
 
   def reset
+    @human_score = 0
+    @computer_score = 0
     board.reset
     @current_marker = FIRST_TO_MOVE
     clear
