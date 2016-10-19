@@ -151,18 +151,33 @@ class Human < Player
   end
 end
 
+class Computer < Player
+  attr_reader :name
+
+  def initialize(default_marker)
+    super(default_marker)
+    @name = random_name
+  end
+
+  private
+
+  def random_name
+    %w(Johnny\ 5 Hal DeepBlue The\ Gibson).sample
+  end
+end
+
 module Displayable
   def display_scores
-    puts "#{@human.name}'s Score: #{@human.score}"
-    puts "Computer's Score: #{@computer.score}"
+    puts "#{human.name}'s Score: #{human.score}"
+    puts "#{computer.name}'s Score: #{computer.score}"
     puts ""
   end
 
   def display_winner
     if @human.score == TTTGame::MAX_SCORE
-      puts "#{@human.name} wins!"
+      puts "#{human.name} wins!"
     else
-      puts "The Computer wins!"
+      puts "#{computer.name} wins!"
     end
     puts ""
   end
@@ -182,7 +197,7 @@ module Displayable
   end
 
   def display_board
-    puts "You're a #{human.marker}. Computer is a #{computer.marker}."
+    puts "You're a #{human.marker}. #{computer.name} is a #{computer.marker}."
     puts ""
     board.draw
     puts ""
@@ -205,7 +220,7 @@ module Displayable
     when human.marker
       puts "You won!"
     when computer.marker
-      puts "Computer won!"
+      puts "#{computer.name} won!"
     else
       puts "It's a tie!"
     end
@@ -220,14 +235,14 @@ class TTTGame
   include Displayable
   HUMAN_MARKER = "X".freeze
   COMPUTER_MARKER = "O".freeze
-  MAX_SCORE = 2
+  MAX_SCORE = 5
 
   attr_reader :board, :human, :computer
 
   def initialize
     @board = Board.new
     @human = Human.new(HUMAN_MARKER, "Player")
-    @computer = Player.new(COMPUTER_MARKER)
+    @computer = Computer.new(COMPUTER_MARKER)
     @current_marker = @human.marker
     @first_to_move = @human.marker
   end
@@ -287,17 +302,16 @@ class TTTGame
     if human.marker == 'O'
       @computer.marker = 'X'
     end
-
     select_first_mover
   end
 
   def select_first_mover
     answer = nil
     loop do
-      puts "Who shall go first, (1)#{human.name} or (2) Computer?"
+      puts "Who shall go first, (1)#{human.name} or (2) #{computer.name}?"
       puts "Please input 1 or 2:"
       answer = gets.chomp.to_i
-      break if answer == 1 || answer == 2
+      break if (1..2).cover?(answer)
       puts "Invalid Choice, try again."
     end
     if answer == 2
