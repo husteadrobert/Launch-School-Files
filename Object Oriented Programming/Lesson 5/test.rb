@@ -1,3 +1,4 @@
+require 'pry'
 class Board
   WINNING_LINES = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] + # rows
                   [[1, 4, 7], [2, 5, 8], [3, 6, 9]] + # cols
@@ -168,16 +169,16 @@ end
 
 module Displayable
   def display_scores
-    puts "#{@human.name}'s Score: #{@human.score}"
-    puts "#{@computer.name}'s Score: #{@computer.score}"
+    puts "#{human.name}'s Score: #{human.score}"
+    puts "#{computer.name}'s Score: #{computer.score}"
     puts ""
   end
 
   def display_winner
     if @human.score == TTTGame::MAX_SCORE
-      puts "#{@human.name} wins!"
+      puts "#{human.name} wins!"
     else
-      puts "#{@computer.name} wins!"
+      puts "#{computer.name} wins!"
     end
     puts ""
   end
@@ -220,7 +221,7 @@ module Displayable
     when human.marker
       puts "You won!"
     when computer.marker
-      puts "#{@computer.name} won!"
+      puts "#{computer.name} won!"
     else
       puts "It's a tie!"
     end
@@ -235,16 +236,15 @@ class TTTGame
   include Displayable
   HUMAN_MARKER = "X".freeze
   COMPUTER_MARKER = "O".freeze
-  MAX_SCORE = 2
+  MAX_SCORE = 5
 
   attr_reader :board, :human, :computer
+  attr_accessor :current_marker, :first_to_move
 
   def initialize
     @board = Board.new
     @human = Human.new(HUMAN_MARKER, "Player")
     @computer = Computer.new(COMPUTER_MARKER)
-    @current_marker = @human.marker
-    @first_to_move = @human.marker
   end
 
   def play
@@ -274,7 +274,7 @@ class TTTGame
   def setup_game_environment
     clear
     display_welcome_message
-    initialize_game_settings
+    prompt_change_game_settings
   end
 
   def play_single_game
@@ -288,7 +288,7 @@ class TTTGame
     display_scores
   end
 
-  def initialize_game_settings
+  def prompt_change_game_settings
     answer = nil
     loop do
       puts "Play with (D)efaults or (P)ersonalize your game?"
@@ -296,9 +296,15 @@ class TTTGame
       break if answer.casecmp('d').zero? || answer.casecmp('p').zero?
       puts "Invalid Answer, try again."
     end
-    return if answer.casecmp('d').zero?
+    if answer.casecmp('d').zero?
+      set_human_first
+      return
+    end
+    initialize_game_settings
+  end
 
-    @human.initialize_name_and_marker
+  def initialize_game_settings
+    human.initialize_name_and_marker
     if human.marker == 'O'
       @computer.marker = 'X'
     end
@@ -314,10 +320,17 @@ class TTTGame
       break if (1..2).cover?(answer)
       puts "Invalid Choice, try again."
     end
-    if answer == 2
-      @current_marker = computer.marker
-      @first_to_move = computer.marker
-    end
+    answer == 1 ? set_human_first : set_computer_first
+  end
+
+  def set_computer_first
+    @current_marker = computer.marker
+    @first_to_move = computer.marker
+  end
+
+  def set_human_first
+    @current_marker = human.marker
+    @first_to_move = human.marker
   end
 
   def enter_to_continue
@@ -375,12 +388,12 @@ class TTTGame
   end
 
   def current_player_moves
-    if @current_marker == HUMAN_MARKER
+    if current_marker == human.marker
       human_moves
-      @current_marker = COMPUTER_MARKER
+      @current_marker = computer.marker
     else
       computer_moves
-      @current_marker = HUMAN_MARKER
+      @current_marker = human.marker
     end
   end
 
