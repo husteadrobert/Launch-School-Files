@@ -1,10 +1,10 @@
-require 'pry'
 module Hand
-
   def display_hand
+    to_display = []
     @hand.each do |card|
-      puts "#{card}"
+      to_display << card.to_s
     end
+    puts "#{self.class} has: #{joinor(to_display)}"
   end
 
   def <<(card)
@@ -18,61 +18,25 @@ module Hand
     end
     # Correct for Aces
     @hand.select { |card| card.face == "A" }.count.times do
-    value -= 10 if value > 21
+      value -= 10 if value > 21
     end
-    binding.pry
     value
   end
 
-end
+  private
 
+  def joinor(arr, delimiter=', ', word='and')
+    arr[-1] = "#{word} #{arr.last}" if arr.size > 1
+    arr.size == 2 ? arr.join(' ') : arr.join(delimiter)
+  end
+end
 
 class Player
   include Hand
+
   attr_accessor :hand
   def initialize
-    # what would the "data" or "states" of a Player object entail?
-    # maybe cards? a name?
     @hand = []
-  end
-
-  def hit(deck)
-
-  end
-
-  def stay
-  end
-
-  def busted?
-    hand_value > 21
-  end
-
-  def total #Don't need?
-    hand_value
-  end
-end
-
-class Dealer
-  include Hand
-  attr_accessor :hand
-  def initialize
-    # seems like very similar to Player... do we even need this?
-    @hand = []
-  end
-
-  def display_initial_hand
-    puts "#{hand[0]} and ??? (#{hand[1]})"
-  end
-
-  def deal
-    # does the dealer or the deck deal?
-  end
-
-  def hit
-
-  end
-
-  def stay
   end
 
   def busted?
@@ -84,8 +48,10 @@ class Dealer
   end
 end
 
-class Participant
-  # what goes in here? all the redundant behaviors from Player and Dealer?
+class Dealer < Player
+  def display_initial_hand
+    puts "Dealer has a #{hand[0]} showing."
+  end
 end
 
 class Deck
@@ -104,15 +70,14 @@ class Deck
     deck.shuffle
   end
 
-
   def deal
     cards.pop
   end
 end
 
 class Card
-  SUITS = ['H', 'D', 'S', 'C']
-  FACES = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+  SUITS = ['H', 'D', 'S', 'C'].freeze
+  FACES = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'].freeze
 
   attr_reader :suit, :face
 
@@ -121,8 +86,21 @@ class Card
     @face = face
   end
 
-  def to_s
-    "a #{@face} of #{suit}"
+  def to_s # Change to two methods
+    display_suit = case @suit
+                   when 'H' then "Hearts"
+                   when 'D' then "Diamonds"
+                   when 'S' then "Spades"
+                   when 'C' then "Clubs"
+                   end
+    display_face = case @face
+                   when 'J' then "Jack"
+                   when 'Q' then "Queen"
+                   when 'K' then "King"
+                   when 'A' then "Ace"
+                   else          @face
+                   end
+    "#{display_face} of #{display_suit}"
   end
 
   def value
@@ -133,10 +111,9 @@ class Card
     end
   end
 end
-  
-
 
 class Game
+  DEALER_MAX = 17
   attr_accessor :player, :dealer, :deck
 
   def initialize
@@ -149,23 +126,23 @@ class Game
     deal_cards
     show_initial_cards
     player_turn
-    #dealer_turn
-    #show_result
+    dealer_turn
+    show_result
   end
 
   private
 
   def deal_cards
-    player.hand << Card.new('D', 'A') << Card.new('C', '10')
-   # dealer.hand << deck.deal << deck.deal
+    player.hand << deck.deal << deck.deal
+    dealer.hand << deck.deal << deck.deal
   end
 
   def show_initial_cards
     player.display_hand
-   # dealer.display_initial_hand
+    dealer.display_initial_hand
   end
 
-  def player_turn #goto Player.hit_or_stand ?
+  def player_turn # goto Player.hit_or_stand ?
     answer = nil
     loop do
       loop do
@@ -176,24 +153,25 @@ class Game
         puts "Invalid, try again."
       end
       player.hand << deck.deal if answer == 'h'
+      player.display_hand
       break if answer == 's'
       break if player.busted?
     end
-    player.display_hand
   end
 
   def dealer_turn
-    #unless player.bust?
-    #hits till 17
+    while dealer.total < DEALER_MAX
+      dealer.hand << deck.deal
+    end
+    dealer.display_hand
   end
 
   def show_result
-    #if dealer.bust?
-    #player wins
-    #else compare
-    #display winner
+    puts ""
+    puts "Player Total: #{player.total}"
+    puts "Dealer Total: #{dealer.total}"
+    puts ""
   end
-
 end
 
 Game.new.start
