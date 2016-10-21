@@ -140,12 +140,10 @@ class Deck
 end
 
 class Card
-  # rubocop:disable Metrics/LineLength
-  SUITS = ['H', 'D', 'S', 'C'].freeze
-  FACES = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'].freeze
-  # rubocop:enable Metrics/LineLength
+  SUITS = %w(H D S C).freeze
+  FACES = %w(2 3 4 5 6 7 8 9 10 J Q K A).freeze
 
-  attr_reader :suit, :face
+  attr_reader :face
 
   def initialize(suit, face)
     @suit = suit
@@ -293,9 +291,9 @@ class Game
 
   def find_winner
     if player.busted?
-      return "Dealer"
+      "Dealer"
     elsif dealer.busted?
-      return "Player"
+      "Player"
     else
       compare_hands
     end
