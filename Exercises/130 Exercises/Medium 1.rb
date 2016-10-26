@@ -102,3 +102,34 @@ end
 # Procs/Blocks are strange with return.  The return will kick out of a method if the block is defined within a method.
 # the return will be an error if the Proc/Block is defined outside of a method.
 # Lambdas act as their own scope, it seems, as return does not effect the rest of methods.
+
+# Method to Proc
+#LS Solution
+def convert_to_base_8(n)
+  n.to_s(8).to_i
+end
+
+base8_proc = method(:convert_to_base_8).to_proc
+
+[8,10,12,14,16,33].map(&base8_proc) # => [10, 12, 14, 16, 20, 41]
+
+# Internal vs External Iterators
+
+
+# Bubble Sort with Blocks
+def bubble_sort!(array)
+  loop do
+    swapped = false
+    1.upto(array.size - 1) do |index|
+      if block_given?
+        next if yield(array[index - 1], array[index])
+      else
+        next if array[index - 1] <= array[index]
+      end
+      array[index - 1], array[index] = array[index], array[index - 1]
+      swapped = true
+    end
+    break unless swapped
+  end
+  nil
+end
