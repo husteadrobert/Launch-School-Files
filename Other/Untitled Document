@@ -1,0 +1,14 @@
+#include <iostream>
+#include <string>
+
+void
+xyzzy(std::string & x) {
+ x = "abc";
+}
+
+int
+main() {
+   std::string y = "xyz";
+   xyzzy(y);
+   std::cout << y;
+}
