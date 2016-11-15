@@ -3,7 +3,8 @@ require "socket"
 def parse_request(request_line)
   http_method, path_and_params, version = request_line.split(" ")
   path, params = path_and_params.split('?')
-  params = params.split('&').each_with_object({}) do |pair, object|
+
+  params = (params || "").split('&').each_with_object({}) do |pair, object|
     key, value = pair.split('=')
     object[key] = value
   end
@@ -18,8 +19,7 @@ loop do
   next if !request_line || request_line =~ /favicon/
   puts request_line
 
-  # next unless request_line
-
+  next unless request_line
 
   http_method, path, params = parse_request(request_line)
 
@@ -34,13 +34,13 @@ loop do
   client.puts params
   client.puts "</pre>"
 
-  client.puts "<h1>Rolls!</h1>"
-  rolls = params["rolls"].to_i
-  sides = params["sides"].to_i
-  rolls.times do
-    roll = rand(sides) + 1
-    client.puts "<p>", roll, "</p>"
-  end
+  client.puts "<h1>Counter</h1>"
+
+  number = params["number"].to_i
+  client.puts "<p>The current number is #{number}.</p>"
+
+  client.puts "<a href='?number=#{number + 1}'>Add one</a>"
+  client.puts "<a href='?number=#{number - 1}'>Subtract one</a>"
 
   client.puts "</body>"
   client.puts "</html>"

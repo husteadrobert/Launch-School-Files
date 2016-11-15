@@ -1,0 +1,8 @@
+<body>
+  <h1>Names:</h1>
+  <ul>
+    <% @name_list.each do |name| %>
+    <li><a href="/user/<%= name %>"><%= name %></a></li>
+    <% end %>
+  </ul>
+</body>
