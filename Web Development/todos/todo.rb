@@ -12,6 +12,46 @@ before do
   session[:lists] ||= []
 end
 
+helpers do
+  def display_remaining(list)
+    total_tasks = list[:todos].size
+    remaining_tasks = list[:todos].select{|chore| chore[:completed] == false}.size
+    "#{remaining_tasks}/#{total_tasks}"
+  end
+
+  def list_complete?(list)
+    list[:todos].size > 0 && list[:todos].all? {|todo| todo[:completed] }
+  end
+
+  def list_class(list)
+    "complete" if list_complete?(list)
+  end
+
+  def sort_lists(lists, &block)
+    complete_lists, incomplete_lists = lists.partition { |list| list_complete?(list) }
+
+    incomplete_lists.each {|list| yield(list, lists.index(list))}
+    complete_lists.each {|list| yield(list, lists.index(list))}
+  end
+
+  def sort_todos(todos, &block)
+    incomplete_todos = {}
+    complete_todos = {}
+
+    todos.each_with_index do |todo, index|
+      if todo[:completed]
+        complete_todos[todo] = index
+      else
+        incomplete_todos[todo] = index
+      end
+    end
+    incomplete_todos.each(&block)
+    complete_todos.each(&block)
+  end
+
+end
+
+
 # View all lists
 get "/lists" do
   @lists = session[:lists]
