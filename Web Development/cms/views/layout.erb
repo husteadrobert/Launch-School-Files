@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/cms.css">
+  </head>
+  <body>
+    <% if session[:success] %>
+      <div class="message">
+        <p><%= session.delete(:success) %></p>
+      </div>
+    <% end %>
+
+    <% if session[:error] %>
+      <div class="message">
+        <p><%= session.delete(:error) %></p>
+      </div>
+    <% end %>
+
+    <main>
+      <%= yield %>
+    </main>
+  </body>
+</html>

@@ -9,7 +9,15 @@ configure do #this is telling Sinatra
   set :sessions_secret, 'secret'
 end
 
-def render_markdown(text)
+def data_path
+  if ENV["RACK_ENV"] == "test"
+    File.expand_path("../test/data", __FILE__)
+  else
+    File.expand_path("../data", __FILE__)
+  end
+end
+
+def render_markdown(text) #Renders Markdown text into HTML
   markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
   markdown.render(text)
 end
@@ -21,22 +29,25 @@ def load_file_content(path)
     headers["Content-Type"] = "text/plain"
     content
   when ".md"
-    render_markdown(content)
+    erb render_markdown(content)
   end
 end
 
-
-root = File.expand_path("..", __FILE__) #Unsure whats going on here
-
 get "/" do
-  @file_list = Dir.glob(root + "/data/*").map do |path|
+  pattern = File.join(data_path, "*")
+  @file_list = Dir.glob(pattern).map do |path|
     File.basename(path)
   end
   erb :index
 end
 
+get "/new" do
+  erb :new
+
+end
+
 get "/:filename" do
-  file_path = root + "/data/" + params[:filename]
+  file_path = File.join(data_path, params[:filename])
   if File.exist?(file_path)
     load_file_content(file_path)
   else
@@ -46,14 +57,14 @@ get "/:filename" do
 end
 
 get "/:filename/edit" do
-  file_path = root + "/data/" + params[:filename]
+  file_path = File.join(data_path, params[:filename])
   @file_name = params[:filename]
   @content = File.read(file_path)
   erb :edit
 end
 
 post "/:filename" do
-  file_path = root + "/data/" + params[:filename]
+  file_path = File.join(data_path, params[:filename])
   File.write(file_path, params[:content])
   session[:success] = "#{params[:filename]} has been updated."
   redirect "/"
