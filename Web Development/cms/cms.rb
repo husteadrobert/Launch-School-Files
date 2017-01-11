@@ -42,23 +42,28 @@ get "/" do
 end
 
 get "/new" do
-
-
-
   erb :new
 end
 
-post "/new" do #Must be before "/:filename"
+post "/new" do #Must be before "post /:filename"
   filename = params[:file_name].to_s
   if filename.size > 0
     file_path = File.join(data_path, filename)
     File.write(file_path, "")
-    session[:success] = "#{filename} was created."
+    session[:success] = "#{filename} has been created"
     redirect "/"
   else
     session[:error] = "Please input a file name."
-    redirect "/new"
+    status 422
+    erb :new
   end
+end
+
+post "/:filename/delete" do
+  file_path = File.join(data_path, params[:filename])
+  File.delete(file_path)
+  session[:success] = "#{params[:filename]} has been deleted."
+  redirect "/"
 end
 
 
