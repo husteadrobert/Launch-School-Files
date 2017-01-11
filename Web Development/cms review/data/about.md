@@ -1,0 +1,3 @@
+# Ruby is...
+
+A dynamic whatever the heck *thing* is written here.
