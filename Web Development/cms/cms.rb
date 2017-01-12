@@ -33,9 +33,14 @@ def load_file_content(path)
   end
 end
 
-helpers do
-  def signed_in?
-    !session[:user].nil?
+def signed_in?
+  session[:user]
+end
+
+def require_signin
+  unless signed_in?
+    session[:error] = "You must be signed in to do that."
+    redirect "/"
   end
 end
 
@@ -49,10 +54,12 @@ get "/" do
 end
 
 get "/new" do
+  require_signin
   erb :new
 end
 
 post "/new" do #Must be before "post /:filename"
+  require_signin
   filename = params[:file_name].to_s
   if filename.size > 0
     file_path = File.join(data_path, filename)
@@ -67,6 +74,7 @@ post "/new" do #Must be before "post /:filename"
 end
 
 post "/:filename/delete" do
+  require_signin
   file_path = File.join(data_path, params[:filename])
   File.delete(file_path)
   session[:success] = "#{params[:filename]} has been deleted."
@@ -85,10 +93,11 @@ get "/:filename" do
 end
 
 get "/:filename/edit" do
-  file_path = File.join(data_path, params[:filename])
-  @file_name = params[:filename]
-  @content = File.read(file_path)
-  erb :edit
+    require_signin
+    file_path = File.join(data_path, params[:filename])
+    @file_name = params[:filename]
+    @content = File.read(file_path)
+    erb :edit
 end
 
 post "/users/signin" do
@@ -106,6 +115,7 @@ post "/users/signin" do
 end
 
 post "/:filename" do
+  require_signin
   file_path = File.join(data_path, params[:filename])
   File.write(file_path, params[:content])
   session[:success] = "#{params[:filename]} has been updated."

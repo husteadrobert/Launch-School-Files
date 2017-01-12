@@ -27,6 +27,14 @@ class AppTest < Minitest::Test
     end
   end
 
+  def session
+    last_request.env["rack.session"]
+  end
+
+  def admin_session
+    { "rack.session" => { user: "admin" } }
+  end
+
   # test/cms_test.rb
   def test_index
     create_document "about.md"
@@ -55,11 +63,7 @@ class AppTest < Minitest::Test
   get "/notafile.ext"
 
   assert_equal 302, last_response.status
-
-  get last_response["Location"]
-
-  assert_equal 200, last_response.status
-  assert_includes last_response.body, "notafile.ext does not exist"
+  assert_equal "notafile.ext does not exist.", session[:error]
   end
 
   def test_viewing_markdown_document
@@ -73,9 +77,10 @@ class AppTest < Minitest::Test
   end
 
   def test_editing_document
+
     create_document "changes.txt"
 
-    get "/changes.txt/edit"
+    get "/changes.txt/edit", {}, admin_session
 
     assert_equal 200, last_response.status
     assert_includes last_response.body, "<textarea"
@@ -83,13 +88,11 @@ class AppTest < Minitest::Test
   end
 
   def test_updating_document
-    post "/changes.txt", content: "new content"
+    post "/changes.txt", {content: "new content"}, admin_session
 
     assert_equal 302, last_response.status
 
-    get last_response["Location"]
-
-    assert_includes last_response.body, "changes.txt has been updated"
+    assert_equal "changes.txt has been updated.", session[:success]
 
     get "/changes.txt"
     assert_equal 200, last_response.status
@@ -97,7 +100,7 @@ class AppTest < Minitest::Test
   end
 
   def test_view_new_document_form
-    get "/new"
+    get "/new", {}, admin_session
 
     assert_equal 200, last_response.status
     assert_includes last_response.body, "<input"
@@ -105,18 +108,17 @@ class AppTest < Minitest::Test
   end
 
   def test_create_new_document
-    post "/new", file_name: "test.txt"
+    post "/new", {file_name: "test.txt"}, admin_session
     assert_equal 302, last_response.status
 
-    get last_response["Location"]
-    assert_includes last_response.body, "test.txt has been created"
+    assert_equal "test.txt has been created", session[:success]
 
     get "/"
     assert_includes last_response.body, "test.txt"
   end
 
   def test_create_new_document_without_filename
-    post "/new", file_name: ""
+    post "/new", {file_name: ""}, admin_session
     assert_equal 422, last_response.status
     assert_includes last_response.body, "Please input"
   end
@@ -125,18 +127,18 @@ class AppTest < Minitest::Test
   def test_delete
     create_document "testing.txt"
 
-    post "/testing.txt/delete"
+    post "/testing.txt/delete", {}, admin_session
 
     assert_equal 302, last_response.status
 
-    get last_response["Location"]
-    assert_includes last_response.body, "testing.txt has been deleted"
+    assert_equal "testing.txt has been deleted.", session[:success]
+
 
     get "/"
 
-    refute_includes last_response.body, "testing.txt"
+    refute_includes last_response.body, %q(href="/testing.txt")
   end
-  
+
   def test_signin_form
     get "/users/signin"
 
@@ -148,9 +150,10 @@ class AppTest < Minitest::Test
   def test_signin
     post "/users/signin", username: "admin", password: "secret"
     assert_equal 302, last_response.status
+    assert_equal "Welcome!", session[:success]
+    assert_equal "admin", session[:user]
 
     get last_response["Location"]
-    assert_includes last_response.body, "Welcome"
     assert_includes last_response.body, "Signed in as admin"
   end
 
@@ -158,6 +161,7 @@ class AppTest < Minitest::Test
     post "/users/signin", username: "guest", password: "shhhh"
     assert_equal 422, last_response.status
     assert_includes last_response.body, "Invalid credentials"
+    assert_equal nil, session[:user]
   end
 
   def test_signout
@@ -168,6 +172,7 @@ class AppTest < Minitest::Test
     post "/users/signout"
     get last_response["Location"]
 
+    assert_equal nil, session[:user]
     assert_includes last_response.body, "You have been signed out"
     assert_includes last_response.body, "Sign In"
   end
