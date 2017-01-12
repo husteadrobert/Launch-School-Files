@@ -33,11 +33,18 @@ def load_file_content(path)
   end
 end
 
+helpers do
+  def signed_in?
+    !session[:user].nil?
+  end
+end
+
 get "/" do
   pattern = File.join(data_path, "*")
   @file_list = Dir.glob(pattern).map do |path|
     File.basename(path)
   end
+  @username = session[:user]
   erb :index
 end
 
@@ -84,9 +91,33 @@ get "/:filename/edit" do
   erb :edit
 end
 
+post "/users/signin" do
+  username = params[:username]
+  password = params[:password]
+  if username == "admin" && password == "secret"
+    session[:user] = params[:username]
+    session[:success] = "Welcome!"
+    redirect "/"
+  else
+    session[:error] = "Invalid credentials"
+    status 422
+    erb :signin
+  end
+end
+
 post "/:filename" do
   file_path = File.join(data_path, params[:filename])
   File.write(file_path, params[:content])
   session[:success] = "#{params[:filename]} has been updated."
+  redirect "/"
+end
+
+get "/users/signin" do
+  erb :signin
+end
+
+post "/users/signout" do
+  session.delete(:user)
+  session[:success] = "You have been signed out."
   redirect "/"
 end
