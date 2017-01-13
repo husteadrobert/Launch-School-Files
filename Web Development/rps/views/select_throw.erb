@@ -4,8 +4,16 @@
   <% @move_list.each do |move| %>
   <li>
     <form class="inline" method="post" action="/human_move/<%= move %>">
-      <button type="submit"><%= move %></button>
+      <button type="submit"><img src="<%= move %>.jpg"><%= move %></button>
     </form> 
   </li>
   <% end %>
 </ul>
+
+<% unless @log.human_history.empty? %>
+  <% @log.human_history.each_with_index do |symbol, index| %>
+    <ul>
+      <li><%= symbol %> - <%= @log.computer_history[index] %></li>
+    </ul>
+  <% end %>
+<% end %>

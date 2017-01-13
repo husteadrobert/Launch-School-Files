@@ -2,7 +2,3 @@
 
 <a href="/opponents/select">Sign in as Guest</a>
 
-<% if session[:human_move] %>
-  <h2><%= result(session[:human_move], session[:computer_move]) %></h2>
-  <h2><%= session.delete(:human_move) %> vs <%= session.delete(:computer_move) %></h2>
-<% end %>

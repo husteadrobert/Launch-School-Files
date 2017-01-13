@@ -1,0 +1,15 @@
+<h2><%= display_result(session[:human_move], session[:computer_move]) %></h2>
+<h2><%= session.delete(:human_move) %> vs <%= session.delete(:computer_move) %></h2>
+
+<p>Human: <%= session[:human] %> / Computer: <%= session[:computer] %></p>
+
+
+
+<a href="/select_throw">Try Again</a>
+<a href="/">Back to Homepage</a>
+
+<% @log.human_history.each_with_index do |symbol, index| %>
+  <ul>
+    <li><%= symbol %> - <%= @log.computer_history[index] %></li>
+  </ul>
+<% end %>

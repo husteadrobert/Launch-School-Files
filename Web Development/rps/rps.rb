@@ -7,6 +7,25 @@ configure do #this is telling Sinatra
   set :sessions_secret, 'secret'
 end
 
+class Log
+  attr_reader :human_history, :computer_history
+
+  def initialize
+    @human_history = []
+    @computer_history = []
+  end
+
+  # def count(element)
+  #   @human_history.count(element)
+  # end
+
+  def update(human_move, computer_move)
+    @human_history << human_move.value
+    @computer_history << computer_move.value
+  end
+end
+
+
 class Move
   VALUES = ['rock', 'paper', 'scissors'].freeze
 
@@ -42,7 +61,7 @@ class Move
 end
 
 helpers do
-  def result(human_move, computer_move)
+  def display_result(human_move, computer_move)
     if human_move > computer_move
       "The human wins"
     elsif computer_move > human_move
@@ -53,13 +72,26 @@ helpers do
   end
 end
 
+def result(human_move, computer_move)
+  if human_move > computer_move
+    :human
+  elsif computer_move > human_move
+    :computer
+  else
+    :tie
+  end
+end
 
 get "/" do
+  session[:human] = 0
+  session[:computer] = 0
+  session[:tie] = 0
+  session[:log] = Log.new
   erb :homepage
 end
 
 get "/opponents/select" do
-  @ai_list = ["Random", "Johnny 5", "Deep Blue", "HAL"]
+  @ai_list = ["Johnny 5", "Deep Blue", "HAL"]
   erb :select_ai
 end
 
@@ -69,6 +101,7 @@ post "/:ai_name/select" do
 end
 
 get "/select_throw" do
+  @log = session[:log]
   @move_list = Move::VALUES
   erb :select_throw
 end
@@ -76,5 +109,14 @@ end
 post "/human_move/:move" do
   session[:human_move] = Move.new(params[:move])
   session[:computer_move] = Move.new(Move::VALUES.sample)
-  redirect "/"
+
+  redirect "/result"
+end
+
+get "/result" do
+  winner = result(session[:human_move], session[:computer_move])
+  session[:log].update(session[:human_move], session[:computer_move])
+  session[winner] += 1
+  @log = session[:log]
+  erb :result
 end
