@@ -3,6 +3,8 @@ require "sinatra/reloader"
 require "sinatra/content_for"
 require "tilt/erubis"
 require "redcarpet"
+require "yaml"
+require "bcrypt"
 
 configure do #this is telling Sinatra
   enable :sessions
@@ -16,6 +18,26 @@ def data_path
     File.expand_path("../data", __FILE__)
   end
 end
+
+def load_users
+  path = if ENV["RACK_ENV"] == "test"
+    File.expand_path("../test/users.yaml", __FILE__)
+  else
+    File.expand_path("../users.yaml", __FILE__)
+  end
+  YAML.load_file(path)
+end
+
+def valid_credentials?(username, password)
+  user_list = load_users
+  if user_list.key?(username)
+    b_password = BCrypt::Password.new(user_list[username]) #Decrypting/Dehashing password here
+    b_password == password
+  else
+    false
+  end
+end
+
 
 def render_markdown(text) #Renders Markdown text into HTML
   markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
@@ -103,8 +125,9 @@ end
 post "/users/signin" do
   username = params[:username]
   password = params[:password]
-  if username == "admin" && password == "secret"
-    session[:user] = params[:username]
+
+  if valid_credentials?(username, password)
+    session[:user] = username
     session[:success] = "Welcome!"
     redirect "/"
   else
