@@ -1,0 +1,11 @@
+<h1>Select your Symbol</h1>
+
+<ul>
+  <% @move_list.each do |move| %>
+  <li>
+    <form class="inline" method="post" action="/human_move/<%= move %>">
+      <button type="submit"><%= move %></button>
+    </form> 
+  </li>
+  <% end %>
+</ul>

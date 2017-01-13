@@ -1,0 +1,11 @@
+<h1>Select your Opponent</h1>
+
+<ul>
+  <% @ai_list.each do |name| %>
+  <li>
+    <form class="inline" method="post" action="/<%= name %>/select">
+      <button type="submit"><%= name %></button>
+    </form> 
+  </li>
+  <% end %>
+</ul>
