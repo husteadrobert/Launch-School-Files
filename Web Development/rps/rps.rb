@@ -72,9 +72,9 @@ helpers do
   end
 
   def display_history(human_move, computer_move)
-    if human_move > computer_move
+    if Move.new(human_move) > Move.new(computer_move)
       "<strong>#{human_move}</strong> v <del>#{computer_move}</del>"
-    elsif computer_move > human_move
+    elsif Move.new(computer_move) > Move.new(human_move)
       "<del>#{human_move}</del> v <strong>#{computer_move}</strong>"
     else
       "#{human_move} v #{computer_move}"
