@@ -10,6 +10,6 @@
 
 <% @log.human_history.each_with_index do |symbol, index| %>
   <ul>
-    <li><%= symbol %> - <%= @log.computer_history[index] %></li>
+    <li><%= display_history(symbol, @log.computer_history[index]) %></li>
   </ul>
 <% end %>

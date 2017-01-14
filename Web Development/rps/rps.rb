@@ -70,6 +70,17 @@ helpers do
       "It's a tie"
     end
   end
+
+  def display_history(human_move, computer_move)
+    if human_move > computer_move
+      "<strong>#{human_move}</strong> v <del>#{computer_move}</del>"
+    elsif computer_move > human_move
+      "<del>#{human_move}</del> v <strong>#{computer_move}</strong>"
+    else
+      "#{human_move} v #{computer_move}"
+    end
+  end
+
 end
 
 def result(human_move, computer_move)
