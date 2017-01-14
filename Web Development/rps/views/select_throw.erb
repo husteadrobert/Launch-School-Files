@@ -10,10 +10,11 @@
   <% end %>
 </ul>
 
+
 <% unless @log.human_history.empty? %>
-  <% @log.human_history.each_with_index do |symbol, index| %>
+  <% @log.each do |human_move, computer_move| %>
     <ul>
-      <li><%= display_history(symbol, @log.computer_history[index]) %></li>
+      <li><%= display_history(human_move, computer_move) %></li>
     </ul>
   <% end %>
 <% end %>

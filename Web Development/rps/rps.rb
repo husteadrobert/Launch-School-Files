@@ -1,6 +1,7 @@
 require "sinatra"
 require "sinatra/reloader"
 require "tilt/erubis"
+require "yaml"
 
 configure do #this is telling Sinatra
   enable :sessions
@@ -15,13 +16,15 @@ class Log
     @computer_history = []
   end
 
-  # def count(element)
-  #   @human_history.count(element)
-  # end
-
-  def update(human_move, computer_move)
+  def update(human_move, computer_move) #Only sending .value here, not a Move object
     @human_history << human_move.value
     @computer_history << computer_move.value
+  end
+
+  def each
+    @human_history.each_with_index do |symbol, index|
+      yield(symbol, @computer_history[index])
+    end
   end
 end
 
@@ -58,6 +61,7 @@ class Move
   def to_s
     @value
   end
+
 end
 
 helpers do
@@ -80,7 +84,24 @@ helpers do
       "#{human_move} v #{computer_move}"
     end
   end
+end
 
+def load_users
+  path = if ENV["RACK_ENV"] == "test"
+    File.expand_path("../test/users.yaml", __FILE__)
+  else
+    File.expand_path("../data/users.yaml", __FILE__)
+  end
+  YAML.load_file(path)
+end
+
+def valid_credentials?(username, password)
+  users = load_users
+  if users.key?(username) && users[username] == password
+    true
+  else
+    false
+  end
 end
 
 def result(human_move, computer_move)
@@ -93,12 +114,46 @@ def result(human_move, computer_move)
   end
 end
 
-get "/" do
+get "/" do #Set to 0 at post logout, set to 0 at log in
   session[:human] = 0
   session[:computer] = 0
   session[:tie] = 0
   session[:log] = Log.new
   erb :homepage
+end
+
+get "/signin" do
+  erb :signin
+end
+
+get "/newuser" do
+  erb :newuser
+end
+
+post "/users/newuser" do
+  username = params[:username]
+  password = params[:password]
+  users = load_users
+  users[username] = password
+
+  File.open("data/users.yaml", "r+") do |f|
+    f.write(users.to_yaml)
+  end
+  session[:user] = username
+  redirect "/opponents/select"
+end
+
+post "/users/signin" do
+  username = params[:username]
+  password = params[:password]
+
+  if valid_credentials?(username, password)
+    session[:user] = username
+    redirect "/opponents/select"
+  else
+    status 422
+    erb :signin
+  end
 end
 
 get "/opponents/select" do
