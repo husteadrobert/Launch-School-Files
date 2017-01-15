@@ -147,7 +147,7 @@ post "/users/signin" do
   username = params[:username]
   password = params[:password]
 
-  if valid_credentials?(username, password)
+  if valid_credentials?(username, password) #Set all variables to 0
     session[:user] = username
     redirect "/opponents/select"
   else
