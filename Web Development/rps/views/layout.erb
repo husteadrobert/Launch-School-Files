@@ -8,5 +8,8 @@
     <main>
       <%= yield %>
     </main>
+    <% if session[:message] %>
+      <p><%= session.delete(:message) %></p>
+    <% end %>
   </body>
 </html>

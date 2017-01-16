@@ -1,0 +1,7 @@
+<h1>Hall of Fame</h1>
+
+<ol>
+  <% @hall.each_key do |name| %>
+    <p><li><%= name %> - <%= @hall[name]["score"] %> (vs. <%= @hall[name]["opponent"] %>)</li></p>
+  <% end %>
+</ol>

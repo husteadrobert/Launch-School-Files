@@ -2,6 +2,7 @@ require "sinatra"
 require "sinatra/reloader"
 require "tilt/erubis"
 require "yaml"
+require "bcrypt"
 
 configure do #this is telling Sinatra
   enable :sessions
@@ -86,6 +87,7 @@ helpers do
   end
 end
 
+
 def load_users
   path = if ENV["RACK_ENV"] == "test"
     File.expand_path("../test/users.yaml", __FILE__)
@@ -95,9 +97,19 @@ def load_users
   YAML.load_file(path)
 end
 
+def load_fame
+  path = if ENV["RACK_ENV"] == "test"
+    File.expand_path("../test/hall_of_fame.yaml", __FILE__)
+  else
+    File.expand_path("../data/hall_of_fame.yaml", __FILE__)
+  end
+  YAML.load_file(path)
+end
+
+
 def valid_credentials?(username, password)
   users = load_users
-  if users.key?(username) && users[username] == password
+  if users.key?(username) && BCrypt::Password.new(users[username]) == password
     true
   else
     false
@@ -114,12 +126,23 @@ def result(human_move, computer_move)
   end
 end
 
-get "/" do #Set to 0 at post logout, set to 0 at log in
-  session[:human] = 0
-  session[:computer] = 0
-  session[:tie] = 0
+def valid_newuser?(username, password)
+  if username.strip.size < 1
+    "Username must be at least 1 character in length."
+  elsif password.size < 5
+    "Password must be at least 5 characters in length."
+  end
+end
+
+get "/" do
+  session[:user] = nil
   session[:log] = Log.new
   erb :homepage
+end
+
+get "/hall_of_fame" do
+  @hall = load_fame
+  erb :hall_of_fame
 end
 
 get "/signin" do
@@ -131,33 +154,50 @@ get "/newuser" do
 end
 
 post "/users/newuser" do
-  username = params[:username]
-  password = params[:password]
-  users = load_users
-  users[username] = password
 
-  File.open("data/users.yaml", "r+") do |f|
-    f.write(users.to_yaml)
+  username = params[:username].strip
+  password = params[:password]
+  error = valid_newuser?(username, password)
+  if error
+    session[:message] = error
+    erb :"/newuser"
+  else
+    encrypted_password = BCrypt::Password.create(password)
+    users = load_users
+    users[username] = encrypted_password
+
+    File.open("data/users.yaml", "r+") do |f|
+      f.write(users.to_yaml)
+    end
+    session[:user] = username
+    redirect "/opponents/select"
   end
-  session[:user] = username
-  redirect "/opponents/select"
 end
 
 post "/users/signin" do
   username = params[:username]
   password = params[:password]
 
-  if valid_credentials?(username, password) #Set all variables to 0
+  if valid_credentials?(username, password)
     session[:user] = username
     redirect "/opponents/select"
   else
+    session[:message] = "Please try again."
     status 422
     erb :signin
   end
 end
 
 get "/opponents/select" do
+  session[:human] = 0
+  session[:computer] = 0
+  session[:tie] = 0
+  session[:winning_streak] = 0
+  unless session[:user]
+    session[:user] = "Guest"
+  end
   @ai_list = ["Johnny 5", "Deep Blue", "HAL"]
+  session[:message] = "Signed in as #{session[:user]}."
   erb :select_ai
 end
 
@@ -169,6 +209,7 @@ end
 get "/select_throw" do
   @log = session[:log]
   @move_list = Move::VALUES
+  session[:message] = "Signed in as #{session[:user]}."
   erb :select_throw
 end
 
@@ -181,6 +222,11 @@ end
 
 get "/result" do
   winner = result(session[:human_move], session[:computer_move])
+  if winner == :human
+    session[:winning_streak] += 1
+  elsif winner == :computer
+    session[:winning_streak] = 0
+  end
   session[:log].update(session[:human_move], session[:computer_move])
   session[winner] += 1
   @log = session[:log]
