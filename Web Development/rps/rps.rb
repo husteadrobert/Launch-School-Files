@@ -8,7 +8,9 @@ configure do #this is telling Sinatra
   enable :sessions
   set :sessions_secret, 'secret'
 end
+#----------------------
 
+#-------CLASSES--------
 class Log
   attr_reader :human_history, :computer_history
 
@@ -64,7 +66,9 @@ class Move
   end
 
 end
+#----------------------
 
+#-------HELPERS--------
 helpers do
   def display_result(human_move, computer_move)
     if human_move > computer_move
@@ -85,9 +89,19 @@ helpers do
       "#{human_move} v #{computer_move}"
     end
   end
+
+  def display_hall(entry)
+    if entry["score"] == 1
+      word = "win"
+    else
+      word = "wins"
+    end
+    "<li>#{entry["name"]} - #{entry["score"]} #{word} (vs. #{entry["opponent"]})</li>"
+  end
 end
+#----------------------
 
-
+#-------METHODS--------
 def load_users
   path = if ENV["RACK_ENV"] == "test"
     File.expand_path("../test/users.yaml", __FILE__)
@@ -106,7 +120,6 @@ def load_fame
   YAML.load_file(path)
 end
 
-#IN PROGRESS
 def update_hall(username, winning_streak, computer_name)
   hall = load_fame
   new_entry = {"name" => username, "score" => winning_streak, "opponent" => computer_name}
@@ -125,7 +138,6 @@ def update_hall(username, winning_streak, computer_name)
   end
 end
 
-#IN PROGRESS
 def enter_hall?(winning_streak)
   hall = load_fame
   lowest_score = hall[2]["score"]
@@ -159,6 +171,19 @@ def valid_newuser?(username, password)
   end
 end
 
+def ai_move(log, ai_name) #Need LOGIC
+  case ai_name
+  when "Johnny 5"
+    "rock"
+  when "Deep Blue"
+    "paper"
+  when "HAL"
+    "scissors"
+  end
+end
+#----------------------
+
+#-------ROUTES---------
 get "/" do
   session[:user] = nil
   erb :homepage
@@ -240,7 +265,7 @@ end
 
 post "/human_move/:move" do
   session[:human_move] = Move.new(params[:move])
-  session[:computer_move] = Move.new(Move::VALUES.sample)
+  session[:computer_move] = Move.new(ai_move(session[:log], session[:ai]))
 
   redirect "/result"
 end
