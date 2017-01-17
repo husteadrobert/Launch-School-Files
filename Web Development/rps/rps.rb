@@ -66,6 +66,22 @@ class Move
   end
 
 end
+
+class Computer
+
+  def self.johnny_move(history)
+    "rock"
+  end
+
+  def self.hal_move(history)
+    "paper"
+  end
+
+  def self.blue_move(history)
+    "scissors"
+  end
+
+end
 #----------------------
 
 #-------HELPERS--------
@@ -174,11 +190,11 @@ end
 def ai_move(log, ai_name) #Need LOGIC
   case ai_name
   when "Johnny 5"
-    "rock"
+    Computer.johnny_move(log)
   when "Deep Blue"
-    "paper"
+    Computer.blue_move(log)
   when "HAL"
-    "scissors"
+    Computer.hal_move(log)
   end
 end
 #----------------------
