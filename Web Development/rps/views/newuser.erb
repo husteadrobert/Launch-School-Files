@@ -11,6 +11,9 @@
   <button type="submit">Sign In</button>
 </form>
 
+<p>(Please note that due to Heroku's ephemeral file system, new user credentials only last for about 24 hours.
+you'll need to create a new user each time Heroku refreshes it's file systems.)</p>
+
 <% content_for :footer_link do %>
   <a href="/">Return to the Homepage</a>
 <% end %>
