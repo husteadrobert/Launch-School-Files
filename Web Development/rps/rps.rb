@@ -24,6 +24,10 @@ class Log
     @computer_history << computer_move.value
   end
 
+  def count(element)
+    @human_history.count(element)
+  end 
+
   def each
     @human_history.each_with_index do |symbol, index|
       yield(symbol, @computer_history[index])
@@ -67,18 +71,92 @@ class Move
 
 end
 
-class Computer
 
+class Computer #Dirty, but working
   def self.johnny_move(history)
-    "rock"
+    #"rock"
+    hash = {}
+    Move::VALUES.each do |move|
+      hash[move] = history.count(move)
+    end
+    symbol = self.sample_of_best(hash)
+    
   end
 
   def self.hal_move(history)
-    "paper"
+    current_history = history.human_history
+    return move = Move::VALUES.sample if current_history.empty?
+    last_move = current_history.last
+    possible_winning_moves = []
+    possible_winning_moves << Move::LOSING_COMBINATION[last_move]
+    move = possible_winning_moves.sample
+    move
   end
 
   def self.blue_move(history)
-    "scissors"
+    if history.computer_history.length.zero?
+      move = Move::VALUES.sample
+    else
+      hash = self.winning_percentages(history)
+      rand = self.random(10)
+      move = self.sample_of_best(hash) if rand < 8
+      move = Move::VALUES.sample if rand >= 8
+    end
+    move
+  end
+
+  private
+
+  def self.winning_percentages(history)
+    winning_symbols = self.find_winning_symbols(history)
+    percentage_hash = self.find_win_percent(winning_symbols, history)
+    percentage_hash
+  end
+
+  def self.random(max_num)
+    (1..max_num).to_a.sample
+  end
+
+  def self.sample_of_best(hash)
+    maximum = hash.max_by { |_, v| v }
+    array = []
+    hash.each do |k, v|
+      if v == maximum.last
+        array << k
+      end
+    end
+    array.sample
+  end
+
+  def self.find_winning_symbols(history)
+    total_games = history.computer_history.length
+    winning_symbol = []
+    index = 0
+    while index < total_games
+      computer_past_move = Move.new(history.computer_history[index])
+      human_past_move = Move.new(history.human_history[index])
+      if computer_past_move > human_past_move
+        winning_symbol << history.computer_history[index]
+      end
+      index += 1
+    end
+    winning_symbol
+  end
+
+  def self.find_win_percent(winning_symbols, history)
+    total_games = history.computer_history.length
+    hash = Hash.new(0)
+    Move::VALUES.each do |symbol|
+      hash[symbol] = winning_symbols.count(symbol)
+    end
+    hash.each do |key, value|
+      hash[key] = if value.positive?
+                    value.to_f / total_games
+                  else
+                    0
+                  end
+    end
+    hash
   end
 
 end
@@ -149,6 +227,14 @@ def update_hall(username, winning_streak, computer_name)
                  end
   hall.insert(insert_index, new_entry)
   hall.delete_at(3)
+  File.open("data/hall_of_fame.yaml", "r+") do |f|
+    f.write(hall.to_yaml)
+  end
+end
+
+def reset_hall
+  path = File.expand_path("../data/default_hall_of_fame.yaml", __FILE__)
+  hall = YAML.load_file(path)
   File.open("data/hall_of_fame.yaml", "r+") do |f|
     f.write(hall.to_yaml)
   end
@@ -301,4 +387,14 @@ get "/result" do
   session[winner] += 1
   @log = session[:log]
   erb :result
+end
+
+post "/reset_hall" do
+  unless session[:user] == "admin"
+    session[:message] = "Log in as Admin to reset the Hall of Fame"
+    redirect "/hall_of_fame"
+  else
+    reset_hall
+    redirect "/hall_of_fame"
+  end
 end
