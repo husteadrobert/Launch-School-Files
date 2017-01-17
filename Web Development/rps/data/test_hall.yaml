@@ -1,0 +1,10 @@
+---
+- name: P1
+  score: 10
+  opponent: HAL
+- name: P2
+  score: 5
+  opponent: HAL
+- name: Guest
+  score: 2
+  opponent: Johnny 5

@@ -7,11 +7,14 @@
 
 
 
-<a href="/select_throw">Try Again</a>
-<a href="/">Back to Homepage</a>
+<p><a href="/select_throw">Try Again</a></p>
+<p><a href="/opponents/select">Change Opponent</a></p>
+<a href="/">Logout</a>
 
 
 <% unless @log.human_history.empty? %>
+  <h3>Current History</h3>
+  <p>----------------------------------</p>
   <% @log.each do |human_move, computer_move| %>
     <ul>
       <li><%= display_history(human_move, computer_move) %></li>

@@ -106,6 +106,31 @@ def load_fame
   YAML.load_file(path)
 end
 
+#IN PROGRESS
+def update_hall(username, winning_streak, computer_name)
+  hall = load_fame
+  new_entry = {"name" => username, "score" => winning_streak, "opponent" => computer_name}
+  insert_index = case 
+                 when winning_streak > hall[0]["score"]
+                  0
+                 when winning_streak > hall[1]["score"]
+                  1
+                 else
+                  2
+                 end
+  hall.insert(insert_index, new_entry)
+  hall.delete_at(3)
+  File.open("data/hall_of_fame.yaml", "r+") do |f|
+    f.write(hall.to_yaml)
+  end
+end
+
+#IN PROGRESS
+def enter_hall?(winning_streak)
+  hall = load_fame
+  lowest_score = hall[2]["score"]
+  winning_streak > lowest_score
+end
 
 def valid_credentials?(username, password)
   users = load_users
@@ -136,7 +161,6 @@ end
 
 get "/" do
   session[:user] = nil
-  session[:log] = Log.new
   erb :homepage
 end
 
@@ -192,6 +216,7 @@ get "/opponents/select" do
   session[:human] = 0
   session[:computer] = 0
   session[:tie] = 0
+  session[:log] = Log.new
   session[:winning_streak] = 0
   unless session[:user]
     session[:user] = "Guest"
@@ -225,6 +250,10 @@ get "/result" do
   if winner == :human
     session[:winning_streak] += 1
   elsif winner == :computer
+    if enter_hall?(session[:winning_streak])
+      session[:message] = "You've entered the Hall of Fame!"
+      update_hall(session[:user], session[:winning_streak], session[:ai])
+    end
     session[:winning_streak] = 0
   end
   session[:log].update(session[:human_move], session[:computer_move])
