@@ -1,7 +1,14 @@
 <h1>Welcome to Rock Paper Scissors!</h1>
 
-<p><a href="/opponents/select">Sign in as Guest</a></p>
-<p><a href="/newuser">Create new User</a></p>
-<p><a href="/signin">Log In</a></p>
-<a href="/hall_of_fame">Hall of Fame</a>
+<% unless session[:user] %>
+  <p><a href="/opponents/select">Sign in as Guest</a></p>
+  <p><a href="/newuser">Create new User</a></p>
+  <p><a href="/signin">Log In</a></p>
+<% else %>
+  <p>Signed in as <%= "#{session[:user]}" %></p>
+  <p><a href="/opponents/select">Select Opponent</a></p>
+  <a href="/users/logout">Log Out</a>
+<% end %>
+
+<p><a href="/hall_of_fame">Hall of Fame</a></p>
 

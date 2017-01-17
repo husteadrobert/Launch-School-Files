@@ -1,5 +1,6 @@
 require "sinatra"
 require "sinatra/reloader"
+require "sinatra/content_for"
 require "tilt/erubis"
 require "yaml"
 require "bcrypt"
@@ -166,11 +167,11 @@ end
 helpers do
   def display_result(human_move, computer_move)
     if human_move > computer_move
-      "The human wins"
+      "#{session[:user]} wins!"
     elsif computer_move > human_move
-      "The computer wins"
+      "#{session[:ai]} wins!"
     else
-      "It's a tie"
+      "It's a tie."
     end
   end
 
@@ -232,9 +233,17 @@ def update_hall(username, winning_streak, computer_name)
   end
 end
 
-def reset_hall
-  path = File.expand_path("../data/default_hall_of_fame.yaml", __FILE__)
-  hall = YAML.load_file(path)
+def reset_hall #Not Pretty
+  hall = load_fame
+  first_entry = {"name" => "Mark", "score" => 3, "opponent" => "Johnny 5"}
+  second_entry = {"name" => "John", "score" => 2, "opponent" => "Deep Blue"}
+  third_entry = {"name" => "Sally", "score" => 1, "opponent" => "HAL"}
+  hall.insert(0, first_entry)
+  hall.insert(1, second_entry)
+  hall.insert(2, third_entry)
+  
+  hall = hall.slice!(0, 3)
+
   File.open("data/hall_of_fame.yaml", "r+") do |f|
     f.write(hall.to_yaml)
   end
@@ -287,8 +296,12 @@ end
 
 #-------ROUTES---------
 get "/" do
-  session[:user] = nil
+  session[:user] = nil unless session[:user]
   erb :homepage
+end
+
+get "/users/logout" do
+  erb :logout
 end
 
 get "/hall_of_fame" do

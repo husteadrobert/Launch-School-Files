@@ -1,5 +1,6 @@
 <h2><%= display_result(session[:human_move], session[:computer_move]) %></h2>
-<h2><%= session.delete(:human_move) %> vs <%= session.delete(:computer_move) %></h2>
+<h2><img src="<%= session.delete(:human_move) %>.jpg"> vs <img src="<%= session.delete(:computer_move) %>.jpg"></h2>
+
 
 <p>Human: <%= session[:human] %> / Computer: <%= session[:computer] %></p>
 
@@ -7,9 +8,9 @@
 
 
 
-<p><a href="/select_throw">Try Again</a></p>
+<p><a href="/select_throw">Play Again</a></p>
 <p><a href="/opponents/select">Change Opponent</a></p>
-<a href="/">Logout</a>
+<a href="/">Return to the Homepage</a>
 
 
 <% unless @log.human_history.empty? %>
