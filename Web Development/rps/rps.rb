@@ -312,6 +312,11 @@ get "/newuser" do
   erb :newuser
 end
 
+get "/about" do
+  @content = File.read("data/about.txt")
+  erb :about
+end
+
 post "/users/newuser" do
 
   username = params[:username].strip
