@@ -270,8 +270,8 @@ def result(human_move, computer_move)
 end
 
 def valid_newuser?(username, password)
-  if username.strip.size < 1
-    "Username must be at least 1 character in length."
+  if username.strip.size < 1 || username.strip.size > 20
+    "Username must be between 1 and 20 characters in length."
   elsif password.size < 5
     "Password must be at least 5 characters in length."
   end
