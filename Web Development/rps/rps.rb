@@ -291,6 +291,7 @@ end
 
 #-------ROUTES---------
 get "/" do
+  @content = File.read("data/intro.txt")
   session[:user] = nil unless session[:user]
   erb :homepage
 end

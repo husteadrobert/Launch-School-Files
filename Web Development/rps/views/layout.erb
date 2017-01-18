@@ -9,8 +9,8 @@
       <%== yield %>
     </main>
     <% if session[:message] %>
-      <p><%= session.delete(:message) %></p>
+      <p><em><%= session.delete(:message) %></em></p>
     <% end %>
-    <p><%== yield_content :footer_link %>
+    <p><%== yield_content :footer_link %></p>
   </body>
 </html>
