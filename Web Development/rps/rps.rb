@@ -234,16 +234,27 @@ def update_hall(username, winning_streak, computer_name)
   end
 end
 
-def reset_hall #Not Pretty
+def reset_hall #NOT WORKING
   hall = load_fame
-  first_entry = {"name" => "Mark", "score" => 3, "opponent" => "Johnny 5"}
-  second_entry = {"name" => "John", "score" => 2, "opponent" => "Deep Blue"}
-  third_entry = {"name" => "Sally", "score" => 1, "opponent" => "HAL"}
-  hall.insert(0, first_entry)
-  hall.insert(1, second_entry)
-  hall.insert(2, third_entry)
+  # first_entry = {"name" => "Mark", "score" => 3, "opponent" => "Johnny 5"}
+  # second_entry = {"name" => "John", "score" => 2, "opponent" => "Deep Blue"}
+  # third_entry = {"name" => "Sally", "score" => 1, "opponent" => "HAL"}
+  # hall.insert(0, first_entry)
+  # hall.insert(1, second_entry)
+  # hall.insert(2, third_entry)
   
-  hall = hall.slice!(0, 3)
+  # #hall = hall.slice!(0, 3)
+  # hall.delete_at(5)
+  # hall.delete_at(4)
+  # hall.delete_at(3)
+
+
+  # hall[2]["name"] = "Sally"
+  # hall[2]["score"] = 1
+  # hall[2]["opponent"] = nil
+  #hall[2]["opponent"] = "HAL"
+
+  hall[2].delete("opponent")
 
   File.open("data/hall_of_fame.yaml", "r+") do |f|
     f.write(hall.to_yaml)
@@ -392,7 +403,8 @@ get "/result" do
     session[:winning_streak] += 1
   elsif winner == :computer
     if enter_hall?(session[:winning_streak])
-      session[:message] = "You've entered the Hall of Fame!"
+      total_streak = session[:winning_streak]
+      session[:hall] = "You've been entered into the Hall of Fame with a total winning streak of #{total_streak}!"
       update_hall(session[:user], session[:winning_streak], session[:ai])
     end
     session[:winning_streak] = 0
