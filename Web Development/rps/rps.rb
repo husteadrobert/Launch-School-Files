@@ -229,34 +229,17 @@ def update_hall(username, winning_streak, computer_name)
                  end
   hall.insert(insert_index, new_entry)
   hall.delete_at(3)
-  File.open("data/hall_of_fame.yaml", "r+") do |f|
+  File.open("data/hall_of_fame.yaml", "w") do |f|
     f.write(hall.to_yaml)
   end
 end
 
-def reset_hall #NOT WORKING
-  hall = load_fame
-  # first_entry = {"name" => "Mark", "score" => 3, "opponent" => "Johnny 5"}
-  # second_entry = {"name" => "John", "score" => 2, "opponent" => "Deep Blue"}
-  # third_entry = {"name" => "Sally", "score" => 1, "opponent" => "HAL"}
-  # hall.insert(0, first_entry)
-  # hall.insert(1, second_entry)
-  # hall.insert(2, third_entry)
-  
-  # #hall = hall.slice!(0, 3)
-  # hall.delete_at(5)
-  # hall.delete_at(4)
-  # hall.delete_at(3)
+def reset_hall 
+  path = File.expand_path("../data/default_hall_of_fame.yaml", __FILE__)
+  hall = YAML.load_file(path)
 
 
-  # hall[2]["name"] = "Sally"
-  # hall[2]["score"] = 1
-  # hall[2]["opponent"] = nil
-  #hall[2]["opponent"] = "HAL"
-
-  hall[2].delete("opponent")
-
-  File.open("data/hall_of_fame.yaml", "r+") do |f|
+  File.open("data/hall_of_fame.yaml", "w") do |f|
     f.write(hall.to_yaml)
   end
 end
