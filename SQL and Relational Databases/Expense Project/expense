@@ -1,5 +1,140 @@
 #! /usr/bin/env ruby
 
 require "pg"
+require "io/console"
 
-puts "Hello World"
+class ExpenseData
+
+  def initialize
+    @db = PG.connect(dbname: "expenses")
+    setup_schema
+  end
+
+  def list_expenses
+    result = @db.exec("SELECT * FROM expenses ORDER BY created_on ASC;")
+    display_expenses(result)
+  end
+
+
+  def add_expense(amount, memo)
+    date = Date.today
+    sql = "INSERT INTO expenses(amount, memo, created_on) VALUES($1, $2, $3);"
+    @db.exec_params(sql,[amount, memo, date])
+  end
+
+  def search_expenses(query)
+    sql = "SELECT * FROM expenses WHERE memo ILIKE $1"
+    result = @db.exec_params(sql, ["%#{query}%"])
+    display_expenses(result)
+  end
+
+  def delete_expense(index)
+    sql = "SELECT * FROM expenses WHERE id=$1"
+    result = @db.exec_params(sql, [index])
+
+    if result.ntuples == 1
+      sql = "DELETE FROM expenses WHERE id=$1"
+      @db.exec_params(sql, [index])
+
+      puts "The following expense has been deleted:"
+      display_expenses(result)
+    else
+      puts "There is no expense with the id #{index}."
+    end
+  end
+
+  def clear_expenses
+    @db.exec("DELETE FROM expenses")
+    puts "All expenses have been deleted."
+  end
+
+  private
+
+  def display_expenses(expenses)
+    if expenses.ntuples > 0
+      puts "There are #{expenses.ntuples} expenses."
+      expenses.each do |tuple|
+        columns = [ tuple["id"].rjust(3),
+                    tuple["created_on"].rjust(10),
+                    tuple["amount"].rjust(12),
+                    tuple["memo"]
+                  ]
+        puts columns.join (" | ")
+      end
+      puts '-' * 50
+      total = expenses.field_values("amount").map(&:to_f).inject(:+)
+      puts "Total = #{total.to_s.rjust(23)}"
+    else
+      puts "There are no expenses."
+    end
+  end
+
+  def setup_schema
+    sql = "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'expenses';"
+    result = @db.exec(sql)
+
+    if result[0]["count"] == "0"
+      @db.exec <<~SQL
+        CREATE TABLE expenses (
+          id serial PRIMARY KEY,
+          amount numeric(6,2) NOT NULL CHECK (amount>=0.01),
+          memo text NOT NULL,
+          created_on date NOT NULL
+          );
+        SQL
+    end
+  end
+
+end
+
+class CLI
+
+  def initialize
+    @database = ExpenseData.new
+  end
+
+  def display_help #this iuses a heredoc
+    puts <<~HELP
+      An expense recording system
+
+      Commands:
+
+      add AMOUNT MEMO [DATE] - record a new expense
+      clear - delete all expenses
+      list - list all expenses
+      delete NUMBER - remove expense with id NUMBER
+      search QUERY - list expenses with a matching memo field
+    HELP
+  end
+
+  def run(arguments)
+    command = arguments.first
+    case command
+    when 'list'
+      @database.list_expenses
+    when 'add'
+      amount = arguments[1]
+      memo = arguments[2]
+      abort "You must provide an amount and memo." unless amount && memo
+      @database.add_expense(amount, memo)
+    when 'search'
+      query = arguments[1]
+      abort "You must provide a search query." unless query
+      @database.search_expenses(query)
+    when 'delete'
+      index = arguments[1]
+      abort "You must provide an index." unless index
+      @database.delete_expense(index)
+    when 'clear'
+      puts "This will remove all expenses.  Are you sure? (y/n)"
+      answer = $stdin.getch #Default gets treat it as File
+      @database.clear_expenses if answer == 'y'
+    else
+      display_help
+    end
+  end
+
+end
+
+
+CLI.new.run(ARGV)
