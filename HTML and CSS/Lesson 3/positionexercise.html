@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      #positioned {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        /* Add a z-index greater than the elements you want to appear on top of */
+        z-index: 2;
+        width: 400px;
+        padding: 30px 15px;
+        margin-left: -200px;
+        background: #ffffff;
+        box-sizing: border-box;
+      }
+
+      #positioned span {
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        width: 20px;
+        height: 20px;
+        background: #fcfc99;
+      }
+      .middleground{
+        position:fixed;
+        background: rgba(0, 0, 0, .6);
+        top: 0;
+        left: 0;
+        width:100vw;
+        height:100vh;
+        z-index: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rutrum eu urna sollicitudin aliquet. Nulla commodo condimentum nibh accumsan volutpat. Donec non euismod nisl, non scelerisque ante. Duis accumsan justo vitae congue placerat. Mauris ante lacus, suscipit nec tortor nec, vestibulum tincidunt felis. Mauris a volutpat urna, aliquam porttitor enim. Ut faucibus, ante nec posuere hendrerit, risus tortor sollicitudin diam, at pharetra leo nisi vel nulla. Maecenas mollis sodales elit ut tempus. Nam vitae augue ullamcorper, tempor sapien non, cursus dolor. Etiam vel ligula at mi condimentum posuere. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In congue pharetra mauris ut interdum. Nam porta elit arcu, ac vestibulum quam vestibulum at. Curabitur eu sodales lectus.</p>
+
+        <p>Duis condimentum eros in scelerisque facilisis. Morbi dapibus cursus lorem, a semper leo maximus a. Donec euismod tortor efficitur purus tempus, vel mattis risus ornare. Vestibulum rutrum lacus non arcu aliquam ultrices. Duis sodales eleifend mi, mollis porttitor nulla bibendum id. Morbi dignissim dui eget felis vehicula congue nec sit amet leo. Suspendisse metus lectus, cursus sed auctor at, commodo id dui. In dapibus dolor et vestibulum finibus. Donec ac varius risus, eu commodo neque. Cras at mi ut lacus euismod luctus. Morbi efficitur porta lectus eleifend pulvinar. Morbi diam sapien, feugiat eu pharetra consequat, suscipit ut massa. Fusce sed laoreet elit, non maximus arcu. Nunc dignissim risus quis neque viverra condimentum. Duis ultrices felis tincidunt, aliquet dui at, elementum metus. Ut accumsan orci suscipit purus iaculis, at consequat risus luctus.</p>
+
+        <p>Nunc in lacus ac mauris aliquet pretium. Pellentesque eget volutpat sem, id feugiat ex. Phasellus facilisis lobortis leo, in malesuada nisi rhoncus vel. Donec luctus velit eget sapien blandit, eget rutrum tortor consectetur. Curabitur lorem eros, scelerisque quis lectus ac, viverra pulvinar eros. In malesuada urna enim, a aliquam ligula facilisis quis. Nunc nisi erat, congue eu malesuada sagittis, ullamcorper a tortor. Vestibulum dui eros, porttitor ut mollis nec, ornare id ligula.</p>
+      </section>
+      <div id="positioned">
+        <span></span>
+        I'm positioned!
+      </div>
+      <div class="middleground">
+      </div>
+  </body>
+</html>
