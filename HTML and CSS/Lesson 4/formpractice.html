@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+<head><title>Title</title></head>
+<body>
+
+<form action="#" method="get">
+  <fieldset>
+    <dl>
+      <dt><label for="category">Categories</label></dt>
+      <dd>
+        <select name="category" id="category">
+          <option value="core">Core</option>
+          <option value="plugin-library">Plugins and Libraries</option>
+          <option value="convention">Conventions</option>
+          <option value="review">Reviews</option>
+          <option value="opinion">Opinion</option>
+          <option value="people">People</option>
+        </select>
+      </dd>
+      <dt><label for="tags">Tags</label></dt>
+      <dd>
+        <select name="tags" id="tags" multiple>
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+          <option value="javascript">Javascript</option>
+          <option value="ruby">Ruby</option>
+          <option value="rails">Rails</option>
+          <option value="python">Python</option>
+          <option value="django">Django</option>
+        </select>
+      </dd>
+    </dl>
+    <input type="submit" value="Filter" />
+    <input type="reset" />
+  </fieldset>
+</form>
+</body>
+</html>
+
+<br></br>
+<br></br>
+
+<form action="" method="get">
+  <fieldset>
+    <h2>Categories</h2>
+    <ul>
+      <li>
+        <label>
+        <input type="radio" name="category" value="core" />
+        Core
+        </label>
+      <li>
+        <label>
+        <input type="radio" name="category" value="plugin-library" />
+        Plugins and Libraries
+        </label>
+      </li>      
+      <li>
+        <label>
+        <input type="radio" name="category" value="conventions" />
+        Conventions
+        </label>
+      </li>
+      <li>
+        <label>
+        <input type="radio" name="category" value="reviews" />
+        Reviews
+        </label>
+      </li>
+      <li>
+        <label>
+        <input type="radio" name="category" value="opinion" />
+        Opinion
+        </label>
+      </li>
+      <li>
+        <label>
+        <input type="radio" name="category" value="people" />
+        People
+        </label>
+      </li>
+    </ul>
+
+    <h2>Tags</h2>
+    <ul>
+      <li>
+        <label>
+        <input type="checkbox" name="tag" />
+        HTML
+        </label>
+      </li>
+      <li>
+        <label>
+        <input type="checkbox" name="tag"  />
+        CSS
+        </label>
+      </li>
+      <li>
+        <label>
+        <input type="checkbox" name="tag"  />
+        Javascript
+        </label>
+      </li>
+      <li>
+        <label>
+        <input type="checkbox" name="tag"/>
+        Ruby
+        </label>
+      </li>
+      <li>
+        <label>
+        <input type="checkbox" name="tag"  />
+        Rails
+        </label>
+      </li>
+      <li>
+        <label>
+        <input type="checkbox" name="tag"  />
+        Python
+        </label>
+      </li>
+      <li>
+        <label>
+        <input type="checkbox" name="tag"  />
+        Django
+        </label>
+      </li>
+    </ul>
+    <input type="submit" value="Filter" />
+  </fieldset>
+</form>
+
+<br></br>
+<br></br>
+
+<form action="" method="post">
+  <fieldset>
+    <dl>
+      <dt><label for="firstname">First Name</label></dt>
+      <dd>
+        <input type="text" name="firstname" id="firstname"/>
+      </dd>
+      <dt><label for="lastname">Last Name</label></dt>
+      <dd>
+        <input type="text" name="lastname" id="lastname"/>
+      </dd>
+      <dt><label for="email">Email</label></dt>
+      <dd>
+        <input type="email" name="email" id="email" autocomplete="false" autocorrect="off" autocapitalize="none"/>
+      </dd>
+      <dt><label for="phone">Phone Number</label></dt>
+      <dd>
+        <input type="tel" name="phone" id="phone" />
+      </dd>
+      <dt><label for="phone-type">Phone Type</label></dt>
+      <dd>
+        <select name="phone-type" id="phone-type">
+          <option value="home" selected>Home</option>
+          <option value="business">Business</option>
+          <option value="mobile">Mobile</option>
+        </select>
+      </dd>
+    </dl>
+    <input type="submit" value="Send" />
+  </fieldset>
+</form>
+
