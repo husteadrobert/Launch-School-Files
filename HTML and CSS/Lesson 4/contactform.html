@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>Contact Form</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <form action="#" method="post">
+      <fieldset>
+        <dl>
+          <dt>
+            <label for="first_name">First Name</label>
+          </dt>
+          <dd>
+            <input type="text" name="first_name" id="first_name" />
+          </dd>
+          <dt>
+            <label for="last_name">Last Name</label>
+          </dt>
+          <dd>
+            <input type="text" name="last_name" id="last_name" />
+          </dd>
+          <dt>
+            <label for="email_address">Email Address</label>
+          </dt>
+          <dd>
+            <input type="email" name="email_address" id="email_address" />
+          </dd>
+          <dt>
+            <label for="city">City</label>
+          </dt>
+          <dd>
+            <input type="text" name="city" id="city" />
+          </dd>
+          <dt>
+            <label for="state">State</label>
+          </dt>
+          <dd>
+            <select name="state" id="state">
+              <option>AK</option>
+              <option>KS</option>
+            </select>
+          </dd>
+          <dt>
+            <label for="zipcode">Zipcode</label>
+          </dt>
+          <dd>
+            <input type="number" name="zipcode" id="zipcode" />
+          </dd>
+        </dl>
+        <p>Which of these colors do you most prefer?</p>
+        <ul>
+          <li>
+            <label>
+              <input type="radio" value="red" name="color" />Red
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="radio" value="blue" name="color" />Blue
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="radio" value="black" name="color" />Black
+            </label>
+          </li>
+        </ul>
+        <p>What web technologies do you want to hear more about?</p>
+        <ul>
+          <li>
+            <label><input type="checkbox" value="HTML" name="html" />HTML</label>
+          </li>
+          <li>
+            <label><input type="checkbox" value="Ruby" name="ruby" />Ruby</label>
+          </li>
+          <li>
+            <label><input type="checkbox" value="JavaScript" name="javascript" />JavaScript</label>
+          </li>
+        </ul>
+        <dl>
+          <dt>
+            <label for="comments">Comments</label>
+          </dt>
+          <dd>
+            <textarea rows="6" cols="80" id="comments" name="comments"></textarea>
+          </dd>
+        </dl>
+
+        <input type="hidden" value="2017-01-01" name="timestamp" />
+        <input type="submit" value="Send" />
+        <input type="reset" value="Reset" />
+      </fieldset>
+    </form>
+  </body>
+</html>
