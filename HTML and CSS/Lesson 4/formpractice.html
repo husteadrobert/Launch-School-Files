@@ -156,8 +156,12 @@
       <dt><label for="phone-type">Phone Type</label></dt>
       <dd>
         <select name="phone-type" id="phone-type">
-          <option value="home" selected>Home</option>
-          <option value="business">Business</option>
+          <optgroup label="Home Options">
+            <option value="home" selected>Home</option>
+          </optgroup>
+          <optgroup label="Work Options">
+            <option value="business">Business</option>
+          </optgroup>
           <option value="mobile">Mobile</option>
         </select>
       </dd>
