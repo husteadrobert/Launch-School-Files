@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+  <style>
+    .battery {
+      width: 64px;
+      height: 124px;
+      background: transparent url("battery_indicator.png") 0 0 no-repeat;
+    }
+    .moderate{
+      background-position: 0 33.3%;
+    }
+    .low{
+      background-position: 0 66.6%;
+    }
+    .empty {
+      background-position: 0 100%;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Battery Life Indicator</h1>
+
+<h2>Full</h2>
+<div class="battery full"></div>
+
+<h2>Moderate</h2>
+<div class="battery moderate"></div>
+
+<h2>Low</h2>
+<div class="battery low"></div>
+
+<h2>Empty</h2>
+<div class="battery empty"></div>
+
+</body>
+</html>
