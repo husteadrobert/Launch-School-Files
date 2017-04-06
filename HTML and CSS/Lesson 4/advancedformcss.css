@@ -1,0 +1,88 @@
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  height: 40px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+form {
+  width: 600px;
+  margin: 0 auto;
+}
+
+fieldset {
+  padding: 1.5rem 2rem;
+  border: 1px solid black;
+  border-left: 2px solid blue;
+  margin-bottom: 5px;
+  background: grey;
+}
+
+h1 {
+  width: 600px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+h2,
+dd,
+dt {
+  margin-top: 0;
+}
+
+dd {
+  margin: 0 0 25px 0;
+}
+
+input[name="first_name"],
+input[name="last_name"] {
+  width: 49%;
+  height: 40px;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+input[name="last_name"]{
+  margin-left: 2%;
+}
+
+input[type="email"],
+input[name="profile_name"] {
+  width: 100%;
+  height: 40px;
+  box-sizing: border-box;
+}
+
+label {
+  display: block;
+  padding-bottom: 10px;
+}
+
+dl.partial {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 33.3%;
+  padding-right: 7px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+label.checkbox {
+  position: relative;
+  padding: 0.20rem 0 2rem 1.75rem;
+
+}
+
+label.checkbox input {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
