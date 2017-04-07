@@ -42,6 +42,11 @@
         padding-bottom: 15px;
       }
 
+      header li a {
+        text-decoration: none;
+        color: white;
+      }
+
       main {
         width: 100%;
         float: left;
@@ -61,6 +66,64 @@
         box-sizing: border-box;
       }
     </style>
+    <style>
+      header li a:before {
+        display: inline-block;
+        width: 27px;
+        height: 27px;
+        margin: 0 5px 0 0;
+        vertical-align: middle;
+        content: "";
+        background: transparent url("icons_nav.png") 0 0 no-repeat;
+      }
+      header li a.photos:before {
+        background-position: 0 -26px;
+        height: 20px;
+      }
+
+      header li a.contact:before {
+        background-position: 0 -46px;
+        height: 16px;
+      }
+
+      header li a:hover:before {
+        background-position: 100% 0;
+      }
+
+      header li a.photos:hover:before {
+        background-position: 100% -26px;
+        height: 20px;
+      }
+
+      header li a.contact:hover:before {
+        background-position: 100% -46px;
+        height: 16px;
+      }
+
+      footer li a:before {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        margin: 0 5px 0 0;
+        vertical-align: middle;
+        content: "";
+        background: transparent url("icons_social.png") 0 0 no-repeat;
+        background-size: 24px;
+      }
+
+      footer a:hover:before {
+        background-color: #00bf8f;
+      }
+
+      footer a.facebook:before {
+        background-position: 0 -24px;
+      }
+
+      footer a.instagram:before {
+        background-position: 0 -48px;
+      }
+      
+    </style>
   </head>
 
   <body>
@@ -69,12 +132,13 @@
       <h1>My Blog</h1>
       <nav>
         <ul>
-          <li>Home</li>
-          <li>My Photos</li>
-          <li>Contact Me</li>
+          <li><a href="#" class="home">Home</a></li>
+          <li><a href="#" class="photos">My Photos</a></li>
+          <li><a href="#" class="contact">Contact Me</a></li>
         </ul>
       </nav>
     </header>
+    
     <main>
     <h2>Welcome!</h2>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tincidunt, turpis tristique aliquet sollicitudin, ipsum orci tempus sem, nec semper ipsum odio eget lacus. In hac habitasse platea dictumst. Vivamus hendrerit leo a nunc convallis gravida. Nunc lobortis tincidunt massa, id pulvinar ante blandit a. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc in vulputate nibh, vel aliquet arcu. Cras sed ipsum mauris. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed turpis urna, lacinia ut tincidunt at, venenatis a ex. Etiam velit felis, eleifend id lobortis vitae, finibus id sapien. Nullam suscipit consectetur metus, vitae tristique leo lacinia ac. Curabitur varius urna malesuada, condimentum erat non, cursus dolor. Pellentesque nibh libero, gravida id ante ut, feugiat imperdiet est.</p>
@@ -84,11 +148,12 @@
 
     <footer>
       <ul>
-        <li>Twitter</li>
-        <li>Facebook</li>
-        <li>Instagram</li>
+        <li><a href="#" class="twitter">Twitter</li>
+        <li><a href="#" class="facebook">Facebook</li>
+        <li><a href="#" class="instagram">Instagram</li>
       </ul>
     </footer>
+
     </div>
   </body>
 </html>
