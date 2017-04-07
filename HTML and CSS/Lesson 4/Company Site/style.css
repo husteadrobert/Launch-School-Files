@@ -10,17 +10,17 @@ body {
 
 }
 
-h1 {
-  padding: 0 0 75px 0;
+header h1 {
+  margin: 0 0 90px 0;
 }
 
 nav {
-  padding: 20px 0 45px 0;
+  padding: 10px 0 45px 0;
   text-transform: uppercase;
   font: 24px;
 }
 
-ul {
+nav ul {
   list-style: none;
 }
 
@@ -37,13 +37,76 @@ nav a {
 
 nav a.active {
   color: blue;
+  font-weight: bold;
 }
 
 main {
   background: white;
+  padding: 100px 0 0 0;
 }
 
 .column {
   width: 1000px;
   margin: 0 auto;
+}
+
+article h2 {
+  padding: 0 0 40px 0;
+  font-size: 36px;
+  font-weight: 600;
+}
+
+article h2:before, article h2:after {
+  content: "";
+  display: inline-block;
+  margin: 0 10px;
+  height: 10px;
+  width: 10px;
+  background-color: black;
+  vertical-align: middle;
+  border-radius: 5px;
+}
+
+
+article h3 {
+  padding: 0 0 20px 0;
+  font-size: 24px;
+  color: blue;
+}
+
+main article {
+  padding: 0 110px 100px 110px;
+}
+
+footer {
+  padding: 30px 0 30px 0;
+  background: grey;
+}
+
+footer p {
+  padding-bottom: 40px;
+}
+
+footer li {
+  display: inline-block;
+  padding: 0 62px;
+}
+
+footer li a {
+  display: block;
+  height: 46px;
+  width: 46px;
+  background: transparent url("images/icons_social-media.png") 0 0 no-repeat;
+}
+
+footer li a.facebook {
+  background-position: 0 -46px;
+}
+
+footer li a.email {
+  background-position: 0 -92px;
+}
+
+footer li a.instagram {
+  background-position: 0 100%;
 }
