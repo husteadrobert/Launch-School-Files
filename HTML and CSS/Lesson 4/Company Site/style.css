@@ -55,18 +55,27 @@ article h2 {
   font-size: 36px;
   font-weight: 600;
 }
-
+/*
 article h2:before, article h2:after {
   content: "";
   display: inline-block;
-  margin: 0 10px;
+  margin: 0 24px;
   height: 10px;
   width: 10px;
   background-color: black;
   vertical-align: middle;
   border-radius: 5px;
 }
+*/
 
+article h2:before,
+article h2:after {
+  content: "\2022";
+  display: inline-block;
+  padding: 0 24px;
+  font-size: 24px;
+  vertical-align: 5px;
+}
 
 article h3 {
   padding: 0 0 20px 0;
@@ -79,12 +88,12 @@ main article {
 }
 
 footer {
-  padding: 30px 0 30px 0;
+  padding: 80px 0;
   background: grey;
 }
 
 footer p {
-  padding-bottom: 40px;
+  padding-bottom: 50px;
 }
 
 footer li {
@@ -96,6 +105,8 @@ footer li a {
   display: block;
   height: 46px;
   width: 46px;
+  text-indent: -9999px;
+  overflow: hidden;
   background: transparent url("images/icons_social-media.png") 0 0 no-repeat;
 }
 
