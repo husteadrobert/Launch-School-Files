@@ -83,6 +83,42 @@ article h3 {
   color: blue;
 }
 
+#projects article img {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+#projects article {
+  padding: 0 0 50px 0;
+}
+
+#projects p {
+  padding: 0 110px;
+}
+
+#team li {
+  display: inline-block;
+  padding: 0 20px;
+}
+
+#team img {
+  display: block;
+  padding-bottom: 30px;
+}
+
+#team li a {
+  text-decoration: none;
+}
+
+#team article {
+  padding: 0 0 225px 0;
+}
+
+#team p {
+  padding: 0 110px 100px 110px;
+}
+
 main article {
   padding: 0 110px 100px 110px;
 }
