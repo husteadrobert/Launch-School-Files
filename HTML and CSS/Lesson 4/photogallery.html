@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>Photo Gallery</title>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        color: #f0f0f0;
+        font: normal 16px Helvetica, Arial, sans-serif;
+        margin: 0 0;
+        background: #141414;
+      }
+      main {
+        min-width: 600px;
+        max-width: 1000px;
+        background: #333333;
+        margin: 0 auto;
+        padding: 25px 20px 20px 20px;
+      }
+      figure {
+        margin: 0;
+        padding-bottom: 10px;
+      }
+      figure img {
+        border: 15px solid white;
+      }
+      figcaption {
+        padding-top: 10px;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 -15px;
+        font-size: 0;
+      }
+      li {
+        display: inline-block;
+        box-sizing: border-box;
+        width: 25%;
+        padding: 0 15px;
+      }
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 5px solid white;
+        box-sizing: border-box;
+      }
+      h1 {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>My Photo Gallery</h1>
+      <figure>
+        <img src="1200x900.png" alt="Example Photo">
+        <figcaption>Example Photo</figcaption>
+      </figure>
+      <ul class="thumbnails">
+        <li><img src="1200x900.png" alt="" title="Photo 1"></li>
+        <li><img src="1200x900.png" alt="" title="Photo 2"></li>
+        <li><img src="1200x900.png" alt="" title="Photo 3"></li>
+        <li><img src="1200x900.png" alt="" title="Photo 4"></li>
+      </ul>
+    </main>
+  </body>
+</html>
