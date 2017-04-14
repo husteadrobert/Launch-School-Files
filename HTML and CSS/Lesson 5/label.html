@@ -15,8 +15,124 @@
       }
 
       dt, dd {
-        display: inline;
+        display: inline-block;
+        margin: 0;
       }
+
+      /*Header Element Styles*/
+      header {
+
+        border-bottom: 15px solid black;
+        margin-bottom: 10px;
+      }
+
+      header dl {
+        display: inline-block;
+        margin: 0;
+        padding: 15px 0 5px 0;
+        width: 50%;
+      }
+
+      header h2 {
+        border-bottom: 1px solid black;
+        border-top: 30px solid black;
+        margin-bottom: -10px;
+        padding-bottom: 10px;
+        margin-top: 0;
+      }
+
+      header h1 {
+        margin: 0;
+      }
+
+      header p {
+        margin: 0;
+      }
+
+      header dl + dl {
+        text-align: right;
+      }
+
+      /*Table Element Styles*/
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      tr {
+
+      }
+      tbody {
+        border-spacing: 0;
+      }
+      tbody td {
+        padding: 0;
+        border-top: 1px solid black;
+      }
+
+      td[colspan="3"] {
+        text-align: right;
+      }
+
+      th {
+        text-align: left;
+        border-top: 1px solid black;
+      }
+      dl {
+        margin: 0;
+      }
+
+      tr td:last-of-type {
+        text-align: right;
+      }
+
+      tr.indent td {
+        padding-left: 30px;
+      }
+
+      td.indent {
+        width: 30px;
+        border-top: none;
+      }
+
+      tbody + tbody tr:first-of-type td {
+        border-top: 20px solid black;
+      }
+
+      table tfoot {
+        border-top: 1px solid black;
+      }
+
+      table tfoot td:last-of-type {
+        text-align: justify;
+        padding-bottom: 20px;
+      }
+
+      /*Second Table Elements*/
+      table + table th {
+        border-top: none;
+        font-weight: normal;
+      }
+
+      table + table tbody tr:first-of-type td{
+        border-top: 1px solid black;
+      }
+
+      table + table tbody td {
+        border-top: none;
+      }
+
+      table + table tbody tr.indent td:first-of-type {
+        padding-left: 40px;
+      }
+
+      table + table tbody tr.indent td {
+        padding-left: 0;
+      }
+
+      table + table tr td:last-of-type {
+        text-align: left;
+      }
+
     </style>
   </head>
 
@@ -30,8 +146,8 @@
         <dl>
           <dt>Calories</dt>
           <dd>230</dd>
-        </dl>
-        <dl>
+        </dl><!--
+        --><dl>
           <dt>Calories from Fat</dt>
           <dd>40</dd>
         </dl>
@@ -54,8 +170,9 @@
             <td> 12%</td>
           </tr>
 
-          <tr class="indent">
-            <td colspan="2" scope="row">
+          <tr>
+            <td class="indent"></td>
+            <td>
               <dl>
                 <dt>Saturated Fat</dt>
                 <dd>1g</dd>
@@ -64,8 +181,9 @@
             <td>5%</td>
           </tr>
 
-          <tr class="indent">
-            <td colspan="2" scope="row">
+          <tr>
+            <td class="indent"></td>
+            <td>
               <dl>
                 <dt><em>Trans</em> Fat</dt>
                 <dd>0g</dd>
@@ -104,18 +222,20 @@
             <td>12%</td>
           </tr>
 
-          <tr class="indent">
-            <td colspan="2" scope="row">
+          <tr>
+            <td class="indent"></td>
+            <td>
               <dl>
                 <dt>Dietary Fiber</dt>
                 <dd>4g</dd>
               </dl>
             </td>
-            <td>16%</td>
+            <td></td>
           </tr>
 
-          <tr class="indent">
-            <td colspan="2" scope="row">
+          <tr>
+            <td class="indent"></td>
+            <td>
               <dl>
                 <dt>Sugars</dt>
                 <dd>1g</dd>
@@ -169,7 +289,7 @@
         <thead>
           <tr>
             <th></th>
-            <th>Calories</th>
+            <th>Calories:</th>
             <th>2,000</th>
             <th>2,500</th>
           </tr>
