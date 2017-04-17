@@ -68,12 +68,52 @@ main article h2 {
   padding-bottom: 30px;
 }
 
+main header > a {
+   color: #45494D;
+}
+ 
+
+main header >a:hover {
+  color: #50C3AF;
+}
+
 header p {
-  padding-bottom: 40px;
+  padding-bottom: 35px;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 article a {
   color: #50C3AF;
+}
+
+main img {
+  display: inline;
+  margin-right: 10px;
+}
+
+#comments header a {
+  color: #50C3AF;
+}
+
+#comments h3,
+form h3 {
+  font-size: 2em;
+  padding-bottom: 20px;
+}
+
+form {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"] {
+  width: 75%;
+}
+
+textarea {
+  width: 100%;
+  resize: none;
 }
 
 .buttons {
