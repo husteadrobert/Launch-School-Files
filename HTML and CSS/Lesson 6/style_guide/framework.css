@@ -1,0 +1,144 @@
+@import url("whitespace-reset.css");
+
+h1 {
+  margin: 0 0 25px 0;
+  font-size: 2.6em;
+}
+
+h2 {
+  margin: 0 0 25px 0;
+  font-size: 2.2em;
+}
+
+h3 {
+  margin: 0 0 20px 0;
+  font-size: 1.8em;
+}
+
+h4 {
+  margin: 0 0 20px 0;
+  font-size: 1.5em;
+}
+
+.copy p {
+  margin: 0 0 20px 0;
+  font-size: 1em;
+  line-height: 150%;
+}
+
+.copy ul {
+  padding: 0 0 20px 25px;
+  list-style: disc;
+}
+
+.copy ul ul {
+  padding: 20px 0 20px 18px;
+  list-style: circle;
+}
+
+.copy ol {
+  padding: 0 0 20px 25px;
+  list-style: decimal;
+}
+
+.copy ol ol {
+  padding: 20px 0 20px 18px;
+  list-style: lower-latin;
+}
+
+.copy ol.roman {
+  list-style: upper-roman;
+}
+
+.copy ol.roman ol {
+  list-style: lower-roman;
+}
+
+.row {
+  max-width: 1200px;
+  margin: 0 auto 20px auto;
+  clear: both;
+}
+.row:after {
+  display: block;
+  clear: both;
+  line-height: 0;
+  content: "";
+}
+
+ul.row li {
+  float: left;
+  box-sizing: border-box;
+}
+
+ul.row li.half {
+  width: 50%;
+}
+
+ul.row li.sixth {
+  width: 16.6%;
+}
+ul.row li.fourth {
+  width: 25%;
+}
+ul.row li.third {
+  width: 33.3%;
+}
+
+ul.row.margin_row li {
+  margin-right: 2%;
+}
+
+ul.row.margin_row li.half {
+  width: 49%;
+}
+
+ul.row.margin_row li.third {
+  width: 32%;
+}
+
+ul.row.margin_row li.fourth {
+  width: 23.5%;
+}
+
+ul.row.margin_row li.sixth {
+  width: 15%;
+}
+
+ul.row.margin_row li.half:last-of-type,
+ul.row.margin_row li.third:last-of-type,
+ul.row.margin_row li.fourth:last-of-type,
+ul.row.margin_row li.sixth:last-of-type {
+  margin-right: 0;
+}
+
+div.row.margin_row div {
+  float: left;
+  box-sizing: border-box;
+  margin-right: 2%;
+}
+
+div.row.margin_row div:last-of-type {
+  margin-right: 0;
+}
+
+div.row.margin_row div.demo_height.two_third {
+  width: 65.6%;
+}
+
+div.row.margin_row div.demo_height.third {
+  width: 32.3%;
+}
+
+div.row.margin_row div.demo_height.sixth + div.demo_height.two_third {
+  width: 64.8%;
+}
+
+div.row.margin_row div.demo_height.sixth {
+  width: 15.6%;
+}
+
+div.row.margin_row div.demo_height.five_sixth {
+  width: 82.3%;
+}
+
