@@ -5,6 +5,31 @@ body {
   color: #444;
 }
 
+nav {
+  text-align: center;
+  font-size: 13px;
+  position: fixed;
+  top: 0;
+  background: white;
+  width: 100%;
+  border-bottom: 1px solid grey;
+}
+
+nav ul li{
+  display: inline-block;
+  text-transform: uppercase;
+  padding: 10px 20px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: black;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
 /*HEADER STYLES*/
 header {
   background: transparent url("images/front.jpg") center no-repeat;
@@ -12,6 +37,9 @@ header {
   top: 55px;
   height: 428px;
   color: white;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 20px;
 }
 
 header img {
@@ -37,6 +65,15 @@ header h2 {
 }
 /*================*/
 
+footer {
+  background: transparent url("images/people.jpg") no-repeat center 23%;
+  background-size: cover;
+  text-align: center;
+  height: 360px;
+  color: white;
+  padding-top: 40px;
+}
+
 section {
   border-top: 1px solid grey;
   text-align: center;
@@ -49,7 +86,8 @@ section p {
   padding-bottom: 20px;
 }
 
-section h2 {
+section h2,
+footer h2 {
   font-weight: normal;
   font-size: 48px;
   text-align: center;
@@ -69,9 +107,12 @@ a.link-button {
   font-size: 16px;
   font-weight: bold;
   display: inline-block;
+  margin-bottom: 20px;
 }
 
-div.speaker-container {
+div.speaker-container,
+div.sponsors-container,
+div#footer-bar {
   max-width: 900px;
   margin: 0 auto;
 }
@@ -108,7 +149,9 @@ tr:last-of-type td{
   border-bottom: 1px solid grey;
 }
 
-div.schedule-container {
+div.schedule-container,
+div.location-container,
+div.help-container {
   max-width: 1000px;
   margin: 0 auto;
 }
@@ -122,6 +165,7 @@ div.schedule-container table h3 {
 
 td img {
   width: 130px;
+  padding: 10px 0;
 }
 
 td.table-time {
@@ -131,4 +175,85 @@ td.table-time {
 
 p.bold {
   font-weight: bold;
+  text-align: left;
+  padding: 20px 0;
+}
+
+div.location-container,
+div.help-container {
+  text-align: left;
+}
+
+section.location img {
+  width: 100%;
+  height: 400px;
+}
+
+a.code-of-conduct,
+#footer-bar a,
+td a {
+  color: green;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a.code-of-conduct:hover,
+#footer-bar a:hover,
+td a:hover {
+  text-decoration: underline;
+}
+
+div.sponsors-platinum,
+div.sponsors-gold,
+div.sponsors-silver,
+div.sponsors-support {
+  text-align: left;
+}
+
+
+div.sponsors-gold {
+  text-align: left;
+}
+
+.sponsors-gold img {
+  width: 300px;
+}
+
+.sponsors-silver img,
+.sponsors-support img {
+  width: 220px;
+}
+
+#footer-bar {
+  text-align: left;
+}
+
+#footer-bar h2 {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: left;
+  padding-bottom: 10px;
+}
+
+#footer-bar p > a {
+  color: green;
+}
+
+#footer-bar p + a {
+  color: white;
+  margin-bottom: 15px;
+}
+
+#footer-bar p + a:hover {
+  text-decoration: none;
+}
+
+#footer-bar p:first-of-type,
+#footer-bar p:last-of-type {
+  padding-bottom: 20px;
+}
+
+div#footer-bar-background {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px;
 }
