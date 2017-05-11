@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+  </head>
+  <body>
+    <script>
+      /*
+      function average(arrayArg) {
+        return sum(arrayArg) / arrayArg.length;
+      }
+
+      function sum(arrayArg) {
+        var total = 0;
+        for (var i = 0, length = arrayArg.length; i < length; i++) {
+          total += arrayArg[i];
+        }
+        return total;
+      }
+
+      console.log(average([3,3,8,3,3]));
+
+      var temp = [98.6, 23.6, 33.2, 88.5, 92.0];
+      console.log(average(temp));
+      */
+
+      var a = 'outer';
+      function testScope() {
+        var a = 'inner';
+        console.log(a);
+      }
+      console.log(a);
+      testScope();
+      console.log(a);
+
+
+      
+    </script>
+  </body>
+</html>
