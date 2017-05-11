@@ -4,6 +4,7 @@
   </head>
   <body>
     <script>
+      /*
       var numerator = 10;
       var denominator = 2;
       var answer = numerator / denominator;
@@ -28,6 +29,56 @@
 
       answer = (11 + 31) * 3;
       console.log(answer);
+      */
+      /*
+      var x = '13';
+      var y = 9;
+
+      console.log(x * y);
+
+      var npa = 212;
+      var nxx = 555;
+      var num = 1212;
+
+      console.log(String(npa) + String(nxx) + String(num))
+
+      var bool = true;
+      var arr = [1,2,3];
+
+      console.log(bool.toString());
+      console.log(arr.toString());
+      */
+
+      var apples = 3;
+      var bananas = 1;
+      var eitherOr = (apples || bananas);
+      console.log(eitherOr);
+      eitherOr = (bananas || apples);
+      console.log(eitherOr);
+      var areEqual = (apples === bananas);
+      console.log(areEqual);
+      /*
+      if (apples === bananas) {
+        console.log("True");
+      } else if (apples == bananas) {
+        console.log("Kinda True");
+      } else {
+        console.log("False");
+      }
+      */
+      if (apples === bananas) {
+        console.log("Same");
+      } else {
+          if (apples == bananas) {
+            console.log("Kinda the same");
+          } else {
+            console.log("Not the same");
+          }
+      }
+
+      var lastName = "Hustead";
+      var familyMessage = lastName === "Hustead" ? "You're in." : "You're out.";
+      console.log(familyMessage);
 
     </script>
   </body>
