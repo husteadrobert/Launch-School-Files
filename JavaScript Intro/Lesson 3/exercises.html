@@ -1,0 +1,202 @@
+<body>
+  <script>
+  /*
+  function logOddNumbers(num) {
+    for (var i = 1; i <= num; i+=2) {
+      console.log(i);
+    }
+  }
+  */
+
+  /*Multiples of 3 and 5*/
+  /*
+  function multiplesOfThreeAndFive() {
+    for (var i = 1; i <= 100; i++) {
+      if (i % 3 === 0 && i % 5 === 0) {
+        console.log(i + "!");
+      } else if (i % 3 === 0 || i % 5 === 0) {
+        console.log(i);
+      }
+    }
+  }
+  */
+
+  /*Print Multiples*/
+  /*
+  function logMultiples(num) {
+    for (var i = 49; i >= 1; i-=2) {
+      if (num * i <= 100) {
+        console.log(num * i)
+      }
+    }
+  }
+  */
+
+  /*FizzBuzz*/
+  /*
+  function fizzbuzz() {
+    var message = '';
+    for (var i = 1; i <= 100; i++) {
+      message = '';
+      if (i % 3 === 0) {
+        message += 'Fizz';
+      }
+      if (i % 5 === 0) {
+        message += 'Buzz';
+      } else if (i % 3 !== 0) {
+        message = ''+ i;
+      }
+      console.log(message);
+    }
+  }
+  */
+
+  /*Prime Check*/
+  /*
+  function isPrime(num) {
+    if (num === 0 || num === 1) {
+      return false;
+    }
+    for (var i = 2; i < num / 2; i++) {
+      if (num % i === 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+  */
+
+  /*XOR*/
+  /*
+  function isXor(a, b) {
+    if ((a || b) && !(a && b)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  */
+
+  /*Guessing the Password*/
+  /*
+  var password = 'password';
+  var guess = '';
+  var attempts = 0;
+
+  while (attempts < 3 && password !== guess) {
+    guess = prompt("What is the password: ");
+    if (password === guess) {
+      console.log("You have successfully logged in.");
+      break;
+    }
+    attempts++;
+  }
+  if (attempts === 3) {
+    console.log("You have been denied access.");
+  }
+  */
+
+  /*Student Grade*/
+  /*
+  var grade1 = parseInt(prompt("Enter score 1:"));
+  var grade2 = parseInt(prompt("Enter score 2:"));
+  var grade3 = parseInt(prompt('Enter score 3:'));
+
+  var total = grade1 + grade2 + grade3;
+  var average = total / 3;
+  var letter = 'F';
+  if (average >= 90) {
+    letter = 'A';
+  } else if (average >= 80) {
+    letter = 'B';
+  } else if (average >= 70) {
+    letter = 'C';
+  } else if (average >= 60) {
+    letter = 'D';
+  }
+  console.log('Based on the average of your 3 scores your letter grade is "' + letter + '".');
+  */
+
+  /*Greatest Common Divisor*/
+  /*
+  function gcd(num1, num2) {
+    var result = 1;
+    var minimum = Math.min(num1, num2);
+    for (var i = 2; i <= minimum; i++) {
+      if (num1 % i === 0 && num2 % i === 0) {
+        result = i;
+      }
+    }
+    return result;
+  }
+  */
+
+  /*Goldbach Numbers*/
+  /*
+  function checkGoldbach(num) {
+    if (num <= 3) {
+      console.log("null");
+      return;
+    }
+    for (var i = 1; i <= num / 2; i++) {
+      var remainder = num - i;
+      if (isPrime(i) && isPrime(remainder)) {
+        console.log(i + ' ' + remainder);
+      }
+    }
+  }
+  */
+
+  /*Pattern Generation*/
+  /*
+  function generatePattern(num) {
+    var numbers = '';
+    var stars = '';
+    for (var i = 1; i <= num; i++) {
+      numbers = '';
+      stars = '';
+      for (var counter = 1; counter <= i; counter++) {
+        numbers += String(counter);
+      }
+      var starCounter = i;
+      while (starCounter < num) {
+        stars += '*';
+        starCounter++;
+      }
+      console.log(numbers + stars);
+    }
+  }
+  */
+
+  /*Index of Substring*/
+  function indexOf(firstString, secondString) {
+    var result = -1;
+    var match = true;
+    for (var i = 0; i < firstString.length; i++) {
+      if (firstString[i] === secondString[0]) {
+        for (var y = 1; y < secondString.length; y++) {
+          if (firstString[i+y] !== secondString[y]) {
+            match = false;
+            break; 
+          }
+        }
+        if (match) {
+          result = i;
+          return result;
+        }
+      }
+    }
+    return result;
+  }
+
+  function lastIndexOf(firstString, secondString) {
+
+  }
+
+  console.log(indexOf('Some strings', 's'));
+  console.log(indexOf('Blue Whale', 'Whale'));
+  console.log(indexOf('Blue Whale', 'Blute'));
+  console.log(indexOf('Blue Whale', 'leB'));
+
+  </script>
+</body>
