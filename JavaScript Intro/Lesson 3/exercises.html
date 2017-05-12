@@ -169,6 +169,7 @@
   */
 
   /*Index of Substring*/
+  /*
   function indexOf(firstString, secondString) {
     var result = -1;
     var match = true;
@@ -188,19 +189,210 @@
     }
     return result;
   }
+  */
 
-  function lastIndexOf(firstString, secondString) {
-    if (indexOf(firstString, secondString) === -1) {
-      return -1;
-    } else {
-      
+  /*LS Solution*/
+  /*
+  function indexOf(firstString, secondString) {
+    var limit = firstString.length - secondString.length;
+    var matchCount;
+
+    for (var i = 0; i <= limit; i++) {
+      matchCount = 0;
+
+      for (var j = 0; j < secondString.length; j++) {
+        if (firstString[i + j] === secondString[j]) {
+          matchCount++;
+        } else {
+          break;
+        }
+      }
+      if (matchCount === secondString.length) {
+        return i;
+      }
     }
+    return -1;
+  }
+  function lastIndexOf(firstString, secondString) {
+    var limit = firstString.length - secondString.length;
+    var matchCount;
+
+    for (var i = limit; i >= 0; i--) {
+      matchCount = 0;
+
+      for (var j = 0; j < secondString.length; j++) {
+        if (firstString[i + j] === secondString[j]) {
+          matchCount++;
+        } else {
+          break;
+        }
+      }
+      if (matchCount === secondString.length) {
+        return i;
+      }
+    }
+    return -1;
+  }
+  */
+  
+
+  /*Trimming Spaces*/
+  /*
+  function trim(string) {
+    var output = '';
+    output = leftTrim(string);
+    output = rightTrim(output);
+    return output;
   }
 
-  console.log(indexOf('Some strings', 's'));
-  console.log(indexOf('Blue Whale', 'Whale'));
-  console.log(indexOf('Blue Whale', 'Blute'));
-  console.log(indexOf('Blue Whale', 'leB'));
+  function leftTrim(string) {
+    var output = '';
+    var copyMode = false;
+    var length = string.length;
+    for (var i = 0; i < length; i++) {
+      if (string[i] !== ' ') {
+        copyMode = true;
+      }
+      if (copyMode) {
+        output += string[i];
+      }
+    }
+    return output;
+  }
+
+  function rightTrim(string) {
+    var output = '';
+    var copyMode = false;
+    var length = string.length - 1;
+    for (var i = length; i >= 0; i--) {
+      if (string[i] !== ' ') {
+        copyMode = true;
+      }
+      if (copyMode) {
+        output = string[i] + output;
+      }
+    }
+    return output;
+  }
+  */
+
+  /*Splitting a String*/
+  /*
+  function splitString(string, delimiter) {
+    if (delimiter === undefined) {
+      console.log("ERROR");
+      return;
+    }
+    var currentString = '';
+    var length = string.length;
+    for (var i = 0; i < length; i++) {
+      if (string[i] === delimiter) {
+        console.log(currentString);
+        currentString = '';
+      } else if (delimiter === '') {
+        console.log(string[i]);
+      } else {
+        currentString = currentString + string[i];
+      }
+    }
+    if (currentString) {
+    console.log(currentString);
+    }
+  }
+  */
+
+  /*Repeating String*/
+  /*
+  function repeat(string, times) {
+    var totalString = "";
+    if (isNaN(times) || times < 0) {
+      return undefined;
+    } else if (times === 0) {
+      return '';
+    } else {
+      for (var i = 1; i <= times; i++) {
+        totalString += string;
+      }
+      return totalString;
+    }
+  }
+  */
+
+  /*String StartsWith*/
+  /*
+  function startsWith(string, searchString) {
+    return indexOf(string, searchString) === 0;
+  }
+  */
+
+  /*Converting Strings to Lower Case*/
+  /*
+  function toLowerCase(string) {
+    var lowercase = '';
+    for (var i = 0; i < string.length; i++) {
+      var asciiNumber = string.charCodeAt(i);
+      if (asciiNumber >= 65 && asciiNumber <= 90) {
+        lowercase += String.fromCharCode(asciiNumber + 32);
+      } else {
+        lowercase += string[i];
+      }
+    }
+    return lowercase;
+  }
+  */
+
+  /*Substring(1)*/
+  /*
+  function substr(string, start, length) {
+    var substring = '';
+    if (start < 0) {
+      start = string.length + start;
+    }
+    for (var i = 0; i < length; i++) {
+      if (string[start + i] === undefined) {
+        break;
+      }
+      substring += string[start + i];
+    }
+    return substring;
+  }
+  */
+  /*Substrings(2)*/
+  function substr(string, start, end) {
+    if (start < 0 || isNaN(start)) {
+      start = 0;
+    }
+
+    if (start > end) {
+      var temp = start;
+      start = end;
+      end = temp;
+    }
+    if (start > string.length) {
+      start = string.length;
+    }
+    if (end > string.length || end === undefined) {
+      end = string.length;
+    }
+    if (end < 0 || isNaN(end)) {
+      end = 0;
+    }
+    if (start === end) {
+      return '';
+    }
+
+    var substring = '';
+    for (var i = 0; i < end - start; i++) {
+      if (string[start + i] == undefined) {
+        break;
+      }
+      substring += string[start+i];
+    }
+    return substring;
+  }
+
+  var string = 'hello world';
+  console.log(substr(string, 'a'));
 
   </script>
 </body>
