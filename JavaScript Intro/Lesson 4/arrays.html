@@ -1,0 +1,171 @@
+<body>
+  <script>
+  /*Comparing Arrays*/
+
+  function arraysEqual(array1, array2) {
+    if (array1.length != array2.length) {
+      return false;
+    }
+    else {
+      for (var i = 0; i < array1.length; i++) {
+        if (array1[i] !== array2[i]) {
+          return false;
+        }
+      return true;
+      }
+    }
+  }
+
+  /*Basic Array Uses*/
+
+  function firstElementOf(array) {
+    return array[0];
+  }
+
+  function lastElementOf(array) {
+    return array[array.length - 1];
+  }
+
+  function nthElementOf(array, index) {
+    return array[index];
+  }
+
+  /*You can insert negative values into arrays.*/
+
+  function firstNOf(array, count) {
+    var result = [];
+    for (var i = 0; i < count; i++) {
+      result[i] = array[i];
+    }
+    return result;
+  }
+  /*LS SOLUTION*/
+  function firstNOf(array, count) {
+    return array.slice(0, count);
+  }
+
+
+  function lastNOf(array, count) {
+    return array.slice(array.length - count);
+  }
+
+  function lastNOf(array, count) {
+    var index = array.length - count;
+    if (index < 0) {
+      index = 0;
+    }
+    return array.slice(index);
+  }
+
+  function endsOf(array1, array2) {
+    return [array1[0], array2[array2.length - 1]];
+  }
+
+  /*Intermediate Array Uses*/
+  function oddElementsOf(array) {
+    var result = [];
+    for (var i = 1; i < array.length; i+=2) {
+      result.push(array[i]);
+    }
+    return result;
+  }
+
+  function combinedArray(array1, array2) {
+    var result = [];
+    for (var i = 0; i < array1.length; i++) {
+      result.push(array1[i]);
+      result.push(array2[i]);
+    }
+    return result;
+  }
+
+  function mirrorArray(array) {
+    var original = array.slice(0);
+    return original.concat(array.reverse());
+  }
+  /*LS SOLUTION*/
+  function mirrorArray(array) {
+    return array.concat(array.slice().reverse());
+  }
+
+  function joinArray(array, joiner) {
+    var result = array[0].toString();
+    joiner = joiner || '';
+
+    for (var i = 1; i < array.length; i++) {
+      result += joiner + array[i].toString();
+    }
+    return result;
+
+  }
+
+  function sortDescending(array) {
+    return array.slice(0).sort().reverse();
+  }
+  /*LS SOLUTION*/
+  function sortDescending(array) {
+    var arrCopy = array.slice();
+    return arrCopy.sort(function(a,b) { return b - a});
+  }
+
+  function matrixSums(array) {
+    var sortedArrays = array.slice().sort(function (a, b) { return b.length - a.length});
+    var result = [];
+    var sum = 0;
+    for (var i = 0; i < sortedArrays[0].length; i++) {
+      for (var y = 0; y < sortedArrays.length; y++) {
+        sum += sortedArrays[y][i];
+      }
+      result.push(sum)
+      sum = 0;
+    }
+    return result;
+  }
+  /*Misunderstood directions*/
+
+  function matrixSums(arrays) {
+    var result = [];
+    var sum = 0;
+    for (var i = 0; i < arrays.length; i++) {
+      for (var y = 0; y < arrays[i].length; y++) {
+        sum += arrays[i][y];
+      }
+      result.push(sum);
+      sum = 0;
+    }
+    return result;
+  }
+
+  function uniqueElements(array) {
+    var result = [];
+    for (var i = 0; i < array.length; i++) {
+      if (result.includes(array[i])) {
+        continue;
+      }
+      else {
+        result.push(array[i]);
+      }
+    }
+    return result;
+  }
+
+  /*Find Missing Numbers*/
+  function missing(array) {
+    var result = [];
+    var min = array[0];
+    var max = array[array.length - 1];
+    for (var i = min + 1; i < max; i++) {
+      if (array.includes(i)) {
+        continue;
+      }
+      else {
+        result.push(i);
+      }
+    }
+    return result;
+  }
+  var numbers = [6];
+  console.log(missing(numbers));
+
+  </script>
+</body>
