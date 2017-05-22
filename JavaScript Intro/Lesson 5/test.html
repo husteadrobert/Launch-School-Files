@@ -1,0 +1,86 @@
+<body>
+  <script>
+  /*Working with Object Properties*/
+  function objectHasProperty(object, property) {
+    
+    if (Object.keys(object).includes(property)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  var pets = {
+    cat: 'Simon',
+    dog: 'Dwarf',
+    mice: null,
+  };
+
+
+  function incrementProperty(object, property) {
+    if (object[property] === undefined) {
+      object[property] = 0;
+    }
+    object[property] += 1;
+    return object[property];
+  }
+
+  var wins = {
+    steve: 3,
+    susie: 4,
+  };
+
+  function copyProperties(object1, object2) {
+    var keys = Object.keys(object1);
+    for (var i = 0; i < keys.length; i++) {
+      object2[keys[i]] = object1[keys[i]]; 
+    }
+    return keys.length;
+  }
+  /*LS SOLUTION*/
+  function copyProperties(object1, object2) {
+    var count = 0;
+    for (var property in object1) {
+      object2[property] = object1[property];
+      count++;
+    }
+    return count;
+  }
+
+  var hal = {
+    model: 9000,
+    enabled: true,
+  };
+  var sal = {};
+
+  function wordCount(string) {
+    var counts = {};
+    var words = string.split(' ');
+    for(var i = 0; i < words.length; i++) {
+      if (counts[words[i]] === undefined) {
+        counts[words[i]] = 1;
+      }
+      else {
+        counts[words[i]] += 1;
+      }
+    }
+    return counts;
+  }
+  var str = 'box car cat bag box';
+
+  /*Working with the Math Object*/
+
+  function radToDegree(num) {
+    return num * 180 / Math.PI;
+  }
+
+  function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
+  /*Working with Dates*/
+
+  
+  </script>
+</body>
