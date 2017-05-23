@@ -80,7 +80,117 @@
   }
 
   /*Working with Dates*/
-
+  var today2 = Date.now();/*Number*/
+  var today = new Date(); /*Object*/
   
+  var day = today.getDate();
+
+
+  function dateSuffix(date) {
+    var suffix = 'th';
+    var dateString = date.toString();
+    var digit;
+
+    if (dateString.length === 1) {
+      digit = dateString[0];
+    } else if (dateString[1] !== '1') {
+      digit = dateString[1];
+    }
+
+    if (digit === '1') {
+      suffix = 'st';
+    } else if (digit === '2') {
+      suffix = 'nd';
+    } else if (digit === '3') {
+      suffix = 'rd';
+    }
+
+    return dateString + suffix;
+
+  }
+
+  function formattedMonth(date) {
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return months[date.getMonth()];
+  }
+
+  function formattedDay(date) {
+    var daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    return daysOfWeek[date.getDay()];
+  }
+
+  function formattedDate(date) {
+    var day = formattedDay(date);
+    var month = formattedMonth(date);
+
+    console.log("Today's date is " + day + ' ' + month + ' ' + dateSuffix(date.getDate()));
+  }
+
+
+  var tomorrow = new Date(today.getTime());
+  tomorrow.setDate(24);
+  formattedDate(tomorrow);
+
+  var nextWeek = new Date(today.getTime());
+  nextWeek.setDate(today.getDate() + 7);
+
+  function formattedTime(time) {
+    var hours = String(time.getHours());
+    var minutes = String(time.getMinutes());
+    if (hours.length < 2) {
+      hours = '0' + hours;
+    }
+    if (minutes.length < 2) {
+      minutes = '0' + minutes;
+    }
+    return hours + ':' + minutes;
+  }
+
+  var timeNow = new Date();
+  console.log(formattedTime(timeNow));
+  /*WELCOME STRANGER*/
+  function greetings(array, object) {
+    var fullName = "";
+    var message = "";
+    for (var i = 0; i < array.length; i++) {
+      fullName = fullName + String(array[i]);
+      if (i + 1 < array.length) {
+        fullName = fullName + ' ';
+      }
+    }
+    message += fullName + '! ';
+
+    message += "Nice to have a " + object.title + ' ' + object.occupation + ' around.';
+
+    return message;
+  }
+
+  /*LS SOLUTION*/
+  /*var nameGreet = 'Hello, ' + name.join(' ') + '!';*/
+  console.log(greetings(['John', 'Q', 'Monkey', 'Public'], {title: 'Master', occupation: 'Killa'}));
+
+
+  /*Repeated Characters*/
+  function repeatedCharacters(string) {
+    var counts = {};
+    var key;
+    var lowerString = string.toLowerCase();
+    for (var i = 0; i < lowerString.length; i++) {
+      if (counts[lowerString[i]] === undefined) {
+        counts[lowerString[i]] = 1;
+      } else {
+        counts[lowerString[i]] += 1;
+      }
+    }
+    for (key in counts) {
+      if (counts[key] === 1) {
+        delete counts[key];
+      }
+    }
+    return counts;
+  }
+
+  console.log(repeatedCharacters('Paper'));
+
   </script>
 </body>
