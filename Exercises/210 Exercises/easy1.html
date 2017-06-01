@@ -1,0 +1,109 @@
+<body>
+  <script>
+    function oddNumbers() {
+      for (var i = 1; i < 100; i+=2) {
+        console.log(i);
+      }
+    }
+
+    function evenNumbers() {
+      for (var i = 2; i <= 100; i+=2) {
+        console.log(i);
+      }
+    }
+    //How Big is the ROom
+    /*
+    var length = prompt("Enter the length of the room in meters:");
+    var width = prompt("Enter the width of the room in meters:");
+    var area  = parseInt(length) * parseInt(width);
+    var areaFeet = area * 10.7639;
+    console.log("The area of the room is " + area + " (" + areaFeet.toFixed(2) + " square feet).");
+    */
+    //Remember to parseInt()
+
+    //Tip Calculator
+    /*
+    var bill = parseFloat(prompt("What is the bill?"));
+    var tipPercentage = parseFloat(prompt("What is the tip percentage?"));
+
+    var tipTotal = bill * (tipPercentage / 100);
+    var billTotal = tipTotal + bill;
+
+    console.log("The tip is $" + tipTotal.toFixed(2));
+    console.log("The total is $" + billTotal.toFixed(2));
+    */
+
+    //Sum or Product of Consecutive Integers
+    /*
+    var number = parseInt(prompt("Enter a number greater than 0:"));
+    var choice = prompt("Enter 's' or 'p' to compute:");
+    var result = 1;
+    var word = choice === 's' ? 'sum' : 'product';
+    if (choice === 's') {
+      for (var i = 2; i <= number; i++) {
+        result += i;
+      } 
+    } else if (choice === 'p') {
+        for (var i = 1; i <= number; i ++) {
+          result = result * i;
+        }
+    }
+    console.log("The " + word + " of the integers between 1 and " + number + " is " + result);
+    */
+
+    //Short Long Short
+    function shortLongShort(string1, string2) {
+      var result = '';
+      var array = [string1, string2];
+      array = array.sort(function(a, b) {
+        return a.length > b.length;
+      });
+      result = array[0] + array[1] + array[0];
+      return result;
+    }
+
+    //Leap Years Part 1
+    function isGregorianLeapYear(year) {
+      var result = false;
+      if (year % 400 === 0) {
+        return true;
+      } else if (year % 100 === 0) {
+        return true;
+      } else {
+        return year % 4 === 0;
+      }
+    }
+
+    //Leap Years Part 2
+    function isLeapYear(year) {
+      if (year <= 1752) {
+        return year % 4 === 0;
+      } else {
+        return isGregorianLeapYear(year);
+      }
+    }
+
+    //Multiples of 3 and 5
+    function multisum(number) {
+      var sum = 0;
+      for (var i = 1; i <= number; i++) {
+        if ((i % 3 === 0) || (i % 5 === 0)) {
+          sum += i;
+        }
+      }
+      return sum;
+    }
+
+    //ASCII String Value
+    function asciiValue(string) {
+      var sum = 0;
+      for (var i = 0; i < string.length; i++) {
+        sum += string.charCodeAt(i);
+      }
+      return sum;
+    }
+
+
+
+  </script>
+</body>

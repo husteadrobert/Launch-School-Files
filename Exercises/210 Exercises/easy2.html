@@ -1,0 +1,244 @@
+<body>
+  <script>
+  //Daily Double
+  function crunch(string) {
+    if (string.length <= 0) {
+      return '';
+    }
+    var letters = string.split('');
+    var crunchedString = letters[0];
+    var currentLetter = letters[0];
+    var nextLetter;
+
+    for (var i = 1; i < string.length; i++) {
+      nextLetter = string[i];
+      if (nextLetter === currentLetter) {
+        continue;
+      } else {
+        crunchedString += letters[i];
+        currentLetter = letters[i];
+      }
+    }
+    return crunchedString;
+  }
+  //LS SOLUTION
+  function crunch(text) {
+    var index = 0;
+    var crunchText = '';
+
+    while (index <= text.length - 1) {
+      if (text[index] !== text[index + 1]) {
+        crunchText += text[index];
+      }
+
+      index += 1;
+    }
+
+    return crunchText;
+  }
+
+  //Bannerizer
+  function logInBox(string) {
+    var length = string.length;
+    var border = '+-';
+    var padding = '| ';
+    for (var i = 0; i < length; i++) {
+      border += '-';
+      padding += ' ';
+    }
+    border += '-+';
+    padding += ' |';
+    console.log(border);
+    console.log(padding);
+    console.log('| ' + string + ' |');
+    console.log(padding);
+    console.log(border);
+  }
+
+  //Stringy Strings
+  function stringy(number) {
+    var result = '1';
+    for (var i = 1; i < number; i++) {
+      result += i % 2 === 0 ? '1' : '0';
+    }
+    return result;
+  }
+
+  //Fibonacci Number Location by Length
+  function findFibonacciByLength(length) {
+    var previous = 1;
+    var total = 1;
+
+    for (var i = 3; i < 100; i++) {
+      var temp = total;
+      total = total + previous;
+      previous = temp;
+      if (total.toString().length === length) {
+        return i;
+      }
+    }
+    return 0;
+  }
+  //LS SOLUTION
+  function findFibonacciIndexByLength(length) {
+    var first = 1;
+    var second = 1;
+    var index = 2;
+    var fibonacci;
+    do {
+      fibonacci = first + second;
+      index++;
+      first = second;
+      second = fibonacci;
+    } while (String(fibonacci).length < length);
+
+    return index;
+  }
+
+  function triangle(length) {
+    for (var i = 1; i <= length; i++) {
+      var line = padding(i, length) + stars(i, length);
+      console.log(line);
+    }
+  }
+
+  function padding(currentIteration, totalLength) {
+    var line = '';
+    for (var i = 1; i < totalLength - currentIteration + 1; i++) {
+      line += ' ';
+    }
+    return line;
+  }
+  function stars(currentIteration, totalLength) {
+    var line = '';
+    for (var i = 1; i <= currentIteration; i++) {
+      line += '*';
+    }
+    return line;
+  }
+
+  //LS SOLUTION
+  function triangle(height) {
+  var stars = 1;
+  var spaces = height - 1;
+
+  for (var i = 0; i < height; i++) {
+    console.log(repeat(' ', spaces) + repeat('*', stars));
+    stars++;
+    spaces--;
+  }
+}
+
+function repeat(char, count) {
+  var repeated = ''
+  for (var i = 0; i < count; i++) {
+    repeated += char;
+  }
+
+  return repeated;
+}
+
+//Madlibs
+/*
+var noun = prompt("Enter a noun:");
+var verb = prompt("Enter a verb");
+var adjective = prompt("Enter an adjective:");
+var adverb = prompt("Enter an adverb:");
+
+console.log("Do you " + verb + " your " + adjective + " " + noun + " " + adverb + "? That's hilarious!");
+*/
+
+//Double Doubles
+  function twice(number) {
+    if (isDouble(number)) {
+      return number;
+    } else {
+      return number * 2;
+    }
+  }
+  function isDouble(number) {
+    if (String(number).length % 2 !== 0) {
+      return false;
+    }
+    var stringNumber = String(number);
+    var arrayNumber = stringNumber.split('');
+    var length = stringNumber.length;
+    var part1 = parseInt(arrayNumber.slice(0, length/2).join(''));
+    var part2 = parseInt(arrayNumber.slice(length/2).join(''));
+    return part1 === part2;
+  }
+  //LS SOLUTION
+  function twice(number) {
+  if (isDoubleNumber(number)) {
+    return number;
+  } else {
+    return number * 2;
+  }
+}
+
+  function isDoubleNumber(number) {
+    var stringNumber = String(number);
+    var center = stringNumber.length / 2;
+    var leftNumber = stringNumber.substring(0, center);
+    var rightNumber = stringNumber.substring(center);
+    return leftNumber === rightNumber;
+  }
+
+  //Grade Book
+  function getGrades(score1, score2, score3) {
+    var average = (score1 + score2 + score3) / 3;
+    if (average >= 90) {
+      return "A";
+    } else if (average >= 80) {
+      return "B";
+    } else if (average >= 70) {
+      return "C";
+    } else if (average >= 60) {
+      return "D";
+    } else {
+      return "F";
+    }
+  }
+
+  //Clean up the words
+  function cleanUp(string) {
+    var newString = string.replace(/[^a-z]/gi, ' ');
+    return newString.replace(/\s+/gi, ' ');
+  }
+
+  //What Century is That
+  function century(year) {
+
+  }
+
+  //LS SOLUTION
+  function century(year) {
+  var centuryNumber = Math.floor(year / 100) + 1;
+  if (year % 100 === 0) {
+    centuryNumber -= 1;
+  }
+
+  return String(centuryNumber) + centurySuffix(centuryNumber);
+}
+
+function centurySuffix(centuryNumber) {
+  var lastDigit;
+
+  if (catchWithTh(centuryNumber % 100)) {
+    return 'th';
+  }
+
+  lastDigit = centuryNumber % 10;
+  switch (lastDigit) {
+    case 1: return 'st';
+    case 2: return 'nd';
+    case 3: return 'rd';
+    default: return 'th';
+  }
+}
+
+function catchWithTh(lastTwo) {
+  return lastTwo === 11 || lastTwo === 12 || lastTwo === 13;
+}
+  </script>
+</body>
