@@ -1,0 +1,324 @@
+<body>
+  <script>
+
+    var rectangles = [[3, 4], [6, 6], [1, 8], [9, 9], [2, 2]];
+
+    function totalArea(array) {
+      result = array.map(computeArea);
+      return result.reduce(function(previous, next) {
+        return previous + next;
+      });
+    }
+
+
+    function totalSquareArea(array) {
+      squares = array.filter(isSquare);
+      return totalArea(squares);
+    }
+
+    var isSquare = function(array) {
+      return array[0] === array[1];
+    };
+
+    var computeArea = function(array) {
+      return array[0] * array[1];
+    };
+
+    var newReleases = [
+  {
+    'id': 70111470,
+    'title': 'Die Hard',
+    'boxart': 'http://cdn-0.nflximg.com/images/2891/DieHard.jpg',
+    'uri': 'http://api.netflix.com/catalog/titles/movies/70111470',
+    'rating': [4.0],
+    'bookmark': [],
+  },
+  {
+    'id': 654356453,
+    'boxart': 'http://cdn-0.nflximg.com/images/2891/BadBoys.jpg',
+    'uri': 'http://api.netflix.com/catalog/titles/movies/70111470',
+    'rating': [5.0],
+    'bookmark': [{ id:432534, time:65876586 }],
+  },
+  {
+    'title': 'The Chamber',
+    'boxart': 'http://cdn-0.nflximg.com/images/2891/TheChamber.jpg',
+    'uri': 'http://api.netflix.com/catalog/titles/movies/70111470',
+    'rating': [4.0],
+    'bookmark': [],
+  },
+  {
+    'id': 675465,
+    'title': 'Fracture',
+    'boxart': 'http://cdn-0.nflximg.com/images/2891/Fracture.jpg',
+    'uri': 'http://api.netflix.com/catalog/titles/movies/70111470',
+    'rating': [5.0],
+    'bookmark': [{ id:432534, time:65876586 }],
+  },
+];
+
+function processReleaseData(data) {
+  validLists = data.filter(function(value) {
+    return value.id !== undefined && value.title !== undefined;
+  });
+  processedList = validLists.map(function(value) {
+    return { id: value.id, title: value.title };
+  });
+  return processedList;
+}
+
+
+function octalToDecimal(number) {
+  digits = number.split('').map(function(value, index) {
+    return parseInt(value) * Math.pow(8, number.length - index - 1);
+  });
+  return digits.reduce(function(sum, next) {
+    return sum + next;
+  });
+
+}
+
+function anagram(word, list) {
+  return list.filter(function(candidate) {
+    return areAnagrams(candidate, word);
+  });
+}
+
+function areAnagrams(source, target) {
+  var sourceLetters = stringToSortedLetters(source);
+  var targetLetters = stringToSortedLetters(target);
+
+  return compareArrays(sourceLetters, targetLetters);
+}
+
+function stringToSortedLetters(string) {
+  return string.split('').sort(function(letter1, letter2) {
+    if (letter1 < letter2) {
+      return -1;
+    } else if (letter1 > letter2) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+}
+
+function compareArrays(array1, array2) {
+  return array1.every(function(value, index) {
+    return value === array2[index];
+  });
+}
+
+var bands = [
+  { name: 'sunset rubdown', country: 'UK', active: false },
+  { name: 'women', country: 'Germany', active: false },
+  { name: 'a silver mt. zion', country: 'Spain', active: true },
+];
+
+function processBands(data) {
+  return data.map(function(band) {
+    updateCountry(band);
+    capitalizeBandName(band);
+    removeDotsInBandName(band);
+    return band;
+  });
+
+}
+
+function updateCountry(band) {
+  band.country = "Canada";
+}
+
+function capitalizeBandName(band) {
+  band.name = band.name.split(' ').map(function(word) {
+    return capitalizeString(word);
+  }).join(' ');
+}
+
+function removeDotsInBandName(band) {
+  band.name = band.name.replace(/\./g, '');
+}
+
+
+function capitalizeString(word) {
+  var initial = word[0].toUpperCase();
+  var remaining = word.slice(1, word.length);
+  return initial + remaining;
+}
+
+var studentScores = {
+  student1: {
+    id: 123456789,
+    scores: {
+      exams: [90, 95, 100, 80],
+      exercises: [20, 15, 10, 19, 15],
+    },
+  },
+  student2: {
+    id: 123456799,
+    scores: {
+      exams: [50, 70, 90, 100],
+      exercises: [0, 15, 20, 15, 15],
+    },
+  },
+  student3: {
+    id: 123457789,
+    scores: {
+      exams: [88, 87, 88, 89],
+      exercises: [10, 20, 10, 19, 18],
+    },
+  },
+  student4: {
+    id: 112233445,
+    scores: {
+      exams: [100, 100, 100, 100],
+      exercises: [10, 15, 10, 10, 15],
+    },
+  },
+  student5: {
+    id: 112233446,
+    scores: {
+      exams: [50, 80, 60, 90],
+      exercises: [10, 0, 10, 10, 0],
+    },
+  },
+};
+
+
+function generateClassRecordSummary(scores) {
+  // an array of score objects, with both exams and exercises
+  var scoreData = Object.keys(scores).map(function(student) {
+    return scores[student].scores;
+  });
+
+  // transform the above score objects to be an array of arrays for exam scores
+  var examData = scoreData.map(function(score) {
+    return score.exams;
+  });
+
+  return {
+    studentGrades: scoreData.map(function(scoreObj) {
+      return getStudentScore(scoreObj);
+    }),
+    exams: getExamSummary(examData)
+  };
+}
+
+function getStudentScore(scoreObj) {
+  // ...
+}
+
+function getExamSummary(examData) {
+  // ...
+  var scoresPerExam = transpose(examData)
+}
+
+function transpose(array) {
+
+}
+
+function generateClassRecordSummary(scores) {
+  var scoreData = Object.keys(scores).map(function(student) {
+    return scores[student].scores;
+  });
+
+  var examData = scoreData.map(function(score) {
+    return score.exams;
+  });
+
+  return {
+    studentGrades: scoreData.map(function(scoreObj) {
+      return getStudentScore(scoreObj);
+    }),
+    exams: getExamSummary(examData),
+  }
+}
+
+function getStudentScore(scoreObj) {
+  var lookupLetter = function(percentageGrade) {
+    if (percentageGrade >= 93) {
+      return "A";
+    } else if (percentageGrade >= 85 && percentageGrade < 93) {
+      return "B";
+    } else if (percentageGrade >= 77 && percentageGrade < 85) {
+      return "C";
+    } else if (percentageGrade >= 69 && percentageGrade < 77) {
+      return "D";
+    } else if (percentageGrade >= 60 && percentageGrade < 69) {
+      return "E";
+    } else {
+      return "F";
+    }
+  }
+
+  var examsAvg = computeExamsAverage(scoreObj.exams);
+  var exercisesAvg = computeExercisesScore(scoreObj.exercises);
+  var percentageGrade = Math.round(examsAvg * 0.65 + exercisesAvg * 0.35);
+
+  return percentageGrade + " (" + lookupLetter(percentageGrade) + ")";
+}
+
+function computeExamsAverage(exams) {
+  return exams.reduce(function(total, score) {
+    return total + score;
+  }) / exams.length;
+}
+
+function computeExercisesScore(exercises) {
+  return exercises.reduce(function(total, score) {
+    return total + score;
+  });
+}
+
+function getExamSummary(examScoresPerStudent) {
+  var scoresPerExam = transpose(examScoresPerStudent);
+
+  return scoresPerExam.map(function(examScores) {
+    return {
+      average: getExamAverage(examScores),
+      minimum: getExamMinimum(examScores),
+      maximum: getExamMaximum(examScores),
+    }
+  });
+}
+
+function transpose(array) {
+  return array[0].map(function(col, columnIdx) {
+    return array.map(function(row) {
+      return row[columnIdx];
+    });
+  });
+}
+
+function getExamAverage(scores) {
+  return scores.reduce(function(total, score) {
+    return total + score;
+  }) / scores.length;
+}
+
+function getExamMinimum(scores) {
+  return scores.reduce(function(min, score) {
+    return min <= score ? min : score;
+  });
+}
+
+function getExamMaximum(scores) {
+  return scores.reduce(function(max, score) {
+    return max >= score ? max : score;
+  });
+}
+//Output
+/*
+{
+  studentGrades: [ '87 (B)', '73 (D)', '84 (C)', '86 (B)', '56 (F)' ],
+  exams: [
+    { average: 75.6, minimum: 50, maximum: 100 },
+    { average: 86.4, minimum: 70, maximum: 100 },
+    { average: 87.6, minimum: 60, maximum: 100 },
+    { average: 91.8, minimum: 80, maximum: 100 },
+  ],
+}
+*/
+
+  </script>
+</body>

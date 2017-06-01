@@ -1,0 +1,178 @@
+<body>
+<script src="http://dbdwvr6p7sskw.cloudfront.net/210/files/email_data_v2.js"></script>
+  <script>
+  function reverse(string) {
+    return string.split('').reverse().join('');
+  }
+
+  function acronym(string) {
+    var stringArray = string.replace(/-/g, ' ').split(' ');
+    return stringArray.map(function(word) {
+      return word[0];
+    }).join('').toUpperCase();;
+  }
+
+function isValidEmail(email) {
+  return Boolean(email.match(/^[a-z0-9]+@([a-z]+\.)+[a-z]+$/i));
+}
+
+function isBalanced(string) {
+  var stringArray = string.split('');
+  var leftParen = 0;
+  var rightParen = 0;
+  for (var i = 0; i < string.length; i++) {
+    if (stringArray[i] === '(') {
+      leftParen += 1;
+    } else if (stringArray[i] === ')') {
+      rightParen +=1;
+    }
+    if (rightParen > leftParen) {
+      return false;
+    }
+  }
+  return leftParen === rightParen;
+}
+
+var positiveWords = ['fortune', 'dream', 'love', 'respect', 'patience', 'devout', 'noble', 'resolution'];
+var negativeWords = ['die', 'heartache', 'death', 'despise', 'scorn', 'weary', 'trouble', 'oppress'];
+
+
+function sentiment(text) {
+  //text = text.toLowerCase().replace(/[^a-z ]/gi, '').replace(/\n/g, ' ');
+  text = text.toLowerCase().replace(/\n/g, ' ').replace(/[\.\!\,\?]/g, '');
+  var wordList = text.split(' ');
+  var positiveCount = 0;
+  var negativeCount = 0;
+  var positiveList = [];
+  var negativeList = [];
+  var sentiment = 'Neutral';
+
+  positiveWords.forEach(function(searchWord) {
+    if (wordList.indexOf(searchWord) !== -1) {
+      positiveCount += 1;
+      positiveList.push(searchWord);
+    }
+  });
+  negativeWords.forEach(function(searchWord) {
+    if (wordList.indexOf(searchWord) !== -1) {
+      negativeCount += 1;
+      negativeList.push(searchWord);
+    }
+  });
+
+  if (positiveCount > negativeCount) {
+    sentiment = 'Positive';
+  } else if (negativeCount > positiveCount) {
+    sentiment = 'Negative';
+  }
+
+  console.log('There are ' + positiveCount + ' positive words in the text.');
+  console.log('Positive sentiments: ' + positiveList.join(', '));
+  console.log('There are ' + negativeCount + ' negative words in the text.');
+  console.log('Negative sentiments: ' + negativeList.join(', '));
+  console.log('The sentiment of the text is ' + sentiment);
+}
+//LS SOLUTIOn
+function sentiment(text) {
+  var wordList = text.toLowerCase().replace(/\n/g, ' ').replace(/[\.\!\,\?]/g, '').split(' ');
+  var textSentiment;
+
+  var positives = wordList.filter(function(word) {
+     return positiveWords.indexOf(word) >= 0;
+  });
+
+  var negatives = wordList.filter(function(word) {
+     return negativeWords.indexOf(word) >= 0;
+  });
+
+  console.log('There are ' + positives.length + ' positive words in the text.');
+  console.log('Positive sentiments: ' + positives.join(' '));
+  console.log('');
+  console.log('There are ' + negatives.length + ' negative words in the text.');
+  console.log('Negative sentiments: ' + negatives.join(' '));
+
+  if (positives.length > negatives.length) {
+    textSentiment = 'Positive';
+  } else if (positives.length < negatives.length) {
+    textSentiment = 'Negative';
+  } else {
+    textSentiment = 'Neutral';
+  }
+
+  console.log('The sentiment of the text is ' + textSentiment + '.');
+}
+
+var positiveRegex = /(fortunes?)|(dream(s|t|ed)?)|(love(s|d)?)|(respect(s|ed)?)|(patien(ce|t)?)|(devout(ly)?)|(nobler?)|(resolut(e|ion)?)/gi;
+var negativeRegex = /(die(s|d)?)|(heartached?)|(death)|(despise(s|d)?)|(scorn(s|ed)?)|(weary)|(troubles?)|(oppress(es|ed|or('s)?)?)/gi;
+
+
+function sentiment(text) {
+  var positives = text.match(positiveRegex);
+  var negatives = text.match(negativeRegex);
+  var textSentiment;
+
+  console.log('There are ' + positives.length + ' positive words in the text.');
+  console.log('Positive sentiments: ' + positives.join(', '));
+  console.log('');
+  console.log('There are ' + negatives.length + ' negative words in the text.');
+  console.log('Negative sentiments: ' + negatives.join(', '));
+
+  if (positives.length > negatives.length) {
+    textSentiment = 'Positive';
+  } else if (positives.length < negatives.length) {
+    textSentiment = 'Negative';
+  } else {
+    textSentiment = 'Neutral';
+  }
+
+  console.log('The sentiment of the text is ' + textSentiment + '.');
+}
+
+function mailCount(emailData) {
+  var emails = emailData.split('##||##');
+  var count = emails.length;
+  var emailDates = emails.map(function(email) {
+    return email.split('#/#')[2];
+  });
+
+  console.log('Count of Email: ' + count);
+  console.log('Date Range: ' + displayableDateRanges(emailDates));
+
+}
+
+function displayableDateRanges(dates) {
+  var dateObjects = getDateObjects(dates);
+
+  dateObjects.sort( function(a,b) {
+    return a.valueOf() > b.valueOf();
+  });
+
+  return dateObjects[0].toDateString() + ' - ' + dateObjects[dateObjects.length - 1].toDateString();
+
+}
+
+function getDateObjects(dates) {
+  return dates.map(function (date) {
+    var dateElements = date.split(' ')[1].split('-');
+    var month = parseInt(dateElements[0]) - 1;
+    var day = parseInt(dateElements[1]);
+    var year = parseInt(dateElements[2]);
+    return new Date(year, month, day);
+  });
+}
+
+function longestSentence(text) {
+  var sentences = text.match(/[A-z].+?[!?.]/g)
+  var longestSentence = sentences.reduce(function(longest, next) {
+    return wordsCount(next) > wordsCount(longest) ? next : longest;
+  });
+  console.log('The longest sentence is ' + wordsCount(longestSentence) + ' words.');
+  console.log(longestSentence);
+}
+
+function wordsCount(sentence) {
+  return sentence.split(' ').length;
+}
+
+  </script>
+</body>
