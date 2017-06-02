@@ -1,0 +1,97 @@
+<body>
+  <script>
+  //Double char Part 1
+  function repeater(string) {
+    var result = '';
+    for (var i = 0; i < string.length; i++) {
+      result = result + string[i] + string[i];
+    }
+    return result;
+  }
+
+  //Double char Part 2
+  function doubleConsonants(string) {
+    var result = '';
+    for (var i = 0; i < string.length; i++) {
+      if (string[i].match(/[0-9aeiou\!\.\s\-]/i)) {
+        result += string[i];
+      } else {
+        result = result + string[i] + string[i];
+      }
+    }
+    return result;
+  }
+
+  //Convert number to reversed array of digits
+  function reversedNumber(number) {
+    var numberArray = String(number).split('');
+    var reverseArray = numberArray.reverse();
+    return parseInt(reverseArray.join(''), 10);
+  }
+
+  //Get the Middle Character
+  function centerOf(string) {
+    if (string.length % 2 === 0) {
+      return string.substr(string.length / 2 - 1, 2);
+    } else {
+      var midpoint = Math.floor(string.length / 2);
+      return string[midpoint];
+    }
+  }
+
+  //Always return negative
+  function negative(number) {
+    return -Math.abs(number);
+  }
+
+  //Counting Up
+  function sequence(number) {
+    var result = [];
+    for (var i = 1; i <= number; i++) {
+      result.push(i);
+    }
+    return result;
+  }
+
+  //Name Swapping
+  function swapName(name) {
+    var nameArray = name.split(' ');
+    return nameArray[1] + ', ' + nameArray[0];
+  }
+
+  //LS SOLUTION
+  function swapName(name) {
+    return name.split(' ').reverse().join(', ');
+  }
+
+  //Sequence Count
+  function sequence(count, start) {
+    var result = [];
+    var total = 0;
+    for (var i = 0; i < count; i++) {
+      total += start;
+      result.push(total);
+    }
+    return result;
+  }
+
+  //Reverse It Part 1
+  function reverseSentence(string) {
+    return string.split(' ').reverse().join(' ');
+  }
+
+  //Reverse It Part 2
+  function reverseWords(string) {
+    var result = [];
+    var words = string.split(' ');
+    for (var i = 0; i < words.length; i++) {
+      if (words[i].length >= 5) {
+        result.push(words[i].split('').reverse().join(''));
+      } else {
+        result.push(words[i]);
+      }
+    }
+    return result.join(' ');
+  }
+  </script>
+</body>
