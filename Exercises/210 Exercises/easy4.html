@@ -1,0 +1,113 @@
+<body>
+  <script>
+  //LS SOLUTION
+  //COuldn't figure out the math at all.
+  /*
+    var DEGREE = '\xB0';
+var MINUTES_PER_DEGREE = 60;
+var SECONDS_PER_DEGREE = 3600;
+
+function dms(degreesFloat) {
+  var degreesInt = Math.floor(degreesFloat);
+  var minutes = Math.floor((degreesFloat - degreesInt) * MINUTES_PER_DEGREE);
+  var seconds = Math.floor(
+    (degreesFloat - degreesInt - (minutes / MINUTES_PER_DEGREE)) *
+    SECONDS_PER_DEGREE
+  );
+  return degreesInt + DEGREE + padZeroes(minutes) + "'" +
+                               padZeroes(seconds) + '"';
+}
+
+function padZeroes(number) {
+  var numString = String(number);
+  return numString.length < 2 ? ('0' + numString) : numString;
+}
+*/
+
+  //Combining Arrays
+  function union(array1, array2) {
+    var result = {};
+    array1.forEach(function(element) {
+      result[element] = 1;
+    });
+    array2.forEach(function(element) {
+      result[element] = 1;
+    });
+    return Object.keys(result);
+  }
+
+  //Halvsies
+  function halvsies(array) {
+    var middlePoint = Math.ceil(array.length / 2);
+    return [array.slice(0, middlePoint), array.slice(middlePoint)];
+  }
+
+  //Find the Duplicate
+  function findDup(array) {
+    for (var i = 0; i < array.length; i++) {
+      if (array.indexOf(array[i], i + 1) >= 0) {
+        return array[i];
+      }
+    }
+    return undefined;
+  }
+
+  //Combine Two Lists
+  function interleave(array1, array2) {
+    var resultArray = [];
+    for (var i = 0; i < array1.length; i++) {
+      resultArray.push(array1[i]);
+      resultArray.push(array2[i]);
+    }
+    return resultArray;
+  }
+
+  //Multiplicative Average
+  function showMultiplicativeAverage(array) {
+    return (array.reduce(function(total, value) {
+      return total * value
+    }) / array.length).toFixed(3);
+  }
+
+  //Multiply Lists
+  function multiplyList(array1, array2) {
+    var result = [];
+    for (var i = 0; i < array1.length; i++) {
+      result.push(array1[i] * array2[i]);
+    }
+    return result;
+  }
+
+  //Digits List
+  function digitList(number) {
+    return String(number).split('').map(function(number) {
+      return parseInt(number, 10);
+    });
+  }
+
+  //How many
+  function countOccurrences(array) {
+    var result = {}
+    for (var i = 0; i < array.length; i++) {
+      if (result[array[i]] === undefined) {
+        result[array[i]] = 1;
+      } else {
+        result[array[i]] += 1;
+      }
+    }
+    Object.keys(result).forEach(function(element) {
+      console.log(String(element) + ' => ' + result[element]);
+      });
+  }
+
+  //Array Average
+  function average(array) {
+    var result = array.reduce(function(total, number) {
+      return total + number;
+    });
+    return Math.floor(result / array.length);
+  }
+
+
+  </script>
+</body>

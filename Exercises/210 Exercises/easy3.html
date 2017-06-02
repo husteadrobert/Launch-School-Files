@@ -1,0 +1,114 @@
+<body>
+  <script>
+  //How Old is Teddy
+  function teddy() {
+    var age = Math.floor(Math.random() * (200 - 20 + 1)) + 20;
+    console.log("Teddy is " + String(age) + " years old!");
+  }
+
+  //Searching 101
+  /*
+  var array = [];
+  array.push(parseInt(prompt("Enter the 1st Number:")));
+  array.push(parseInt(prompt("Enter the 2nd Number:")));
+  array.push(parseInt(prompt("Enter the 3rd Number:")));
+  array.push(parseInt(prompt("Enter the 4th Number:")));
+  array.push(parseInt(prompt("Enter the 5th Number:")));
+  var last = parseInt(prompt("Enter the last Number:"));
+
+  if (array.indexOf(last) !== -1) {
+    console.log('The number ' + String(last) + ' appears in \[' + String(array) + '\].');
+  } else {
+    console.log('The number ' + String(last) + ' does not appear in \[' + String(array) + '\].');
+  }
+  */
+
+  //When Will I Retire
+  /*
+  var age = parseInt(prompt("What is your age?"));
+  var retireAge = parseInt(prompt("At what age will you retire?"));
+  var today = new Date();
+  var year = today.getFullYear();
+
+  var remainingYears = retireAge - age;
+  var retireYear = year + remainingYears;
+  console.log("It's " + String(year) + ". You will retire in " + String(retireYear) + ".");
+  console.log("You only have " + String(remainingYears) + " years of work to go.");
+  */
+
+  //Palindromic Strings Part 1
+  function isPalindrome(string) {
+    var letters = string.split('');
+    for (var i = 0; i < string.length / 2; i++) {
+      if (letters[i] !== letters[string.length - 1 - i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+  //LS SOLUTION
+  function isPalindrome(string) {
+    return string === string.split('').reverse().join('');
+  }
+
+  //Palindromic Strings Part 2
+  function isRealPalindrome(string) {
+    var cleanString = string.replace(/[^a-z0-9]/gi, '');
+    return isPalindrome(cleanString.toLowerCase());
+  }
+
+  //Palindromic Number
+  function isPalindromicNumber(number) {
+    return isPalindrome(String(number));
+  }
+
+  //Running Totals
+  function runningTotal(array) {
+    if (array.length === 0) {
+      return [];
+    }
+    var total = array[0];
+    var resultArray = [];
+    resultArray.push(total);
+    for (var i = 1; i < array.length; i++) {
+      total += array[i];
+      resultArray.push(total);
+    }
+    return resultArray;
+  }
+
+  //Letter Swap
+  function swap(string) {
+    return string.split(' ').map(function(word) {
+      var letters = word.split('');
+      if (letters.length === 1) {
+        return word;
+      }
+      var firstLetter = letters[0];
+      var lastLetter = letters[word.length -1];
+      var middle = word.substring(1, word.length - 1);
+      return lastLetter + middle + firstLetter;
+    }).join(' ');
+  }
+
+  //Letter Counter Part 1
+  function wordSizes(string) {
+    var result = {};
+    string.split(' ').forEach(function(word) {
+      var length = String(word.length);
+      if (result[length] === undefined) {
+        result[length] = 1;
+      } else {
+        result[length] += 1;
+      }
+    });
+    return result;
+  }
+
+  //Letter Counter Part 2
+  function realWordSizes(string) {
+    var cleanString = string.replace(/[^a-z0-9\s]/gi, '');
+    return wordSizes(cleanString);
+  }
+  </script>
+</body>
