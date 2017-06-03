@@ -1,0 +1,148 @@
+<body>
+  <script>
+    //Uppercase Check
+    function isUppercase(string) {
+      return string === string.toUpperCase();
+    }
+    function isUppercase(string) {
+      return !string.match(/[a-z]/);
+    }
+
+    //Delete Vowels
+    function removeVowels(array) {
+      return array.map(function(word) {
+        return word.replace(/[aeiou]/gi, '');
+      });
+    }
+
+    //Lettercase Counter
+    function letterCaseCount(string) {
+      var result = {
+        lowercase: 0,
+        uppercase: 0,
+        neither: 0,
+      };
+      string.split('').forEach(function(letter) {
+        if (!!letter.match(/[A-Z]/)) {
+          result.uppercase += 1;
+        } else if (!!letter.match(/[a-z]/)) {
+          result.lowercase += 1;
+        } else {
+          result.neither += 1;
+        }
+      });
+      return result;
+    }
+    //LS SOLUTIOn
+    function letterCaseCount(letters) {
+      var lowerArray = letters.match(/[a-z]/g) || [];
+      var upperArray = letters.match(/[A-Z]/g) || [];
+      var neitherArray = letters.match(/[^a-z]/ig) || [];
+      return {
+        lowercase: lowerArray.length,
+        uppercase: upperArray.length,
+        neither: neitherArray.length,
+      };
+    }
+
+    //Capitalize Words
+    function wordCap(string) {
+      string = string.toLowerCase();
+      var stringArray = string.split(' ');
+      return stringArray.map(function(word) {
+        return word[0].toUpperCase() + word.slice(1);
+      }).join(' ');
+    }
+
+    //Swap Case
+    function swapcase(string) {
+      return string.split(' ').map(function(word) {
+        return word.split('').map(function(letter) {
+          if (letter.match(/[a-z]/)) {
+            return letter.toUpperCase();
+          } else if (letter.match(/[A-Z]/)) {
+            return letter.toLowerCase();
+          } else {
+            return letter;
+          }
+        }).join('');
+      }).join(' ');
+    }
+    //LS SOLUTION
+    function swapcase(words) {
+      return words.split('').map(function(char) {
+        if (char.match(/[a-z]/)) {
+          return char.toUpperCase();
+        } else if (char.match(/[A-Z]/)) {
+          return char.toLowerCase();
+        } else {
+          return char;
+        }
+      }).join('');
+    }
+
+    //Staggered Caps Part 1
+    function staggeredCase(string) {
+      return string.split('').map(function(char, index) {
+        if (index % 2 === 0 && char.match(/[a-z]/i)) {
+          return char.toUpperCase();
+        } else if (index % 2 !== 0 && char.match(/[a-z]/i)) {
+          return char.toLowerCase();
+        } else {
+          return char;
+        }
+      }).join('');
+    }
+
+    //Staggered Caps Part 2
+    function staggeredCase(string) {
+      var toUpperCase = true;
+      return string.split('').map(function(char) {
+        if (char.match(/[a-z]/i)) {
+          if (toUpperCase) {
+            toUpperCase = false;
+            return char.toUpperCase();
+          } else {
+            toUpperCase = true;
+            return char.toLowerCase();
+          }
+        } else {
+          return char;
+        }
+      }).join('');
+    }
+
+    //How Long Are You
+    function wordLengths(string) {
+      return string.split(' ').map(function(word) {
+        return word.concat(' ' + word.length);
+      });
+    }
+
+    //Search Word Part 1
+    var text = 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?'
+
+    function searchWord(word, text) {
+      var searchTerm = new RegExp(word, 'gi');
+      var matches = text.match(searchTerm);
+      return matches ? matches.length : 0;
+    }
+
+    //Search Word Part 2
+    function searchWord(searchWord, text) {
+      return text.split(' ').map(function(word) {
+        if (word.toLowerCase() === searchWord.toLowerCase()) {
+          return '**' + word.toUpperCase() + '**';
+        } else {
+          return word;
+        }
+      }).join(' ');
+    }
+    //LS SOLUTION
+    function searchWord(word, text) {
+      var regex = new RegExp(word, 'gi');
+      return text.replace(regex, '**' + word.toUpperCase() + '**');
+    }
+
+  </script>
+</body>
