@@ -1,0 +1,232 @@
+<body>
+  <script>
+    //Alphabetic Numbers
+    function alphabeticNumberSort(array) {
+      var cipher = {
+        0: 'zero',
+        1: 'one',
+        2: 'two',
+        3: 'three',
+        4: 'four',
+        5: 'five',
+        6: 'six',
+        7: 'seven',
+        8: 'eight',
+        9: 'nine',
+        10: 'ten',
+        11: 'eleven',
+        12: 'twelve',
+        13: 'thirteen',
+        14: 'fourteen',
+        15: 'fifteen',
+        16: 'sixteen',
+        17: 'seventeen',
+        18: 'eigthteen',
+        19: 'nineteen',
+      };
+      return array.sort(function(letter1, letter2) {
+        if (cipher[letter1] < cipher[letter2]) {
+          return -1;
+        } else if (cipher[letter1] > cipher[letter2]) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    }
+    //LS Solution
+    function wordSort(num1, num2) {
+  var NUMBER_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight',
+                      'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen',
+                      'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+
+  if (NUMBER_WORDS[num1] > NUMBER_WORDS[num2]) {
+    return 1;
+  } else if (NUMBER_WORDS[num1] < NUMBER_WORDS[num2]) {
+    return -1;
+  } else {
+    return 0;
+  }
+};
+
+function alphabeticNumberSort(array) {
+  return array.sort(wordSort);
+}
+
+  //Sum of Digits
+  function sum(number) {
+    var numberArray = String(number).split('').map(function(element) {
+      return parseInt(element, 10);
+    });
+    return numberArray.reduce(function(sum, number) {
+      return sum + number;
+    });
+  }
+
+  //Multiply All Pairs
+  function multiplyAllPairs(array1, array2) {
+    var result = [];
+    for (var i = 0; i < array1.length; i++) {
+      for (var y = 0; y < array2.length; y++) {
+        result.push(array1[i] * array2[y]);
+      }
+    }
+    return result.sort(function(a, b) {
+      if (a < b) {
+        return -1;
+      } else if (a > b) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  //LS SOLUTION
+  function multiplyAllPairs(array1, array2) {
+  var result = [];
+  array1.forEach(function(element1) {
+    array2.forEach(function(element2) {
+      result.push(element1 * element2);
+    });
+  });
+
+  return result.sort(function(a, b) {
+    return a - b;
+  });
+}
+
+  //Sum of Sums
+  function sumOfSums(array) {
+    var sum = 0;
+    var fixedArray = array.reverse();
+    for (var i = 0; i < array.length; i++) {
+      sum += fixedArray.slice(i).reduce(function(sum, number) {
+        return sum + number
+      });
+    }
+    return sum;
+  }
+  //LS SOLUTION
+  function sumOfSums(numbers) {
+  return numbers.map(function(number, idx) {
+    return numbers.slice(0, idx + 1).reduce(function(sum, value) {
+      return sum + value;
+    });
+  }).reduce(function(sum, value) {
+    return sum + value;
+  });
+}
+
+  //Leading Substrings
+  function substringsAtStart(string) {
+    var result = [];
+    var letters = string.split('');
+    for (var i = 0; i < string.length; i++) {
+      result.push(letters.slice(0, i + 1).join(''));
+    }
+    return result;
+  }
+
+  //All Substrings
+  function substrings(string) {
+    var result = [];
+    for (var i = 0; i < string.length; i++) {
+      result = result.concat((substringsAtStart(string.slice(i))));
+    }
+    return result;
+  }
+
+  //Palindromic Substrings
+  function palindromes(string) {
+    var substringArray = substrings(string);
+    return substringArray.filter(function(string) {
+      return string.length > 1 && string === string.split('').reverse().join('');
+    });
+
+  }
+  //LS SOLUTION
+  function isPalindrome(word) {
+  return word.length > 1 && word === word.split('').reverse().join('');
+}
+
+function palindromes(string) {
+  return substrings(string).filter(isPalindrome);
+}
+
+  //Grocery List
+  function buyFruit(array) {
+    return array.map(function(element) {
+      return repeat(element);
+    }).reduce(function(result, fruit) {
+      return result.concat(fruit);
+    });
+  }
+
+  function repeat(element) {
+    var result = [];
+    for (var i = 0; i < element[1]; i++) {
+      result.push(element[0]);
+    }
+    return result;
+  }
+
+  //Inventory Item Transaction
+  var transactions = [ {id: 101, movement: 'in', quantity: 5, },
+                     {id: 105, movement: 'in', quantity: 10, },
+                     {id: 102, movement: 'out', quantity: 17, },
+                     {id: 101, movement: 'in', quantity: 12, },
+                     {id: 103, movement: 'out', quantity: 15, },
+                     {id: 102, movement: 'out', quantity: 15, },
+                     {id: 105, movement: 'in', quantity: 25, },
+                     {id: 101, movement: 'out', quantity: 18, },
+                     {id: 102, movement: 'in', quantity: 22, },
+                     {id: 103, movement: 'out', quantity: 15, },];
+  function transactionsFor(id, transactions) {
+    return transactions.filter(function(object) {
+      return object.id === id;
+    });
+  }
+
+  //Inventory Item Availability
+  function isItemAvailable(itemID, transactions) {
+    var itemList = transactions.filter(function(object) {
+      return object.id === itemID;
+    });
+    return totalOut(itemList) < totalIn(itemList);
+  }
+
+  function totalOut(itemList) {
+    return itemList.reduce(function(sum, item) {
+      if (item.movement === 'out') {
+        return sum + item.quantity;
+      } else {
+        return sum + 0;
+      }
+    }, 0);
+  }
+
+  function totalIn(itemList) {
+    return itemList.reduce(function(sum, item) {
+      if (item.movement === 'in') {
+        return sum + item.quantity;
+      } else {
+        return sum + 0;
+      }
+    }, 0);
+  }
+
+  //LS SOLUTION
+function isItemAvailable(item, transactions) {
+  var quantity = transactionsFor(item, transactions).reduce(function(sum, transaction) {
+    if (transaction.movement === 'in') {
+      return sum + transaction.quantity;
+    } else {
+      return sum - transaction.quantity;
+    }
+  }, 0);
+
+  return quantity > 0;
+}
+  </script>
+</body>
