@@ -1,0 +1,333 @@
+<body>
+  <script>
+  /*
+-Input:
+  -A Digit
+  -Bad Input: Anything other than a integer value
+-Output: 
+  -Array of digits
+
+Method:
+  -Create an Array of N size, all elements set to Boolean True
+  -Iterate through array starting at 2 + itself, setting Boolean to opposite value
+  -When Finished, Iterate through Array and store index + 1 of all True values.
+  -Return index array.
+
+
+  */
+  //1000 Lights
+  function lightsOn(switches) {
+    var lights = [];
+    var lightsIndex = [];
+    for (var i = 0; i < switches; i++) {
+      lights[i] = true;
+    }
+    for (var i = 2; i <= lights.length; i++) {
+      for (var y = i; y <= lights.length; y+=i) {
+        if (lights[y - 1]) {
+          lights[y - 1] = false;
+        } else {
+          lights[y - 1] = true;
+        }
+      }
+    }
+    lights.forEach(function (element, index) {
+      if (element) {
+        lightsIndex.push(index + 1);
+      }
+    });
+    return lightsIndex;
+  }
+
+//Diamonds
+/*
+Input:
+  -An Odd Integer, can assume will always be odd
+
+Output:
+  -A diamond of * chars.
+  For example: diamond(9)
+  stars:  1, 3, 5, 7, 9, 7, 5, 3, 1
+  spaces: 4, 3, 2, 1, 0, 1, 2, 3, 4
+  Math: (Number - Stars in Row) / 2 = Spaces Needed
+  Math: Start@1, 1+=2 Until reach N = Stars Needed (Upper Half)
+  Math: Start@N, N-=2 Until Reach 1 = Stars Needed (Lower Half)
+
+Method:
+  For loop for Upper Half until var i reaches N
+    Start at 1
+    Increase by 2 each time
+    Calculate Space by var i (which is also the amount of stars)
+  Output N Stars
+  For Loop for Lower Half until var i Reaches 0
+    Start at N - 2
+    Decrease by 2 each time
+    Calculate Space by var i (which is also the amunt of Stars)
+
+Errors Checking:
+  Non Digit Input
+  Non Odd Numbers
+  Stars too large for screen (Max of 30 or so?)
+
+
+*/
+function diamond(number) {
+  if (String(number).match(/[a-z]/i) || (number > 50)) {
+    return "Error";
+  }
+
+  var padding = '';
+  var stars = '';
+  for (var i = 1; i < number; i += 2) {
+    padding = calculatePadding(i, number);
+    stars = calculateStars(i);
+    console.log(padding + stars);
+  }
+  console.log(calculateStars(number));
+  for (var i = number - 2; i > 0; i -=2) {
+    padding = calculatePadding(i, number);
+    stars = calculateStars(i);
+    console.log(padding + stars);
+  }
+}
+
+function calculatePadding(starRow, maxStars) {
+  var paddingNeeded = (maxStars - starRow) / 2;
+  var padding = '';
+  for (var i = 1; i <= paddingNeeded; i++) {
+    padding += ' ';
+  }
+  return padding;
+}
+
+function calculateStars(starRow) {
+  var stars = '';
+  for (var i = 1; i <= starRow; i++) {
+    stars += '*';
+  }
+  return stars;
+}
+
+//Now I know My ABCs
+/*
+Input:
+  String word, case insensitive
+  Ignore Symbols/Digits
+
+Output:
+  Boolean true/false
+
+Rules:
+  Blocks of Letters, can only use 1 letter, only use block once:
+  [BO, GT, VI, XK, RE, LY, DQ, FS, ZM, CP, JW, NA, HU]
+
+Method:
+  Create Array of Letter Blocks.
+  Scrub Input:
+    Adjust to upper or lower case
+    Split into chars
+    Remove any non alphabet characters
+      ERROR if multiple words/white space
+    Iterate through chars Array
+      Check char against Blocks of Letters
+      If block with letter exists, remove it from Block of Letters
+      If can't find letter in Blocks of Letters, return FALSE
+      If reach end of chars Array, then word is Valid, return TRUE
+*/
+
+function isBlockWord(string) {
+  var letterBlocks = ['BO', 'GT', 'VI', 'XK', 'RE', 'LY', 'DQ', 'FS', 'ZM', 'CP', 'JW', 'NA', 'HU'];
+  var matchingBlock;
+  charArray = string.toUpperCase().replace(/[^a-z]/gi, '').split('');
+  for (var i = 0; i < charArray.length; i++) {
+    matchingBlock = letterBlocks.filter(function(element) {
+      return element.indexOf(charArray[i]) > -1;
+    });
+    if (matchingBlock.join('') === '') {
+      return false;
+    }
+    var index = letterBlocks.indexOf(matchingBlock.join(''));
+    letterBlocks.splice(index, 1);
+  }
+  return true;
+}
+
+//Caesar Cipher
+/*
+Input:
+  A string of 1 or more characters, consisting of alphabet, symbols, and numbers
+  Ignore symbols/numbers/white space, do not change
+  Number may be over 26, need to scrub it so it's under 26 (Number % 26)
+
+Output:
+  A string of characters that have been substituted for characters Number of spaces in the alphabet
+  Maintain Case of alphabet
+
+Method:
+  Create Variables for Min/Max char codes in Upper/Lower case
+  Create charArray from Input
+  Create Empty String to handle result of Cipher.
+  Scrub Number Input:
+    If over 26, keep subtracting 26 until get number less than 26.
+
+  Iterate through charArray
+    If the current char is not an alphabet character, push it to the result String.
+    If the current char is an alphabet character
+      Find it's charCode
+      Add NUMBER to the CharCode.
+        If CharCode now Exceeds boundaries, subtract 26
+      Push new Character to result Array
+    REturn the result string
+*/
+
+function caesarEncrypt(string, number) {
+  var LOWER_CASE_MIN = 97;
+  var LOWER_CASE_MAX = 122;
+  var UPPER_CASE_MIN = 65;
+  var UPPER_CASE_MAX = 90;
+  var result = '';
+  var charArray = string.split('');
+  if (number > 26) {
+    do {
+      number -= 26;
+    } while (number > 26)
+  }
+
+  charArray.forEach(function(letter, index) {
+    if (letter.match(/[^a-z]/i)) {
+      result = result + letter;
+    } else {
+      var charCode = letter.charCodeAt(0)
+      if (charCode < LOWER_CASE_MIN) {
+        //uppercase
+        charCode += number;
+        charCode > UPPER_CASE_MAX ? charCode -= 26 : charCode;
+        result = result + String.fromCharCode(charCode);
+      } else {
+        //lowercase
+        charCode += number;
+        charCode > LOWER_CASE_MAX ? charCode -= 26 : charCode;
+        result = result + String.fromCharCode(charCode);
+      }
+    }
+  });
+  return result;
+}
+
+//Vigenere Cipher
+/*
+Do caesarEncrypt using index of keyword + 1
+Create array of letter values for caesarEncrypt
+  bad -> [1, 0, 3]
+  Can do +1 here so [2, 1, 4]
+  index counter, when index === array.length, reset to 0.  Do this in for loop(want to continue when encounter symbol or digit)
+
+Input:
+  plaintext sentence to encrypt with symbols/numbers
+  keyword: singular word, case doesn't matter
+
+Output: 
+  String with same case and symbols in place.
+
+Method:
+  lowercase the keyword, thenc reate an Array of values to be used with casesarEncrypt
+    add +1 to adjust for 0 index of the array.
+  Create charArray out of plaintext
+  create resultString to hold result
+  Iterate through each char in charArray can use .forEach(element)
+    If the char is a letter, apply the caesarEncrypt using first number in keywordArray
+      Update the index to use with keywordArray, return it to 0 if index === keywordArray.length
+      Cat the new char to result
+    If the char is not a letter, cat it to the result and continue
+  Return the result string
+
+
+*/
+
+function vigenereCipher(plaintext, keyword) {
+  var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+  var charArray = plaintext.split('');
+  var result = '';
+  var keywordArray = keyword.toLowerCase().split('').map(function (letter) {
+    return alphabet.indexOf(letter);
+  });
+  var keywordIndex = 0;
+  var keywordLength = keywordArray.length;
+  charArray.forEach(function(letter) {
+    if (letter.match(/[a-z]/i)) {
+      result = result + caesarEncrypt(letter, keywordArray[keywordIndex]);
+      keywordIndex += 1;
+      keywordIndex === keywordLength ? keywordIndex = 0 : keywordIndex;
+    } else {
+      result = result + letter;
+    }
+  });
+  return result;
+
+}
+
+//Seeing Stars
+/*
+Input:
+  Odd Number > 7
+
+Output:
+  Star Pattern (9)
+0* 3* 3*0
+1* 2* 2*1
+2* 1* 1*2
+3* 0* 0*3
+Full 9 Stars
+3* 0* 0*3
+2* 1* 1*2
+1* 2* 2*1
+0* 3* 3*0
+
+(Number - 3) / 2 = InnerPadding
+LeftPadding = 0
+  Each Iteration: Total Iterations = (Number - 1) / 2
+  LeftPadding++
+  InnerPadding--
+Full Number Stars
+  Each Iteration: Total Iterations = (Number - 1) / 2
+  LeftPadding--
+  InnerPadding++
+
+*/
+
+function star(number) {
+  var leftPadding = 0;
+  var innerPadding = (number - 3) / 2
+  var iterationsPerHalf = (number - 1) / 2;
+
+  for (var i = 1; i <= iterationsPerHalf; i++) {
+    console.log(makeSpaces(leftPadding) + '*' + makeSpaces(innerPadding) + '*' + makeSpaces(innerPadding) + '*');
+    leftPadding++;
+    innerPadding--;
+  }
+  console.log(makeStars(number));
+  for (var i = 1; i <= iterationsPerHalf; i++) {
+    leftPadding--;
+    innerPadding++;
+    console.log(makeSpaces(leftPadding) + '*' + makeSpaces(innerPadding) + '*' + makeSpaces(innerPadding) + '*');
+  }
+}
+
+function makeSpaces(number) {
+  var result = '';
+  for (var i = 1; i <= number; i++) {
+    result = result + ' ';
+  }
+  return result;
+}
+
+function makeStars(number) {
+  var result = '';
+  for (var i = 1; i <= number; i++) {
+    result = result + '*';
+  }
+  return result;
+}
+
+  </script>
+</body>
