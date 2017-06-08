@@ -1,0 +1,189 @@
+<body>
+  <script>
+    //Lettercase Percentage Ratio
+    function letterPercentages(string) {
+      var charArray = string.split('');
+      var length = charArray.length;
+      var result = {
+        lowercase: 0,
+        uppercase: 0,
+        neither: 0,
+      };
+      charArray.forEach(function(letter) {
+        if (letter.match(/[a-z]/)) {
+          result.lowercase += 1;
+        } else if (letter.match(/[A-Z]/)) {
+          result.uppercase += 1;
+        } else {
+          result.neither += 1;
+        }
+      });
+      result.lowercase = (result.lowercase / length * 100).toFixed(2);
+      result.uppercase = (result.uppercase / length * 100).toFixed(2);
+      result.neither = (result.neither / length * 100).toFixed(2);
+      return result;
+    }
+    //LS SOLUTION
+    function letterPercentages(string) {
+      var count = string.length;
+      return {
+        lowercase: (((string.match(/[a-z]/g) || []).length / count) * 100).toFixed(2),
+        uppercase: (((string.match(/[A-Z]/g) || []).length / count) * 100).toFixed(2),
+        neither: (((string.match(/[^a-z]/ig) || []).length / count) * 100).toFixed(2),
+      };
+    }
+
+    //Triangle Sides
+    function triangle(side1, side2, side3) {
+      var sides = [side1, side2, side3];
+      sides.sort(function(a, b) {
+        return a > b;
+      });
+      if ((sides[0] + sides[1] < sides[2]) || (sides[0] <= 0)) {
+        return 'invalid';
+      } else if ((sides[0] === sides[1]) && (sides[1] === sides[2])) {
+        return 'equilateral';
+      } else if ((sides[0] !== sides[1]) && (sides[1] !== sides[2]) && (sides[2] !== sides[0])) {
+        return 'scalene';
+      } else {
+        return 'isosceles';
+      }
+    }
+
+    //Tri-Angles
+    function triangle(degree1, degree2, degree3) {
+      var sides = [degree1, degree2, degree3].sort();
+      var totalSides = sides.reduce(function(sum, next) {
+        return sum + next;
+      });
+      if ((totalSides !== 180) || (sides[0] <= 0)) {
+        return 'invalid';
+      } else if (sides.filter(function (side) {
+        return side < 90;
+      }).length === 3) {
+        return 'acute';
+      } else if (sides.filter(function (side) {
+        return side > 90;
+      }).length >= 1) {
+        return 'obtuse';
+      } else {
+        return 'right';
+      }
+    }
+    //LS SOLUTION PART
+    function getTriangleType(angles) {
+      if (angles.some(testRightTriangle)) {
+        return 'right';
+      } else if (angles.every(testAcuteTriangle)) {
+        return 'acute';
+      } else {
+        return 'obtuse';
+      }
+    }
+
+    function testRightTriangle(angle) {
+      return angle === 90;
+    }
+
+    function testAcuteTriangle(angle) {
+      return angle < 90;
+    }
+
+    //Unlucky Days
+    function fridayThe13ths(year) {
+      var total = 0;
+      var calendar = new Date(year, 1, 1);
+      for (var i = 0; i < 12; i++) {
+        calendar.setMonth(i);
+        calendar.setDate(13);
+        if (calendar.getDay() === 5) {
+          total += 1;
+        }
+      }
+      return total;
+    }
+    //LS SOLUTION
+    function fridayThe13ths(year) {
+      var thirteenths = [];
+      for (var i = 0; i < 12; i++) {
+        thirteenths.push(new Date(year, i, 13));
+      }
+
+      return thirteenths.reduce(function(count, day) {
+        return day.getDay() === 5 ? count += 1 : count += 0;
+      }, 0);
+    }
+
+    //Next Featured Number
+    function featured(number) {
+      var nextMultiple = 7 - (number % 7);
+      var currentNum = number + nextMultiple;
+      do {
+        if ((currentNum % 2 !== 0) && onlyOneDigit(currentNum)) {
+          return currentNum;
+        } else {
+          currentNum += 7;
+        }
+      } while (currentNum <= 1023456987);
+      return 'Error';
+    }
+
+    function onlyOneDigit(number) {
+      var digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+      var numberArray = String(number).split('');
+      for (var i = 0; i < numberArray.length; i++) {
+        if (digits.indexOf(numberArray[i]) === -1) {
+          return false;
+        } else {
+          digits.splice(digits.indexOf(numberArray[i]), 1);
+        }
+      }
+      return true;
+    }
+
+    //Sum Square -Square Sum
+    function sumSquareDifference(number) {
+      var numberArray = [];
+      for (var i = 1; i <= number; i++) {
+        numberArray.push(i);
+      }
+      var squareOfSums = Math.pow(numberArray.reduce(function (total, number) {
+        return total + number;
+      }),2);
+      var sumOfSquares = numberArray.reduce(function (total, number) {
+        return total + Math.pow(number, 2);
+      });
+      return squareOfSums - sumOfSquares;
+    }
+    //LS SOLUTION
+    function sumSquareDifference(n) {
+      var sum = 0;
+      var sumOfSquares = 0;
+
+      for (var i = 1; i <= n; i++) {
+        sum += i;
+        sumOfSquares += Math.pow(i, 2);
+      }
+
+      return Math.pow(sum, 2) - sumOfSquares;
+    }
+
+    //Bubble Sort
+    //Will check array.length - 1 times each pass
+    function bubbleSort(array) {
+      var switched;
+      do {
+        switched = false;
+        for (var i = 0; i < array.length - 1; i++) {
+          if (array[i] > array[i+1]) {
+            var temp = array[i];
+            array[i] = array[i+1];
+            array[i+1] = temp;
+            switched = true;
+          }
+        }
+      } while (switched)
+    }
+
+  </script>
+</body>
