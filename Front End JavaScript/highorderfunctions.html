@@ -1,0 +1,188 @@
+<html>
+  <script>
+
+    function helloFactory() {
+      var test = 'hello';
+      return function() {
+        console.log(test);
+      }
+    }
+
+    function timed(func) {
+      return function() {
+      var start = new Date();
+      func();
+      var stop = new Date();
+      console.log((stop - start).toString() + " ms have elapsed");
+      }
+    }
+
+    function loopy() {
+      var sum = 0;
+      for (var i = 0; i < 100000000; i++) {
+        sum += i;
+      }
+      console.log(sum);
+    }
+
+    function makeCounter() {
+      var count = 0;
+      return function() {
+        count += 1;
+        console.log(count);
+      }
+    }
+
+    function makeCounterLogger(start) {
+      return function(end) {
+        if (end > start) {
+          for (var i = start; i <= end; i++) {
+            console.log(i);
+          } 
+        } else {
+          for (var i = start; i >= end; i--) {
+            console.log(i);
+          }
+        }
+      }
+    }
+
+    function makeList() {
+      var list = [];
+      return function(string) {
+        if (string === undefined) {
+          //Empty
+          if (list.length === 0) {
+            console.log('The list is empty.');
+          } else {
+            for (var i = 0; i < list.length; i++) {
+              console.log(list[i]);
+            }
+          }
+        } else {
+          if (list.indexOf(string) > -1) {
+            console.log(string + ' deleted!');
+            list.splice(list.indexOf(string), 1);
+          } else {
+            list.push(string);
+            console.log(string + ' added!');
+          }
+        }
+      }
+    }
+
+    function makeMultipleLister(multiple) {
+      return function() {
+        for (var i = multiple; i <= 100; i += multiple) {
+          console.log(i);
+        }
+      }
+    }
+
+    var total = 0;
+
+    function add(number) {
+      total += add;
+      console.log(total);
+    }
+
+    function subtract(number) {
+      total -= subtract;
+      console.log(total);
+    }
+/*
+    function later(func, message) {
+      return function() {
+        func(message);
+      }
+    }
+*/
+
+    function later(func, argument) {
+      return function() {
+        func(argument);
+      }
+    }
+//==========================================
+function makeList() {
+  var items = [];
+
+  return function(newItem) {
+    var index;
+    if (newItem) {
+      index = items.indexOf(newItem);
+      if (index === -1) {
+        items.push(newItem);
+        console.log(newItem + " added!");
+      } else {
+        items.splice(index, 1);
+        console.log(newItem + " removed!");
+      }
+    } else {
+      if (items.length === 0) {
+        console.log("The list is empty.");
+      } else {
+        items.forEach(function(item) {
+          console.log(item);
+        });
+      }
+    }
+  };
+}
+
+function makeList() {
+  var obj = {
+    items: [],
+    add: function(item) {
+      this.items.push(item);
+      console.log(item + ' added!');
+    },
+    remove: function(item) {
+      this.items.splice(this.items.indexOf(item), 1);
+      console.log(item + ' deleted!');
+    },
+    list: function() {
+      this.items.forEach(function(element) {
+        console.log(element);
+      });
+    },
+  };
+  return obj;
+}
+
+function makeList() {
+  var list = [];
+  return {
+    add: function(item) {
+      var index = items.indexOf(item);
+      if (index === -1) {
+        items.push(item);
+        console.log(item + ' added!');
+      }
+    },
+    list: function() {
+      if (items.length === 0) {
+        console.log("Empty");
+      } else {
+        items.forEach(function(element) {
+          console.log(element);
+        });
+      }
+    },
+    remove: function(item) {
+      var index = items.indexOf(item);
+      if (index !== -1) {
+        items.splice(index, 1);
+        console.log(item + ' removed!');
+      }
+    },
+    clear: function() {
+      items = [];
+      console.log('all items deleted');
+    },
+  };
+}
+
+
+  </script>
+</html>
