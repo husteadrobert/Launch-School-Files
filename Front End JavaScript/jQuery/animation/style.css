@@ -1,3 +1,4 @@
+
 body {
   background: blue;
 }
@@ -31,4 +32,24 @@ ul {
   position: relative;
   display: block;
   background: linear-gradient(to bottom, #ffffff 0%, #0066cc 100%);
+}
+
+#canvas > div {
+  position: absolute;
+  z-index: 1;
+  height: 30px;
+  width: 30px;
+  background-color: red;
+}
+
+#canvas .Square {
+}
+
+#canvas .Circle {
+  border-radius: 100%;
+}
+
+#canvas .Star {
+  background: transparent url("star.png");
+  background-size: 100% auto;
 }
