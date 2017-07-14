@@ -1,0 +1,34 @@
+body {
+  background: blue;
+}
+
+main {
+  background: white;
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 10px 10px;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+dd {
+  margin-left: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+#canvas {
+  height: 500px;
+  box-sizing: border-box;
+  border: 1px solid black;
+  position: relative;
+  display: block;
+  background: linear-gradient(to bottom, #ffffff 0%, #0066cc 100%);
+}
