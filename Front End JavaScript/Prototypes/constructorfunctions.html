@@ -1,0 +1,62 @@
+<head>
+</head>
+<body>
+<script>
+function createObject(obj) {
+  function temp() {};
+  temp.prototype = obj;
+  return new temp();
+}
+
+var foo = {
+  a: 1
+};
+
+var bar = createObject(foo);
+foo.isPrototypeOf(bar);         // true
+
+Object.prototype.begetObject = function() {
+  function F() {}
+  F.prototype = this;
+  return new F();
+}
+
+var foo = {
+  a: 1
+};
+
+var bar = foo.begetObject();
+foo.isPrototypeOf(bar);         // true
+
+
+function neww(constructor, args) {
+  // ..
+  var object = Object.create(constructor.prototype); //new Object blueprint
+  var result = constructor.apply(object, args) //call constructor function with blueprint and args
+
+  object.constructor = constructor; //Set constructor to arg(self)
+  return result === undefined ? object : result;
+}
+
+function neww(constructor, args) {
+  var object = Object.create(constructor.prototype);
+  var result = constructor.apply(object, args);
+
+  object.constructor = constructor;
+  return result === undefined ? object : result;
+}
+
+function Person(firstName, lastName) {
+  this.firstName = firstName;
+  this.lastName = lastName;
+}
+
+Person.prototype.greeting = function() {
+  console.log('Hello, ' + this.firstName + ' ' + this.lastName);
+}
+
+var john = neww(Person, ['John', 'Doe']);
+john.greeting();          // Hello, John Doe
+john.constructor;         // Person(firstName, lastName) {...}
+</script>
+</body>

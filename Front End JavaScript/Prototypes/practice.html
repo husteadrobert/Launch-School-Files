@@ -1,0 +1,105 @@
+<head>
+<style>
+
+</style>
+</head>
+<body>
+
+<script>
+/*
+function getDefiningObject(object, propKey) {
+  if (object.hasOwnProperty(propKey)) {
+    return object;
+  }
+  var currentObject = Object.getPrototypeOf(object);
+  while (currentObject !== null) {
+    if (currentObject.hasOwnProperty(propKey)) {
+      return currentObject;
+    } else {
+      currentObject = Object.getPrototypeOf(currentObject);
+    }
+  }
+  return null;
+}
+
+var foo = {
+  a: 1,
+  b: 2
+};
+
+var bar = Object.create(foo);
+var baz = Object.create(bar);
+var qux = Object.create(baz);
+
+bar.c = 3;
+*/
+
+/*
+function shallowCopy(object) {
+  return Object.create(object);
+}
+
+function shallowCopy(object) {
+  var copy = Object.create(Object.getPrototypeOf(object));
+
+  Object.getOwnPropertyNames(object).forEach(function(prop) {
+    copy[prop] = object[prop];
+  });
+
+  return copy;
+}
+
+var foo = {
+  a: 1,
+  b: 2
+};
+
+var bar = Object.create(foo);
+bar.c = 3;
+bar.say = function() {
+  console.log("c is " + this.c);
+}
+
+var baz = shallowCopy(bar);
+console.log(baz.a);       // 1
+baz.say();   
+*/
+
+function extend(destination) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+    Object.getOwnPropertyNames(source).forEach(function(prop) {
+      destination[prop] = source[prop];
+    });
+  }
+  return destination;
+}
+
+var foo = {
+  a: 0,
+  b: {
+    x: 1,
+    y: 2
+  }
+};
+
+var joe = {
+  name: 'Joe'
+};
+
+var funcs = {
+  sayHello: function() {
+    console.log('Hello, ' + this.name);
+  },
+
+  sayGoodBye: function() {
+    console.log('Goodbye, ' + this.name);
+  }
+};
+
+var object = extend({}, foo, joe, funcs);
+
+console.log(object.b.x);          // 1
+object.sayHello();                // Hello, Joe
+</script>
+</body>

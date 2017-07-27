@@ -1,0 +1,79 @@
+<head>
+</head>
+<body>
+<script>
+/*
+var Vehicle = function() {
+  this.doors = 4;
+  this.wheels = 4;
+}
+*/
+
+function Vehicle() { //Code for dropping new
+  if (!(this instanceof Vehicle)) {
+    return new Vehicle();
+  }
+  return this;
+}
+
+Vehicle.prototype = { //Loses constructor
+  doors: 4,
+  wheels: 4,
+};
+
+var sedan = Vehicle();
+var coupe = new Vehicle();
+
+coupe.doors = 2;
+console.log(sedan.hasOwnProperty('doors'));  //False, comes from prototype
+console.log(coupe.hasOwnProperty('doors'));  //True, since changed on line 24
+
+function Coupe() {
+}
+/*
+function Motorcycle() {
+  this.doors = 0;
+  this.wheels = 2;
+}
+*/
+/*
+function Motorcycle() {
+  var o = this;
+  if (!(o instanceof Motorcycle)) {
+    o = new Motorcycle();
+  }
+  o.doors = 0;
+  o.wheels = 2;
+  return o;
+}
+*/
+
+
+function Motorcycle()  {
+  if (!(this instanceof Motorcycle)) {
+    return new Motorcycle();
+  }
+  this.doors = 0;
+  this.wheels = 2;
+  return this;
+}
+
+
+Motorcycle.prototype = new Vehicle();
+Motorcycle.prototype.constructor = Motorcycle;
+Coupe.prototype = new Vehicle();
+Coupe.prototype.doors = 2;
+Coupe.prototype.constructor = Coupe;
+
+var coupe = new Coupe();
+var motorcycle = new Motorcycle();
+
+function Sedan() {
+}
+
+Sedan.prototype = Object.create(Vehicle.prototype);
+Sedan.prototype.constructor = Sedan;
+var sedan = new Sedan();
+
+</script>
+</body>
