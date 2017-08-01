@@ -28,31 +28,10 @@ var ContactList = {
       Handlebars.registerPartial($partial.attr('id'), $partial.html());
     });
   },
-  /*
-  bind: function() {
-    $('.container').on('click', 'a', this.clickEvent.bind(this));
-  },
-  */
   init: function() {
-    //this.bind();
     this.compileTemplates();
     return this;
   },
-  /*
-  clickEvent: function(e) {
-    e.preventDefault();
-    var $contacts = $('.singleContact');
-    var $el = $(e.target);
-    var id = parseInt($el.closest('div').attr('data-id'), 10);
-    if ($el.attr('data-method') === 'delete') {
-      this.deleteContact(id);
-    } else if ($el.attr('data-method') === 'edit') {
-      this.editContact(id)
-    }
-    //console.log($contacts.index($el.closest('div')) + $el.attr("data-method"));
-    //console.log($el.closest('div').attr('data-id') + $el.attr('data-method'));
-  },
-  */
   addToContacts: function(data) {
     var newContact = {};
     data.forEach(function(object) {
@@ -68,8 +47,12 @@ var ContactList = {
       return object.id !== id;
     });
   },
-  editContact: function(id) {
+  editContact: function(id, data) {
     console.log('edit');
+    var currentContact = this.getSingleContact(id);
+    data.forEach(function(object) {
+      currentContact[object.name] = object["value"];
+    });
   },
   getSingleContact: function(id) {
     var result = this.contacts.filter(function(object) {
@@ -82,6 +65,7 @@ var ContactList = {
 $(function() {
   var list = Object.create(ContactList).init();
   updateDisplay(list);
+  $('.container').hide().delay(300).slideDown(300);
 
   $('.container').on('click', '#newContact', function(e) {
     e.preventDefault();
@@ -96,18 +80,28 @@ $(function() {
 
     $('.container').on('click', 'a[data-method="delete"]', function(e) {
     e.preventDefault();
+    //Alert
     var id = parseInt($(e.target).closest('div').attr('data-id'));
     list.deleteContact(id);
     updateDisplay(list);
   });
 
-  $('main').on('submit', 'form', function(e) {
+  $('.forms').on('click', 'a', function(e) {
     e.preventDefault();
-    //Check Data-method, then use list.editContact(data) or list.addToContacts(data)
-    var data = $(this).serializeArray();
-    list.addToContacts(data);
+    var $form = $(this).closest('form');
+    if ($(this).attr('id') === 'cancelButton') {
+      showMainMenu();
+      return;
+    }
+    var data = $form.serializeArray();
+    //Check Fields
+    if ($form.attr('data-method') === 'edit') {
+      list.editContact(parseInt($form.attr('data-id') ,10), data);
+    } else {
+      list.addToContacts(data)
+    }
     updateDisplay(list);
-    this.reset();
+    $(this).closest('form')[0].reset();
     showMainMenu();
   });
 
@@ -122,10 +116,6 @@ function showMainMenu() {
 }
 
 function showNewMenu(list) {
-  //var $toMove = $('#createContact').detach();
-  //$('main').append($toMove);
-  //$('.container').slideUp(300);
-  //$('#createContact').slideDown(300);
   var info = {
     title: 'Create',
     method: 'new',
@@ -138,14 +128,10 @@ function showNewMenu(list) {
 }
 
 function showEditMenu(list, id) {
-
-  //var $toMove = $('#editContact').detach();
-  //$('main').append($toMove);
-  //$('.container').slideUp(300);
-  //$('#editContact').slideDown(300);
   var info = list.getSingleContact(id);
   info.title = "Edit";
   info.method = "edit";
+  info.id = id;
   var $toMove = $('.forms').html(list.templates.form(info));
   $('main').append($toMove);
   $('.container').slideUp(300);
@@ -158,11 +144,9 @@ function updateDisplay(list) {
 }
 
 //Checking Form
-//Cancel vs. Submit
-//Edit Form
 //Tag System
-//Can use template for Edit/New Contact
-//Use function with :visible to show main menu on 'cancel'
-//Dont' need click events in object
-//Initial slide down on load
-//REmove displaylist from Contacts.
+//No contacts issues
+//Local Storage
+
+//Put in placeholder, .remove(), updateDisplay put it in if empty
+//put placeholder inside container div

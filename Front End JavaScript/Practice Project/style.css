@@ -14,6 +14,10 @@ main header {
   margin-bottom: 20px;
 }
 
+input[name="search"] {
+  float: right;
+}
+
 h1 {
   font-size: 3em;
   padding-bottom: 10px;
@@ -73,8 +77,6 @@ dl {
   margin: 10px 0 15px 0;
 }
 
-#createContact,
-#editContact,
 .forms {
   display: none;
 }

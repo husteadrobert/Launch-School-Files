@@ -19,52 +19,15 @@
       </div>
       <div class="forms">
       </div>
-      <!--
-      <div id="createContact">
-        <h3>Create Contact</h3>
-        <form action="#" method="get">
-          <fieldset>
-            <dl>
-              <dt>Name:</dt>
-              <dd><input type="text" name="name"></dd>
-              <dt>Email Address:</dt>
-              <dd><input type="email" name="email"></dd>
-              <dt>Phone Number:</dt>
-              <dd><input type="text" name="phoneNumber"></dd>
-            </dl>
-            <input type='submit' value='submit'>
-            <input type='submit' value='cancel'>
-          </fieldset>
-        </form>
-      </div>
-      <div id="editContact">
-        <h3>Edit Contact</h3>
-        <form action="#" method="get">
-          <fieldset>
-            <dl>
-              <dt>Name:</dt>
-              <dd><input type="text" name="name"></dd>
-              <dt>Email Address:</dt>
-              <dd><input type="email" name="email"></dd>
-              <dt>Phone Number:</dt>
-              <dd><input type="text" name="phoneNumber"></dd>
-            </dl>
-            <input type='submit' value='submit'>
-            <input type='submit' value='cancel'>
-          </fieldset>
-        </form>
-      </div>
-      -->
     </main>
 
-
     <footer>
-      <p>Developed by <a href="#">Robert Hustead</a> for <a href="#">Launch School</a></p>
+      <p>Developed by <a href="https://github.com/husteadrobert/Launch-School-Files">Robert Hustead</a> for <a href="https://launchschool.com">Launch School</a></p>
     </footer>
 
     <script type="text/x-handlebars" id="form">
       <h3>{{title}} Contact</h3>
-      <form action="#" method="get" data-method="{{method}}">
+      <form action="#" method="get" data-method="{{method}}" data-id="{{id}}">
         <fieldset>
           <dl>
             <dt>Name:</dt>
@@ -74,15 +37,15 @@
             <dt>Phone Number:</dt>
             <dd><input type="text" name="phoneNumber" value="{{phoneNumber}}"></dd>
           </dl>
-          <input type='submit' value='submit'>
-          <input type='submit' value='cancel'>
+          <a href="#" type="submit" id="submitButton">Submit</a>
+          <a href="#" id="cancelButton">Cancel</a>
         </fieldset>
     </script>
 
     <script type="text/x-handlebars" id="contacts">
       <header>
         <a href="#" id="newContact">Add Contact</a>
-        <input type="text">
+        <input type="text" name="search" placeholder="Search">
       </header>
       {{#each contacts}}
       {{> contact}}
