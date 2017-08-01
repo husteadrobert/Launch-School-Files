@@ -1,0 +1,85 @@
+header h1,
+header h3,
+footer {
+  text-align: center;
+}
+
+main,
+footer {
+  margin: 0 20px;
+}
+
+main header {
+  background-color: grey;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 3em;
+  padding-bottom: 10px;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
+header {
+  background-color: blue;
+  padding: 20px;
+}
+
+footer {
+  border-top: 1px solid black;
+  font-style: italic;
+  padding: 20px;
+  margin-top: 50px;
+  clear: both;
+}
+
+.singleContact {
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  float: left;
+}
+
+.container:after {
+  content: "";
+  visibility: hidden;
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+li {
+  display: inline-block;
+}
+
+main a,
+li a {
+  color: black;
+  padding: 5px 10px;
+  border: 1px solid black;
+  text-decoration: none;
+}
+
+main a:hover,
+li a:hover {
+  background-color: blue;
+  color: white;
+}
+
+dl {
+  margin: 10px 0 15px 0;
+}
+
+#createContact,
+#editContact,
+.forms {
+  display: none;
+}
+
+form dt,
+form dd {
+  display: inline-block;
+}
