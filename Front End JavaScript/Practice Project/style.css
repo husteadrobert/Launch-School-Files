@@ -18,6 +18,11 @@ input[name="search"] {
   float: right;
 }
 
+form input {
+  width: 60%;
+  box-sizing: border-box;
+}
+
 h1 {
   font-size: 3em;
   padding-bottom: 10px;
@@ -75,13 +80,63 @@ li a:hover {
 
 dl {
   margin: 10px 0 15px 0;
+  box-sizing: border-box;
+}
+
+form dt,
+form dd {
+  display: inline-block;
+  box-sizing: border-box;
+  margin-bottom: 30px;
+}
+
+form dt {
+  width: 25%;
+  text-align: right;
+}
+
+form dd {
+  width: 70%;
+  padding-left: 40px;
+}
+
+form a {
+  padding: 10px 20px;
+}
+
+form ul {
+  margin-left: 35%;
+}
+
+form li {
+  margin: 0 10px 0 0;
 }
 
 .forms {
   display: none;
 }
 
-form dt,
-form dd {
-  display: inline-block;
+.formTitle {
+  text-align: center;
+  padding: 20px 40px;
+  border-bottom: 1px solid black;
+  width: 700px;
+  display: block;
+  margin: 25px auto;
+}
+
+.error {
+  color: red;
+}
+
+.inputError {
+  border: 1px solid red;
+}
+
+.invisible {
+  display: none;
+}
+
+.help {
+  margin-left: 25.5%;
 }

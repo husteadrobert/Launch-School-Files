@@ -26,19 +26,25 @@
     </footer>
 
     <script type="text/x-handlebars" id="form">
-      <h3>{{title}} Contact</h3>
+      <h3 class="formTitle">{{title}} Contact</h3>
       <form action="#" method="get" data-method="{{method}}" data-id="{{id}}">
         <fieldset>
           <dl>
-            <dt>Name:</dt>
-            <dd><input type="text" name="name" value="{{name}}"></dd>
-            <dt>Email Address:</dt>
-            <dd><input type="email" name="email" value="{{email}}"></dd>
-            <dt>Phone Number:</dt>
+            <label><dt class="name">Name:</dt>
+            <dd><input type="text" name="name" value="{{name}}"></dd></label>
+            <dd class="error invisible help" id="nameHelp">Please input a Name</dd>
+            <label><dt class="email">Email Address:</dt>
+            <dd><input type="email" name="email" value="{{email}}"></dd></label>
+            <dd class="error invisible help" id="emailHelp">Please input an Email Address</dd>
+            <label><dt class="phone">Phone Number:</dt>
             <dd><input type="text" name="phoneNumber" value="{{phoneNumber}}"></dd>
+            <dd class="error invisible help" id="phoneHelp">Please input a phone number</dd>
+            </label>
           </dl>
-          <a href="#" type="submit" id="submitButton">Submit</a>
-          <a href="#" id="cancelButton">Cancel</a>
+          <ul>
+            <li><a href="#" type="submit" id="submitButton">Submit</a></li>
+            <li><a href="#" id="cancelButton">Cancel</a></li>
+          </ul>
         </fieldset>
     </script>
 

@@ -48,7 +48,6 @@ var ContactList = {
     });
   },
   editContact: function(id, data) {
-    console.log('edit');
     var currentContact = this.getSingleContact(id);
     data.forEach(function(object) {
       currentContact[object.name] = object["value"];
@@ -94,18 +93,58 @@ $(function() {
       return;
     }
     var data = $form.serializeArray();
-    //Check Fields
-    if ($form.attr('data-method') === 'edit') {
-      list.editContact(parseInt($form.attr('data-id') ,10), data);
+    if (isValid(data)) {
+      if ($form.attr('data-method') === 'edit') {
+        list.editContact(parseInt($form.attr('data-id') ,10), data);
+      } else {
+        list.addToContacts(data)
+      }
+      updateDisplay(list);
+      $(this).closest('form')[0].reset();
+      showMainMenu();
     } else {
-      list.addToContacts(data)
+      return;
     }
-    updateDisplay(list);
-    $(this).closest('form')[0].reset();
-    showMainMenu();
   });
 
 });
+
+
+function isValid(data) {
+  $('.help').each(function() {
+    $(this).addClass('invisible');
+  });
+  var testData = {};
+  var passTest = false;
+  data.forEach(function(object) {
+    testData[object.name] = object["value"];
+  });
+  passTest = checkName(testData.name);
+  $('form dt.name').toggleClass('error', !passTest);
+  $('form input[name="name"]').toggleClass('inputError', !passTest);
+  $('#nameHelp').toggleClass('invisible', passTest);
+  passTest = checkEmail(testData.email);
+  $('form dt.email').toggleClass('error', !passTest);
+  $('form input[type="email"]').toggleClass('inputError', !passTest);
+  $('#emailHelp').toggleClass('invisible', passTest);
+  passTest = checkNumber(testData.phoneNumber);
+  $('form dt.phone').toggleClass('error', !passTest);
+  $('form input[name="phoneNumber"]').toggleClass('inputError', !passTest);
+  $('#phoneHelp').toggleClass('invisible', passTest);
+  return checkName(testData.name) && checkNumber(testData.phoneNumber) && checkEmail(testData.email);
+}
+
+function checkName(name) {
+  return name.length >= 1;
+}
+
+function checkNumber(number) {
+  return number.length >= 7;
+}
+
+function checkEmail(email) {
+  return email.includes('@');
+}
 
 function showMainMenu() {
   var $visiblePanel = $('main div:visible');
@@ -113,6 +152,7 @@ function showMainMenu() {
   $('main').append($toMove);
   $('.container').slideDown(300);
   $visiblePanel.slideUp(300);
+  //Set search bar to ""
 }
 
 function showNewMenu(list) {
@@ -143,10 +183,10 @@ function updateDisplay(list) {
   $container.html(list.templates.contacts({contacts: list.contacts}));
 }
 
-//Checking Form
 //Tag System
 //No contacts issues
 //Local Storage
 
 //Put in placeholder, .remove(), updateDisplay put it in if empty
 //put placeholder inside container div
+//Better event delegation with clicks
