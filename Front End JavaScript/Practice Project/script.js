@@ -1,22 +1,5 @@
 var ContactList = {
-  contacts: [{
-    name: 'Robert Hustead',
-    phoneNumber: 1234567890,
-    email: 'abc@x.com',
-    id: 1,
-  }, {
-    name: 'John Smith',
-    phoneNumber: 0987654321,
-    email: '123@x.com',
-    id: 2,
-  }, {
-    name: 'Mary Sue',
-    phoneNumber: 111222333,
-    email: 'name@x.com',
-    id: 3,
-  }],
   templates: {},
-  currentID: 4,
   compileTemplates: function() {
     var tmp = this.templates;
     $("script[type='text/x-handlebars']").each(function() {
@@ -30,7 +13,17 @@ var ContactList = {
   },
   init: function() {
     this.compileTemplates();
+    this.contacts = this.loadList() || [];
+    this.currentID = this.findLastID();
     return this;
+  },
+  findLastID: function() {
+    if (this.contacts.length === 0) {
+      return 0;
+    } else {
+      var finalContact = this.contacts[this.contacts.length - 1];
+      return finalContact.id + 1;
+    }
   },
   addToContacts: function(data) {
     var newContact = {};
@@ -41,7 +34,6 @@ var ContactList = {
     this.currentID += 1;
     this.contacts.push(newContact);
   },
-  
   deleteContact: function(id) {
     this.contacts = this.contacts.filter(function(object) {
       return object.id !== id;
@@ -59,12 +51,41 @@ var ContactList = {
     });
     return result[0];
   },
+  isEmpty: function() {
+    return this.contacts.length === 0;
+  },
+  allContacts: function() {
+    return this.contacts;
+  },
+  loadList: function() {
+    return JSON.parse(localStorage.getItem('contacts'));
+  },
+  search: function(searchString, searchTags) {
+    //Filter by Tags first
+    var result = this.contacts.filter(function(object) {
+      var splitName = object.name.split(' ')
+      var firstName = splitName[0];
+      var lastName = splitName.slice(1).join(' ');
+      var search = new RegExp(searchString, 'i');
+      return firstName.match(search) || lastName.match(search);
+    });
+    return result;
+  },
 };
 
 $(function() {
   var list = Object.create(ContactList).init();
   updateDisplay(list);
   $('.container').hide().delay(300).slideDown(300);
+
+  $('.container').on('keyup', 'input[name="search"]', function(e) {
+    var searchString = $(this).val();
+    if (searchString.length >= 1) {
+      displaySearchResults(list.search(searchString, undefined), list);
+    } else {
+      updateDisplay(list);
+    }
+  });
 
   $('.container').on('click', '#newContact', function(e) {
     e.preventDefault();
@@ -77,12 +98,20 @@ $(function() {
     showEditMenu(list, id);
   });
 
-    $('.container').on('click', 'a[data-method="delete"]', function(e) {
+  $('.container').on('click', 'a[data-method="delete"]', function(e) {
     e.preventDefault();
-    //Alert
-    var id = parseInt($(e.target).closest('div').attr('data-id'));
-    list.deleteContact(id);
-    updateDisplay(list);
+    if( window.confirm('Are you sure you want to delete this contact?')) {
+      var id = parseInt($(e.target).closest('div').attr('data-id'));
+      list.deleteContact(id);
+      updateDisplay(list);
+    } else {
+      return;
+    }
+  });
+
+  $('.container').on('click', '#newContactCopy', function(e) {
+    e.preventDefault();
+    $('#newContact').trigger('click');
   });
 
   $('.forms').on('click', 'a', function(e) {
@@ -105,6 +134,11 @@ $(function() {
     } else {
       return;
     }
+  });
+
+  $(window).on('unload', function(e) {
+    var contacts = list.allContacts();
+    localStorage.setItem('contacts', JSON.stringify(contacts));
   });
 
 });
@@ -149,6 +183,7 @@ function checkEmail(email) {
 function showMainMenu() {
   var $visiblePanel = $('main div:visible');
   var $toMove = $('.container').detach();
+  //$('input[name="search"]').val('');
   $('main').append($toMove);
   $('.container').slideDown(300);
   $visiblePanel.slideUp(300);
@@ -180,13 +215,25 @@ function showEditMenu(list, id) {
 
 function updateDisplay(list) {
   var $container = $('.container');
-  $container.html(list.templates.contacts({contacts: list.contacts}));
+  if (list.isEmpty()) {
+    $container.html(list.templates.emptyContacts({}));
+  } else {
+    $container.html(list.templates.contacts({contacts: list.contacts}));
+  }
+}
+
+function displaySearchResults(resultList, fullList) {
+  var $container = $('#contactDisplayArea');
+  if (resultList.length === 0) {
+    var $searchTerms = $('input[name="search"]').val();
+    $container.html(fullList.templates.emptySearch({searchTerm: $searchTerms}));
+    $container.find('header').remove();
+  } else {
+    $container.html(fullList.templates.contacts({contacts: resultList}));
+    $container.find('header').remove();
+  }
 }
 
 //Tag System
-//No contacts issues
-//Local Storage
-
-//Put in placeholder, .remove(), updateDisplay put it in if empty
-//put placeholder inside container div
+//Templates out of Object
 //Better event delegation with clicks

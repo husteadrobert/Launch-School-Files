@@ -53,9 +53,11 @@
         <a href="#" id="newContact">Add Contact</a>
         <input type="text" name="search" placeholder="Search">
       </header>
-      {{#each contacts}}
-      {{> contact}}
-      {{/each}}
+      <div id="contactDisplayArea">
+        {{#each contacts}}
+        {{> contact}}
+        {{/each}}
+      </div>
     </script>
 
     <script type="text/x-handlebars" data-type="partial" id="contact">
@@ -71,6 +73,27 @@
           <li><a href="#" data-method="edit">Edit</a></li>
           <li><a href="#" data-method="delete">Delete</a></li>
         </ul>
+      </div>
+    </script>
+
+    <script type="text/x-handlebars" id="emptyContacts">
+      <header>
+        <a href="#" id="newContact">Add Contact</a>
+        <input type="text" name="search" placeholder="Search">
+      </header>
+      <div id="emptyContactContainer">
+        <h3>There are no contacts.</h3>
+        <a href="#" id="newContactCopy">Add Contact</a>
+      </div>
+    </script>
+
+    <script type="text/x-handlebars" id="emptySearch">
+      <header>
+        <a href="#" id="newContact">Add Contact</a>
+        <input type="text" name="search" placeholder="Search">
+      </header>
+      <div id="emptySearchContainer">
+        <h3>There are no contacts that begin with <span class="bold">{{searchTerm}}</span>.</h3>
       </div>
     </script>
 
