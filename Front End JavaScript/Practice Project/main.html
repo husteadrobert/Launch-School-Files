@@ -42,7 +42,7 @@
             </label>
             <dt>Tags:</dt>
             <dd>
-              {{#each tags}}
+              {{#each allTags}}
               {{> tag}}
               {{/each}}
             </dd>
@@ -140,7 +140,7 @@
         <input type="text" name="search" placeholder="Search">
       </header>
       <div id="emptySearchContainer">
-        <h3>There are no contacts that begin with <span class="bold">{{searchTerm}}</span>.</h3>
+        <h3>There are no contacts that begin with or contain <span class="bold">{{searchTerm}}</span>.</h3>
       </div>
     </script>
 

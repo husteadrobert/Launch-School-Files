@@ -1,14 +1,5 @@
 var ContactList = {
   templates: {},
-  tags: [{
-    tagName: 'Family',
-  }, {
-    tagName: 'Business',
-  },{
-    tagName: 'Friends',
-  }, {
-    tagName: 'Whatever',
-  }],
   compileTemplates: function() {
     var tmp = this.templates;
     $("script[type='text/x-handlebars']").each(function() {
@@ -23,6 +14,7 @@ var ContactList = {
   init: function() {
     this.compileTemplates();
     this.contacts = this.loadList() || [];
+    this.tags = this.loadTags() || [];
     this.currentID = this.findLastID();
     return this;
   },
@@ -56,8 +48,14 @@ var ContactList = {
   },
   editContact: function(id, data) {
     var currentContact = this.getSingleContact(id);
+    var tags = [];
     data.forEach(function(object) {
-      currentContact[object.name] = object["value"];
+      if (object.name === 'checkbox') {
+        tags.push({tagName: object["value"]});
+      } else {
+        currentContact[object.name] = object["value"];
+      }
+      currentContact.tags = tags;
     });
   },
   getSingleContact: function(id) {
@@ -75,6 +73,9 @@ var ContactList = {
   loadList: function() {
     return JSON.parse(localStorage.getItem('contacts'));
   },
+  loadTags: function() {
+    return JSON.parse(localStorage.getItem('tags'));
+  },
   search: function(searchString, searchTags) {
     //Filter by Tags first
     var result = this.contacts.filter(function(object) {
@@ -85,6 +86,37 @@ var ContactList = {
       return firstName.match(search) || lastName.match(search);
     });
     return result;
+  },
+  searchByTags: function($searchTags) {
+    var contains;
+    var result = this.contacts.filter(function(object) {
+      contains = false;
+      var allContactTags = object.tags;
+      allContactTags.forEach(function(singleTag) {
+        if (singleTag.tagName === $searchTags.val()) {
+          contains = true;
+        }
+      });
+      return contains;
+    });
+    return result;
+  },
+  addTag: function(data) {
+    var newTag = data[0]["value"];
+    this.tags.push({tagName: newTag});
+  },
+  allTags: function() {
+    return this.tags;
+  },
+  deleteTags: function(data) {
+    var self = this;
+    data.forEach(function(tag) {
+      self.tags.forEach(function(existingTag, index) {
+        if (tag["value"] === existingTag.tagName) {
+          self.tags.splice(index, 1);
+        }
+      });
+    });
   },
 };
 
@@ -97,6 +129,15 @@ $(function() {
     var searchString = $(this).val();
     if (searchString.length >= 1) {
       displaySearchResults(list.search(searchString, undefined), list);
+    } else {
+      updateDisplay(list);
+    }
+  });
+
+  $('.container').on("change", '#tagList input[type="checkbox"]', function(e) {
+    if (this.checked) {
+      var searchTerms = $('#tagList input[type="checkbox"]').filter(":checked");
+      displaySearchResults(list.searchByTags($(searchTerms)), list);
     } else {
       updateDisplay(list);
     }
@@ -155,6 +196,22 @@ $(function() {
 
     var data = $form.serializeArray();
     console.log(data);
+    if ($form.attr('data-method') === 'addTag') {
+      list.addTag(data);
+      updateDisplay(list);
+      $(this).closest('form')[0].reset();
+      showMainMenu();
+      return;
+    }
+
+    if ($form.attr('data-method') === 'deleteTag') {
+      list.deleteTags(data);
+      updateDisplay(list);
+      $(this).closest('form')[0].reset();
+      showMainMenu();
+      return;
+    }
+
     if (isValid(data)) {
       if ($form.attr('data-method') === 'edit') {
         list.editContact(parseInt($form.attr('data-id') ,10), data);
@@ -171,7 +228,9 @@ $(function() {
 
   $(window).on('unload', function(e) {
     var contacts = list.allContacts();
+    var tags = list.allTags();
     localStorage.setItem('contacts', JSON.stringify(contacts));
+    localStorage.setItem('tags', JSON.stringify(tags))
   });
 
 });
@@ -228,7 +287,7 @@ function showNewMenu(list) {
   var info = {
     title: 'Create',
     method: 'new',
-    tags: tagList,
+    allTags: tagList,
   };
   var $toMove = $('.forms').html(list.templates.form(info));
   $('main').append($toMove);
@@ -256,12 +315,25 @@ function showEditMenu(list, id) {
   info.title = "Edit";
   info.method = "edit";
   info.id = id;
-  info.tags = list.tags;
-  //CHECK TAGS here
+  info.allTags = list.tags;
   var $toMove = $('.forms').html(list.templates.form(info));
   $('main').append($toMove);
   $('.container').slideUp(300);
   $('.forms').slideDown(300);
+  //CHECK TAGS HERE
+  var containsTag;
+  var checkedTags = list.getSingleContact(id).tags;
+  info.tags.forEach(function(object) {
+    containsTag = false;
+    var currentTag = object;
+    checkedTags.forEach(function(tag) {
+      thisTag = tag;
+      if (thisTag.tagName === currentTag.tagName) {
+        containsTag = true;
+      }
+    });
+    $('form input[value=' + currentTag.tagName + ']').prop('checked', containsTag);
+  });
 }
 
 function updateDisplay(list) {
@@ -279,6 +351,9 @@ function displaySearchResults(resultList, fullList) {
   var $container = $('#contactDisplayArea');
   if (resultList.length === 0) {
     var $searchTerms = $('input[name="search"]').val();
+    if ($searchTerms.length === 0) {
+      $searchTerms = "the selected tag"
+    }
     $container.html(fullList.templates.emptySearch({searchTerm: $searchTerms}));
     $container.find('header').remove();
   } else {
@@ -288,10 +363,10 @@ function displaySearchResults(resultList, fullList) {
 }
 
 //Tag System
-//Should give each tag an ID
 //Templates out of Object
 //Better event delegation with clicks
+//Various CSS issues
 
-
-//in HTML, make editTags a Form and attach data-method="XXX" so it'll be handled by event listener
-//Add tagList property to ContactList, which makes a single String by joining
+//Tags:
+//Search by Tags only handles 1 tag at a time + no search terms
+//Remove deleted tags from existing contacts
