@@ -40,6 +40,12 @@
             <dd><input type="text" name="phoneNumber" value="{{phoneNumber}}"></dd>
             <dd class="error invisible help" id="phoneHelp">Please input a phone number</dd>
             </label>
+            <dt>Tags:</dt>
+            <dd>
+              {{#each tags}}
+              {{> tag}}
+              {{/each}}
+            </dd>
           </dl>
           <ul>
             <li><a href="#" type="submit" id="submitButton">Submit</a></li>
@@ -48,10 +54,45 @@
         </fieldset>
     </script>
 
+    <script type="text/x-handlebars" id="tagsEdit">
+      <div id="editTagsContainer">
+        <h3 class="formTitle">Manage Tags</h3>
+        <form action="#" method="get" data-method="deleteTag">
+          <fieldset>
+            <div id="editTags">
+              {{#each tags}}
+              <span class="singleTag">
+                {{>tag}}
+              </span>
+              {{/each}}
+            </div>
+            <ul>
+              <li><a href="#" id="addTagsButton">Add New Tag</a></li>
+              <li><a href="#" type="submit" id="submitButton">Delete Selected</a></li>
+              <li><a href="#" id="cancelButton">Cancel</a></li>
+            </ul>
+          </fieldset>
+        </form>
+      </div>
+      <div id="addNewTagContainer">
+        <h3 class="formTitle">Add Tag</h3>
+        <form action="#" method="get" data-method="addTag">
+          <fieldset>
+            <dl>
+              <label><dt>New Tag Name</dt>
+              <dd><input type="text" name="newTagName"></dd></label>
+            </dl>
+            <ul>
+              <li><a href="#" type="submit" id="submitButton">Add Tag</a></li>
+              <li><a href="#" id="cancelButton">Cancel</a></li>
+            </ul>
+          </fieldset>
+        </form>
+      </div>
+    </script>
+
     <script type="text/x-handlebars" id="contacts">
       <header>
-        <a href="#" id="newContact">Add Contact</a>
-        <input type="text" name="search" placeholder="Search">
       </header>
       <div id="contactDisplayArea">
         {{#each contacts}}
@@ -68,6 +109,12 @@
           <dd>{{phoneNumber}}</dd>
           <dt>Email:</dt>
           <dd>{{email}}</dd>
+          <dt>Tags:</dt>
+          <dd>
+            {{#each tags}}
+            {{tagName}}
+            {{/each}}
+          </dd>
         </dl>
         <ul>
           <li><a href="#" data-method="edit">Edit</a></li>
@@ -95,6 +142,24 @@
       <div id="emptySearchContainer">
         <h3>There are no contacts that begin with <span class="bold">{{searchTerm}}</span>.</h3>
       </div>
+    </script>
+
+    <script type="text/x-handlebars" id="headerBar">
+      <header>
+        <a href="#" id="newContact">Add Contact</a>
+        <input type="text" name="search" placeholder="Search">
+        <div id="tagList">
+          <h4>Tag List:</h4>
+          {{#each tags}}
+          {{> tag}}
+          {{/each}}
+        </div>
+        <a href='#' id="showEditTags">Manage Tags</a>
+      </header>
+    </script>
+
+    <script type="text/x-handlebars" id="tag" data-type="partial">
+      <label><input type="checkbox" name="checkbox" value="{{tagName}}">{{tagName}}</label>
     </script>
 
   </body>

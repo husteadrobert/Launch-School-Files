@@ -1,5 +1,14 @@
 var ContactList = {
   templates: {},
+  tags: [{
+    tagName: 'Family',
+  }, {
+    tagName: 'Business',
+  },{
+    tagName: 'Friends',
+  }, {
+    tagName: 'Whatever',
+  }],
   compileTemplates: function() {
     var tmp = this.templates;
     $("script[type='text/x-handlebars']").each(function() {
@@ -27,9 +36,15 @@ var ContactList = {
   },
   addToContacts: function(data) {
     var newContact = {};
+    var tags = [];
     data.forEach(function(object) {
-      newContact[object.name] = object["value"];
+      if (object.name === 'checkbox') {
+        tags.push({tagName: object["value"]});
+      } else {
+        newContact[object.name] = object["value"];
+      }
     });
+    newContact.tags = tags;
     newContact.id = this.currentID;
     this.currentID += 1;
     this.contacts.push(newContact);
@@ -114,6 +129,17 @@ $(function() {
     $('#newContact').trigger('click');
   });
 
+  $('.container').on('click', '#showEditTags', function(e) {
+    e.preventDefault();
+    showTagsMenu(list);
+  });
+
+  $('.forms').on('click', '#addTagsButton', function(e) {
+    e.preventDefault();
+    $('#editTagsContainer').slideUp(300);
+    $('#addNewTagContainer').slideDown(300);
+  });
+
   $('.forms').on('click', 'a', function(e) {
     e.preventDefault();
     var $form = $(this).closest('form');
@@ -121,7 +147,14 @@ $(function() {
       showMainMenu();
       return;
     }
+    
+    if ($(this).attr('id') === 'addTagsButton') {
+      //showNewTagsMenu(list);
+      return;
+    }
+
     var data = $form.serializeArray();
+    console.log(data);
     if (isValid(data)) {
       if ($form.attr('data-method') === 'edit') {
         list.editContact(parseInt($form.attr('data-id') ,10), data);
@@ -191,9 +224,11 @@ function showMainMenu() {
 }
 
 function showNewMenu(list) {
+  var tagList = list.tags;
   var info = {
     title: 'Create',
     method: 'new',
+    tags: tagList,
   };
   var $toMove = $('.forms').html(list.templates.form(info));
   $('main').append($toMove);
@@ -202,11 +237,27 @@ function showNewMenu(list) {
 
 }
 
+function showTagsMenu(list) {
+  var $toMove = $('.forms').html(list.templates.tagsEdit({tags: list.tags}));
+  $('main').append($toMove);
+  $('.container').slideUp(300);
+  $('.forms').slideDown(300);
+}
+
+function showNewTagsMenu(list) {
+  var $toMove = $('.forms').html(list.templates.newTag({}));
+  $('main').append($toMove);
+  $('.container').slideUp(300);
+  $('.forms').slideDown(300);
+}
+
 function showEditMenu(list, id) {
   var info = list.getSingleContact(id);
   info.title = "Edit";
   info.method = "edit";
   info.id = id;
+  info.tags = list.tags;
+  //CHECK TAGS here
   var $toMove = $('.forms').html(list.templates.form(info));
   $('main').append($toMove);
   $('.container').slideUp(300);
@@ -217,8 +268,10 @@ function updateDisplay(list) {
   var $container = $('.container');
   if (list.isEmpty()) {
     $container.html(list.templates.emptyContacts({}));
+    $container.find('header').html(list.templates.headerBar({tags: list.tags}));
   } else {
     $container.html(list.templates.contacts({contacts: list.contacts}));
+    $container.find('header').html(list.templates.headerBar({tags: list.tags}));
   }
 }
 
@@ -235,5 +288,10 @@ function displaySearchResults(resultList, fullList) {
 }
 
 //Tag System
+//Should give each tag an ID
 //Templates out of Object
 //Better event delegation with clicks
+
+
+//in HTML, make editTags a Form and attach data-method="XXX" so it'll be handled by event listener
+//Add tagList property to ContactList, which makes a single String by joining
