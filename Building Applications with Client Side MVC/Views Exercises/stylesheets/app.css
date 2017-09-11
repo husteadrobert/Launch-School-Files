@@ -1,0 +1,21 @@
+#new-person-modal {
+  background: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#new-person-modal form {
+  background: #fff;
+  box-shadow: 0 0 1px 1px rgb(0, 0, 0);
+  width: 500px;
+  margin: 0 auto;
+  position: relative;
+  top: 200px;
+}
+
+fieldset {
+  border: none;
+}
