@@ -1,5 +1,5 @@
 describe("Albums collection", function() {
-  it("fethes a collection of three albums", function(done) {
+  it("fetches a collection of three albums", function(done) {
     var albumsLoaded = App.albumsLoaded;
     App.albumsLoaded = function() {
       albumsLoaded.apply(App, arguments);
@@ -8,6 +8,14 @@ describe("Albums collection", function() {
       done();
     };
 
+    App.init();
+  });
+
+  it("sets a tracks_url property when models are created", function(done) {
+    App.albumsLoaded = function() {
+      expect(App.albums.first().get("tracks_url")).toMatch(/\/album/);
+      done();
+    };
     App.init();
   });
 });
