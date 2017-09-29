@@ -1,0 +1,31 @@
+include /_mixins
+include /_cart_mock
+include /_functions
+
+doctype html
+html
+  head
+    title Web Store
+    +stylesheet_link_tag('application')
+    link(href="http://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet" type="text/css")
+  body
+    main
+      h1 Products
+      #cart
+        h3
+          a(href="#")
+            | Cart
+            span= cart_quantity()
+        #items
+          ul
+            each cart_item in cart
+              li
+                | #{cart_item.title} x #{cart_item.quantity}
+                span $#{format(cart_item.price * cart_item.quantity)}
+            li
+              strong Total
+              span $#{format(cart.reduce(total))}
+          a(href="#") Checkout
+
+      block content
+    +javascript_include_tag('cart')
