@@ -1,0 +1,30 @@
+extend layout
+
+block content
+  #album_new
+    form(action="/albums" method="post")
+      <h1>Add Album</h1>
+      fieldset
+        dl
+          dt
+            label Title
+          dd
+            input(type="text" name="title")
+          dt
+            label Artist
+          dd
+            input(type="text" name="artist")
+          dt
+            label Date
+          dd
+            input(type="date" name="date")
+          dt
+            label Cover
+          dd
+            input(type="url" name="cover")
+          dt
+            label Price
+          dd
+            input(type="text" name="price")
+      fieldset.actions
+        input(type="submit" value="Create")
