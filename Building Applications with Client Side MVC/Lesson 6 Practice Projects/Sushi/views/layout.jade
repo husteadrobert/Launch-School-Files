@@ -1,0 +1,55 @@
+include /_mixins
+
+doctype html
+html
+  head
+    title Sushi Restaurant Website
+    link(href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous")
+    link(rel='stylesheet', href='/stylesheets/main.css')
+    +javascript_include_tag("vendor/all")
+    +javascript_include_tag("handlebarsTemplates")
+  body
+    header
+      //
+        Main header stuff, like logo and shopping cart
+        Will need Cart Info sent in to change Number in count
+      a(class="logo" href="/")
+        img(src="images/logo.png" alt="logo")
+      div(class="cart")
+        a(href="/")
+          span(class="left") Shopping Cart
+          span(class="right") <!--
+          |--><span class="count">1</span>
+          |items
+          |</span>
+    main
+      //
+        #Cart
+        #Content Which will contain:
+        #MenuView or #ItemView or #CheckoutView
+
+        Change Cart later to handlebars/views, etc
+      #cart
+        ul
+          li(data-id="1")
+            figure
+              img(src="images/sashimi-salad.jpg" alt="cart-item")
+            p 2 x $12.00
+        section
+          h3 Your <br>shopping cart
+          p(class="total")$24.00
+          p
+          footer
+            a(class="left empty_cart" href="/#") Empty Cart <!--
+            |--><a class="right checkout" href="/checkout">Checkout</a>
+
+      #content
+
+    +javascript_include_tag("application")
+    +javascript_include_tag("models/menuItem")
+    +javascript_include_tag("collections/menuItems")
+    +javascript_include_tag("views/menu", "views/item")
+    script(type="text/javascript").
+      App.menuItems = new menuItems(!{JSON.stringify(menu)});
+    +javascript_include_tag("router")
+    block content
