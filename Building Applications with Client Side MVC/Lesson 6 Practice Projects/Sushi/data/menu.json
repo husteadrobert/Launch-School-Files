@@ -20,7 +20,7 @@
   "nutrition": {
     "protein": 2.3138,
     "fat": 0.6041,
-    "carboyhydrates": 7.8006,
+    "carbohydrates": 7.8006,
     "energy_kj": 7.5314,
     "energy_kcal": 1.8000,
     "sugar": 0.3114
@@ -34,7 +34,7 @@
   "nutrition": {
     "protein": 0.229,
     "fat": 2.2852,
-    "carboyhydrates": 4.8824,
+    "carbohydrates": 4.8824,
     "energy_kj": 5.1003,
     "energy_kcal": 1.2190,
     "sugar": 0.0037
@@ -48,7 +48,7 @@
   "nutrition": {
     "protein": 0.7436,
     "fat": 1.9771,
-    "carboyhydrates": 0.674,
+    "carbohydrates": 0.674,
     "energy_kj": 17.294,
     "energy_kcal": 4.1334,
     "sugar": 0.1028
@@ -62,7 +62,7 @@
   "nutrition": {
     "protein": 2.7642,
     "fat": 2.1552,
-    "carboyhydrates": 9.5294,
+    "carbohydrates": 9.5294,
     "energy_kj": 9.393,
     "energy_kcal": 2.2450,
     "sugar": 0.1399
@@ -76,7 +76,7 @@
   "nutrition": {
     "protein": 2.2293,
     "fat": 0.7329,
-    "carboyhydrates": 0.0618,
+    "carbohydrates": 0.0618,
     "energy_kj": 28.2176,
     "energy_kcal": 6.7442,
     "sugar": 0.4018
@@ -90,7 +90,7 @@
   "nutrition": {
     "protein": 1.4804,
     "fat": 1.4739,
-    "carboyhydrates": 0.2237,
+    "carbohydrates": 0.2237,
     "energy_kj": 16.9406,
     "energy_kcal": 4.0489,
     "sugar": 0.245
@@ -104,7 +104,7 @@
   "nutrition": {
     "protein": 0.2814,
     "fat": 1.3963,
-    "carboyhydrates": 1.5973,
+    "carbohydrates": 1.5973,
     "energy_kj": 16.4487,
     "energy_kcal": 3.9313,
     "sugar": 0.0509
@@ -118,7 +118,7 @@
   "nutrition": {
     "protein": 0.9559,
     "fat": 1.6395,
-    "carboyhydrates": 7.4319,
+    "carbohydrates": 7.4319,
     "energy_kj": 9.7847,
     "energy_kcal": 2.3386,
     "sugar": 0.4771
@@ -132,7 +132,7 @@
   "nutrition": {
     "protein": 2.683,
     "fat": 2.858,
-    "carboyhydrates": 1.6309,
+    "carbohydrates": 1.6309,
     "energy_kj": 23.8901,
     "energy_kcal": 5.7099,
     "sugar": 0.4839
@@ -146,7 +146,7 @@
   "nutrition": {
     "protein": 0.848,
     "fat": 0.1205,
-    "carboyhydrates": 3.6646,
+    "carbohydrates": 3.6646,
     "energy_kj": 18.6541,
     "energy_kcal": 4.4584,
     "sugar": 0.0174
@@ -160,7 +160,7 @@
   "nutrition": {
     "protein": 2.2802,
     "fat": 2.309,
-    "carboyhydrates": 9.5136,
+    "carbohydrates": 9.5136,
     "energy_kj": 18.6961,
     "energy_kcal": 4.4685,
     "sugar": 0.2533
@@ -174,7 +174,7 @@
   "nutrition": {
     "protein": 1.0003,
     "fat": 1.5621,
-    "carboyhydrates": 2.6322,
+    "carbohydrates": 2.6322,
     "energy_kj": 25.0911,
     "energy_kcal": 5.9969,
     "sugar": 0.0474
@@ -188,7 +188,7 @@
   "nutrition": {
     "protein": 2.826,
     "fat": 2.854,
-    "carboyhydrates": 2.433,
+    "carbohydrates": 2.433,
     "energy_kj": 19.2756,
     "energy_kcal": 4.6070,
     "sugar": 0.439
@@ -202,7 +202,7 @@
   "nutrition": {
     "protein": 2.2375,
     "fat": 2.6376,
-    "carboyhydrates": 7.4605,
+    "carbohydrates": 7.4605,
     "energy_kj": 18.7052,
     "energy_kcal": 4.4707,
     "sugar": 0.4271
@@ -216,7 +216,7 @@
   "nutrition": {
     "protein": 2.5748,
     "fat": 0.0234,
-    "carboyhydrates": 6.5532,
+    "carbohydrates": 6.5532,
     "energy_kj": 22.7136,
     "energy_kcal": 5.4287,
     "sugar": 0.1158
@@ -230,7 +230,7 @@
   "nutrition": {
     "protein": 2.4622,
     "fat": 2.672,
-    "carboyhydrates": 9.7993,
+    "carbohydrates": 9.7993,
     "energy_kj": 25.1129,
     "energy_kcal": 6.0021,
     "sugar": 0.3426
@@ -244,7 +244,7 @@
   "nutrition": {
     "protein": 1.0267,
     "fat": 2.2143,
-    "carboyhydrates": 6.1597,
+    "carbohydrates": 6.1597,
     "energy_kj": 17.8688,
     "energy_kcal": 4.2708,
     "sugar": 0.0161
@@ -258,7 +258,7 @@
   "nutrition": {
     "protein": 1.7697,
     "fat": 0.2534,
-    "carboyhydrates": 6.9919,
+    "carbohydrates": 6.9919,
     "energy_kj": 7.508,
     "energy_kcal": 1.7945,
     "sugar": 0.1798

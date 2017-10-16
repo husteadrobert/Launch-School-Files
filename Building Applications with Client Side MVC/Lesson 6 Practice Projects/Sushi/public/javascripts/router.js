@@ -1,8 +1,9 @@
 var router = new (Backbone.Router.extend({
   routes: {
-    "index/checkout": App.menuView,
-    "index/individualItem": App.menuView,
-    "index": App.menuView,
+    //"checkout": App.renderCheckoutView.bind(App),
+    "checkout": App.renderCheckoutView.bind(App),
+    "index/:id": "singleItemView",
+    "index": App.menuView.bind(App),
     /*
     "/": App.index <--No good, already assumes the /, so would need regular expression.
     */
@@ -17,6 +18,14 @@ var router = new (Backbone.Router.extend({
     this.route(/^\/?$/, "index", this.menuView)
   }
 }))();
+
+router.on("route:singleItemView", function(id) {
+  if ( +id > App.menuItems.length || id.match(/[a-z]/i) || +id <= 0) {
+    App.menuView();
+  } else {
+  App.renderSingleItemView(id);
+  }
+});
 
 //With Router also need History
 Backbone.history.start({

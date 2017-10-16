@@ -3,7 +3,7 @@ var menuView = Backbone.View.extend({
   tagName: "ul",
   render: function() {
     this.$el.attr('id', 'items');
-    this.$el.appendTo(App.$el);
+    App.$el.html(this.$el);
   },
   initialize: function() {
     this.render();

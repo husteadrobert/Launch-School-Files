@@ -10,46 +10,22 @@ html
     +javascript_include_tag("handlebarsTemplates")
   body
     header
-      //
-        Main header stuff, like logo and shopping cart
-        Will need Cart Info sent in to change Number in count
-      a(class="logo" href="/")
-        img(src="images/logo.png" alt="logo")
+      a(class="logo" href="#")
+        img(src="/images/logo.png" alt="logo")
       div(class="cart")
-        a(href="/")
+        a(href="#")
           span(class="left") Shopping Cart
           span(class="right") <!--
-          |--><span class="count">1</span>
+          |--><span class="count">0</span>
           |items
           |</span>
     main
-      //
-        #Cart
-        #Content Which will contain:
-        #MenuView or #ItemView or #CheckoutView
-
-        Change Cart later to handlebars/views, etc
-      #cart
-        ul
-          li(data-id="1")
-            figure
-              img(src="images/sashimi-salad.jpg" alt="cart-item")
-            p 2 x $12.00
-        section
-          h3 Your <br>shopping cart
-          p(class="total")$24.00
-          p
-          footer
-            a(class="left empty_cart" href="/#") Empty Cart <!--
-            |--><a class="right checkout" href="/checkout">Checkout</a>
-
       #content
 
     +javascript_include_tag("application")
     +javascript_include_tag("models/menuItem")
-    +javascript_include_tag("collections/menuItems")
-    +javascript_include_tag("views/menu", "views/item")
+    +javascript_include_tag("collections/menuItems", "collections/cartItems")
+    +javascript_include_tag("views/menu", "views/item", "views/cart", "views/checkout", "views/checkoutItem", "views/singleItem")
     script(type="text/javascript").
       App.menuItems = new menuItems(!{JSON.stringify(menu)});
     +javascript_include_tag("router")
-    block content

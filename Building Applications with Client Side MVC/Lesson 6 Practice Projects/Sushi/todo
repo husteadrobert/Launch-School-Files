@@ -1,0 +1,10 @@
+
+Add animation for individual view
+
+Clear up Express Router to be cleaner
+
+Clear up comments
+
+Create init in App so can run instead of two t/f lines each time
+
+Add ability to click cart items to go to Single view?
