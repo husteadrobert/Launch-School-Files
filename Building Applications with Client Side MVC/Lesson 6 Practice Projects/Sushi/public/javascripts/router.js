@@ -1,6 +1,5 @@
 var router = new (Backbone.Router.extend({
   routes: {
-    //"checkout": App.renderCheckoutView.bind(App),
     "checkout": App.renderCheckoutView.bind(App),
     "index/:id": "singleItemView",
     "index": App.menuView.bind(App),
@@ -39,5 +38,3 @@ $(document).on("click", "a[href^='/']", function(e) {
 //Here, this replaces first / so Backbone router can take it, then optional trigger
 //tells Backbone to update the url.  
 });
-
-//Question, how set default to /index?

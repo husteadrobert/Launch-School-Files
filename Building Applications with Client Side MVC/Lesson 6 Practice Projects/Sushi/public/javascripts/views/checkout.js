@@ -1,5 +1,4 @@
 var checkoutView = Backbone.View.extend({
-  //cartTotal: $('#cart .total').html(),
   template: App.templates.checkout,
   events: {
     "click footer a": "order",

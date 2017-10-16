@@ -30,7 +30,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Routing
-//Use just one route, index, and in that file load information for menu
 //var routes = require('./routes/index'); <---Get the route file
 //app.use('/', routes); <---Use the route file
 var routes = require('./routes/index');
