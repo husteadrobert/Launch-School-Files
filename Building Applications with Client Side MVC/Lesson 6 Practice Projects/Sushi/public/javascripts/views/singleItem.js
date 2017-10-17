@@ -10,14 +10,16 @@ var singleItemView = Backbone.View.extend({
     "click .next": "nextItem",
   },
   previousItem: function() {
-    var previousModel = this.model.collection.get(this.model.get('id') -1);
+    var previousModelIndex = this.model.collection.indexOf(this.model);
+    var previousModel = this.model.collection.get(previousModelIndex);
     if (previousModel) {
       this.model = previousModel;
       this.update();
     }
   },
   nextItem: function() {
-    var nextModel = this.model.collection.get(this.model.get('id') + 1);
+    var nextModelIndex = this.model.collection.indexOf(this.model) + 2;
+    var nextModel = this.model.collection.get(nextModelIndex);
     if (nextModel) {
       this.model = nextModel;
       this.update();
@@ -37,7 +39,6 @@ var singleItemView = Backbone.View.extend({
   },
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
-    App.$el.html(this.$el);
   },
   initialize: function() {
     this.render();

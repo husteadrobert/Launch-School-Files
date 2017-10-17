@@ -7,6 +7,7 @@ var App = {
     if (!this.eventsBound) { this.bindEvents(); }
     this.cart.view.trigger('unhide');
     this.menu = new menuView();
+    this.$el.html(this.menu.$el);
     this.renderMenuItems();
     router.navigate("index");
   },
@@ -20,33 +21,37 @@ var App = {
     this.menuItems.each(this.renderItemView);
   },
   renderItemView: function(item) {
-    new itemView({
+    var item = new itemView({
       model: item
     });
+    item.$el.appendTo(App.$el.find('ul'));
   },
   renderCheckoutView: function() {
     if (!this.cart) { this.createCart(); }
     if (!this.eventsBound) { this.bindEvents(); }
-    new checkoutView({
+    this.checkoutView = new checkoutView({
       collection: this.cart
     });
+    this.$el.html(this.checkoutView.$el);
     this.cart.view.trigger('hide');
     this.cart.each(this.renderCheckoutItem);
     router.navigate("checkout");
   },
   renderCheckoutItem: function(item) {
-    new checkoutItemView({
+    var item = new checkoutItemView({
       model: item
     });
+    item.$el.appendTo(App.$el.find('tbody'));
   },
   renderSingleItemView: function(id) {
     if (!this.cart) { this.createCart(); }
     if (!this.eventsBound) { this.bindEvents(); }
     this.cart.view.trigger('unhide');
     var currentItem = this.menuItems.get(id);
-    new singleItemView({
+    this.singleItemView = new singleItemView({
       model: currentItem
     });
+    this.$el.html(this.singleItemView.$el);
     router.navigate("index/" + id);
   },
   bindEvents: function() {

@@ -19,7 +19,6 @@ var checkoutItemView = Backbone.View.extend({
   render: function() {
     this.$el.attr('data-id', this.model.toJSON().id);
     this.$el.html(this.template(this.model.toJSON()));
-    this.$el.appendTo(App.$el.find('tbody'));
   },
   updateCount:function() {
     this.$el.html(this.template(this.model.toJSON()));

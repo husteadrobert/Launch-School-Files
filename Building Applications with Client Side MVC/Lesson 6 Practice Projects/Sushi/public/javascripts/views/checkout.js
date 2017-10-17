@@ -14,7 +14,6 @@ var checkoutView = Backbone.View.extend({
     var cartTotal = $('#cart .total').html();
     this.$el.attr('id', 'checkout');
     this.$el.html(this.template({total: cartTotal}));
-    App.$el.html(this.$el);
   },
   updateTotalPrice: function() {
     this.totalPrice = this.collection.getTotal();
